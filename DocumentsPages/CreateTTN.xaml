@@ -1,0 +1,82 @@
+﻿<Window x:Class="DocumentsPages.CreateTTN"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        mc:Ignorable="d"
+        Title="{Binding}" Height="300" Width="410">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#1c4348"/>
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="Padding" Value="10 0  " />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ButtonBase}">
+                        <Border x:Name="border" CornerRadius="10"  BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#1c4348"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+        <Style TargetType="Viewbox">
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Viewbox Grid.Row="0" HorizontalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Создание " />
+                <TextBlock Text="{Binding DocumentName}" />
+            </StackPanel>
+        </Viewbox>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5 0">
+            <TextBlock Text="Дата:" />
+            <dxe:DateEdit DateTime="{Binding DocumentsDate}" dx:ThemeManager.ThemeName="Office2016White" VerticalAlignment="Center" Foreground="#1c4348" />
+            <TextBlock Text=" Номер документа:"/>
+            <dxe:TextEdit Text="{Binding DocumentsNumber}" dx:ThemeManager.ThemeName="Office2016White"  Mask="0000000" Margin="5 15" Width="150" />
+
+        </StackPanel>
+        <StackPanel Grid.Row="2" Margin="5 0">
+            <TextBlock Text="Контрагент: "/>
+            <ComboBox ItemsSource="{Binding Partners}" SelectedIndex="{Binding SelectedPartner}" Margin="15" Width="200" IsEditable="True" IsReadOnly="False" />
+        </StackPanel>
+        <StackPanel Grid.Row="3" Margin="15">
+            <CheckBox x:Name="CheckBox" IsChecked="{Binding VatsDeduction}" VerticalAlignment="Center" />
+            <TextBlock Text=" Принять НДС к вычету   "/>
+            <StackPanel Visibility="{Binding DeductionsVisibility, Converter={StaticResource VisibilityConverter}}">
+                <TextBlock Text="    Дата принятия "/>
+                <DatePicker SelectedDate="{Binding DeductionsDate}" VerticalAlignment="Center" />
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="4" HorizontalAlignment="Center" Visibility="{Binding CreateVisibility, Converter={StaticResource VisibilityConverter}}">
+            <Button Command="{Binding CreateCommand}">Создать</Button>
+        </StackPanel >
+        <StackPanel Grid.Row="4" Visibility="{Binding EditVisibility, Converter={StaticResource VisibilityConverter}}" HorizontalAlignment="Center">
+            <Button Command="{Binding EditCommand}">Изменить</Button>
+            <Button Command="{Binding DeleteCommand}">Удалить</Button>
+        </StackPanel>
+    </Grid>
+</Window>

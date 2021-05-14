@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Model.DbStructure
+namespace Model.DBStructure
 {
     public class BillOfLading
     {

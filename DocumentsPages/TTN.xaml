@@ -1,0 +1,227 @@
+﻿<Page x:Class="DocumentsPages.TTN"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+      xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+      xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TTN">
+   <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+        <Style TargetType="TextBox" x:Key="FixedTextBox">
+            <Setter Property="Background" Value="#1c4348"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="BorderThickness" Value="0.5"/>
+            <Setter Property="BorderBrush" Value="#ffffff"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="18"/>
+
+            <!-- <Setter Property="HorizontalAlignment" Value="Center"/> -->
+
+        </Style>
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Center" />
+            <Setter Property="Background" Value="#cbe7db" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="0.5" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#1c4348"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="Padding" Value="10 0  " />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ButtonBase}">
+                        <Border x:Name="border" CornerRadius="10"  BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+     
+<Style TargetType="dxe:TextEdit">
+            <Setter Property="Margin" Value="5"/>
+
+        </Style>
+        <Style TargetType="TabItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border Name="Border" Width="140" BorderThickness="1,1,1,0" BorderBrush="#173537" CornerRadius="5,30,5,5" Margin="2,0">
+                            <ContentPresenter x:Name="ContentSite"
+                                             VerticalAlignment="Center"
+                                             HorizontalAlignment="Center"
+                                             ContentSource="Header"
+                                             Margin="10,2"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#173537" />
+                                <Setter Property="Foreground" Value="#ffffff" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="#ffffff" />
+                                <Setter Property="Foreground" Value="#173537" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="15"/>
+
+        </Style>
+        <Style TargetType="dxe:ComboBoxEdit">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Page.Resources>
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding LoadMaterialsCommand}" />
+    </dxmvvm:Interaction.Behaviors>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" IsEnabled="{Binding IsEnabled, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+            <TabItem Header="Добавление">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+
+                        </Grid.ColumnDefinitions>
+
+                        <materialDesign:PackIcon Grid.Column="0" Kind="AddBox"  Height="30" Width="30" Foreground="#20454b" HorizontalAlignment="Center"  VerticalAlignment="Center" />
+                        <!-- <wpfControls:AutoCompleteTextBox Grid.Column="1" ItemsSource="{Binding Materials}" SelectedIndex="{Binding AddSelectedMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" IsReadOnly="True"></Autoco> -->
+                        <!-- <wpfControls:AutoCompleteTextBox Delay="5" Grid.Column="1" Text="{Binding AddName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5"></wpfControls:AutoCompleteTextBox> -->
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" NullText="Кол-во"  Text="{Binding AddCount, StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Tag="Количество" />
+                        <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="2" SelectedIndex="{Binding AddUnity, Mode=TwoWay}" ItemsSource="{Binding Units, Mode=OneWay}" NullText="Ед. изм."/>
+                        <!-- <local:CountryDropdown Grid.Column="3"  x:Name="ucCountryDropdown"></local:CountryDropdown> -->
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="4" Text="{Binding AddCost,  StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Стоимость" />
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="5" Text="{Binding AddVatRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Ставка НДС" />
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="6" Text="{Binding AddVat,  StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Сумма НДС" />
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="7" Text="{Binding AddWeight,  StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  NullText="Вес" />
+                        <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White" NullText="Счет учета"  IsReadOnly="False" 
+                                          Grid.Column="8" ItemsSource="{Binding Accounts, Mode=OneTime}" SelectedIndex="{Binding AddAccount}" />
+                    </Grid>
+                    <Button Command="{Binding BackEditCommand}" Grid.Row="1"  HorizontalAlignment="Left" Width="25" Height="25" Margin="5 0" Background="#1c4348" Style="{x:Null}" Foreground="#ffffff" BorderThickness="0" Padding="0">
+                        <materialDesign:PackIcon Margin="2" Kind="Undo" Background="#1c4348" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Button>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button  Command="{Binding AddNewCommand}">Добавить</Button>
+                        <Button Command="{Binding AddCancelCommand}">Отмена</Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Редактирование" Visibility="{Binding EditTabVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource VisibilityConverter}}" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+
+                        </Grid.ColumnDefinitions>
+
+                        <materialDesign:PackIcon Grid.Column="0" Kind="Pen"  Height="30" Width="30" Foreground="#20454b" HorizontalAlignment="Center"  VerticalAlignment="Center" />
+                        <!-- <wpfControls:AutoCompleteTextBox Grid.Column="1" ItemsSource="{Binding Materials}" SelectedIndex="{Binding AddSelectedMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" IsReadOnly="True"></Autoco> -->
+                        <!-- <wpfControls:AutoCompleteTextBox Grid.Column="1" Provider="{Binding }" Text="{Binding EditName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5"></wpfControls:AutoCompleteTextBox> -->
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White"  Text="{Binding EditCount, StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" NullText="Количество" />
+                        <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White"  Name="UnityComboBox" Grid.Column="2" NullText="Ед. изм." SelectedIndex="{Binding EditUnity, Mode=TwoWay}" ItemsSource="{Binding Units, Mode=OneWay}"/>
+                        <!-- <local:CountryDropdown Grid.Column="3"  x:Name="ucCountryDropdown"></local:CountryDropdown> -->
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="4" Text="{Binding EditCost,  StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Стоимость" />
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="5" Text="{Binding EditVatRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Ставка НДС" />
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="6" Text="{Binding EditVat,  StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Сумма НДС" />
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="7" Text="{Binding EditWeight,  StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Вес" />
+                        <dxe:ComboBoxEdit Name="AccountComboBox" IsReadOnly="False" NullText="Счет учета"
+                                          Grid.Column="8" ItemsSource="{Binding Accounts, Mode=OneTime}" SelectedIndex="{Binding EditAccount}" />
+                    </Grid>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" >
+                        <Button Command="{Binding SaveChangesCommand}">Сохранить</Button>
+                        <Button Command="{Binding DeleteCommand}">Удалить</Button>
+                        <Button Command="{Binding EditCancelCommand}">Отмена</Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <dxg:GridControl Margin="10 0"  BorderThickness="1"  dx:ThemeManager.ThemeName="Office2016White" Grid.Row="1" x:Name="grid" ShowBorder="False" ItemsSource="{Binding Materials, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding SelectedDocument}" AutoGenerateColumns="None" Background="red" Foreground="Yellow" SelectionMode="Row">
+            <dxg:GridControl.View>
+                <dxg:TableView AllowEditing="False" ShowIndicator="False"    AlternateRowBackground="#ecf8f6"  AutoWidth="True"  ShowGroupPanel="False" FontFamily="Tahoma" HeaderHorizontalAlignment="Center"/>
+            </dxg:GridControl.View>
+            <dxg:GridColumn x:Name="Header1" Header="Название"  Width ="3*" Binding="{Binding Name}"/>
+            <dxg:GridColumn x:Name="Header2" Header="Единица измерения" MinWidth="100" Width="*"  Binding="{Binding Unity}" />
+            <dxg:GridColumn x:Name="Header3" Header="Количество" MinWidth="100"  Width="*"  Binding="{Binding Count}" />
+            <dxg:GridColumn x:Name="Header4" Header="Цена" Width="*" MinWidth="100"  Binding="{Binding Price}" />
+            <dxg:GridColumn x:Name="Header5" Header="Стоимость" Width="*" MinWidth="100"  Binding="{Binding Cost}" />
+            <dxg:GridColumn x:Name="Header6" Header="Ставка НДC" Width="*" MinWidth="100"  Binding="{Binding VatRate}" />
+            <dxg:GridColumn x:Name="Header7" Header="Сумма НДC" Width="*" MinWidth="100"  Binding="{Binding Vat}" />
+            <dxg:GridColumn x:Name="Header8" Header="Стоимость с НДC" Width="*" MinWidth="100"  Binding="{Binding CostWithVat}" />
+            <dxg:GridColumn x:Name="Header9" Header="Вес" Width="*" MinWidth="100"  Binding="{Binding Weight}" />
+            <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding RowDoubleClickCommand}" />
+            </dxmvvm:Interaction.Behaviors>
+        </dxg:GridControl>
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="15 0">
+            <TextBlock Width="{Binding ElementName=Header1,Path=ActualWidth}" Text="Итого:" FontSize="20" />
+            <TextBox Width="{Binding ElementName=Header2,Path=ActualWidth}" MinWidth="100"  Style="{StaticResource FixedTextBox}" />
+            <!-- <TextBox Text="435678" Style="{StaticResource FixedTextBox}"></TextBox> -->
+            <TextBox Width="{Binding ElementName=Header3,Path=ActualWidth}" MinWidth="100"  Style="{StaticResource FixedTextBox}" />
+            <TextBox Width="{Binding ElementName=Header4,Path=ActualWidth}" MinWidth="100"  Style="{StaticResource FixedTextBox}" />
+            <TextBox Width="{Binding ElementName=Header5,Path=ActualWidth}" MinWidth="100"  Text="{Binding ResultCost}" Style="{StaticResource FixedTextBox}" />
+            <TextBox Width="{Binding ElementName=Header6,Path=ActualWidth}" MinWidth="100"  Style="{StaticResource FixedTextBox}" />
+            <TextBox Width="{Binding ElementName=Header7,Path=ActualWidth}" MinWidth="100" Text="{Binding ResultVat}" Style="{StaticResource FixedTextBox}" />
+            <TextBox Width="{Binding ElementName=Header8,Path=ActualWidth}" MinWidth="100" Text="{Binding ResultCostWithVat}" Style="{StaticResource FixedTextBox}" />
+            <TextBox Width="{Binding ElementName=Header9,Path=ActualWidth}" MinWidth="100" Style="{StaticResource FixedTextBox}" />
+
+            <!-- </Grid> -->
+        </StackPanel>
+        <!-- <wpf:LoadingIndicator Style="{StaticResource LoadingIndicatorRingStyleKey}" Grid.RowSpan="2" Grid.Row="0" SpeedRatio="1" IsActive="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}" Foreground="#1c4348" AutomationProperties.IsColumnHeader="True"  /> -->
+    </Grid>
+    </Page>

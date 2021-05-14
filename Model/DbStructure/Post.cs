@@ -1,4 +1,4 @@
-﻿namespace Model.DbStructure
+﻿namespace Model.DBStructure
 {
     public class Post
     {

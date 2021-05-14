@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Data.Linq.Mapping;
 
-namespace Model.DbStructure
+namespace Model.DBStructure
 {
     public class Employee
     {
@@ -11,7 +10,7 @@ namespace Model.DbStructure
         public string MiddleName { get; set; }
         public DateTime DateBirth { get; set; }
         public DateTime AcceptableDate { get; set; }
-        public DateTime? FiredDate { get; set; }
         public string Education { get; set; }
+        public DateTime? FiredDate { get; set; }
     }
 }

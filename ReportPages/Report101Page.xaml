@@ -1,0 +1,284 @@
+﻿<Page x:Class="ReportPages.Report101Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+      xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+      xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:dxci="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+      xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+      xmlns:reportPages="clr-namespace:ReportPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Report10_1Page">
+    <Page.Resources>
+       
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+        <reportPages:BandTemplateSelector x:Key="BandTemplateSelector" />
+    <DataTemplate x:Key="ColumnTemplate">
+        <ContentControl>
+                <dxg:GridColumn 
+                FieldName="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).FieldName, RelativeSource={RelativeSource Self}}" 
+                Header="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Header, RelativeSource={RelativeSource Self}}"/>
+        </ContentControl>
+    </DataTemplate>
+    <DataTemplate x:Key="MultiColumnBandTemplate">
+        <ContentControl>
+            <dxg:GridControlBand 
+                                 ColumnsSource="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).ChildColumns, RelativeSource={RelativeSource Self} }"
+                                 ColumnGeneratorTemplate="{StaticResource ColumnTemplate}"
+                                 Header="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Header, RelativeSource={RelativeSource Self}}"
+                                 Fixed="None">
+            </dxg:GridControlBand>
+        </ContentControl>
+    </DataTemplate>
+    <DataTemplate x:Key="MultiColumnLeftBandTemplate">
+        <ContentControl>
+            <dxg:GridControlBand 
+                                 ColumnsSource="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).ChildColumns, RelativeSource={RelativeSource Self} }"
+                                 ColumnGeneratorTemplate="{StaticResource ColumnTemplate}"
+                                 Fixed="Left"
+                                 Header="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Header, RelativeSource={RelativeSource Self}}">
+            </dxg:GridControlBand>
+        </ContentControl>
+    </DataTemplate>
+    <DataTemplate x:Key="MultiColumnRightBandTemplate">
+        <ContentControl>
+            <dxg:GridControlBand 
+                                 ColumnsSource="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).ChildColumns, RelativeSource={RelativeSource Self} }"
+                                 ColumnGeneratorTemplate="{StaticResource ColumnTemplate}"
+                                 Fixed="Right"
+                                 Header="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Header, RelativeSource={RelativeSource Self}}">
+            </dxg:GridControlBand>
+        </ContentControl>
+    </DataTemplate>
+        <DataTemplate x:Key="SingleColumnBandTemplate">
+        <ContentControl>
+           <dxg:GridControlBand 
+                                 ColumnsSource="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).ChildColumns, RelativeSource={RelativeSource Self} }"
+                                 ColumnGeneratorTemplate="{StaticResource ColumnTemplate}"
+                                 OverlayHeaderByChildren="True" 
+                                 Fixed="Left"
+                                 Header="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Header, RelativeSource={RelativeSource Self}}"/>
+        </ContentControl>
+    </DataTemplate>
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HorizontalContentAlignment"
+                    Value="Center" />
+        <Setter Property="Background" Value="#cbe7db" />
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="BorderThickness" Value="0.5" />
+    </Style>
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="#1c4348" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="Padding" Value="10 0  " />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="border" CornerRadius="10" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="dxe:TextEdit">
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
+            
+            <Setter Property="Height" Value="Auto"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+
+    </Style>
+    <Style TargetType="TabItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Border Name="Border" Width="140" BorderThickness="1,1,1,0" BorderBrush="#173537" CornerRadius="5,30,5,5" Margin="2,0">
+                        <ContentPresenter x:Name="ContentSite"
+                                             VerticalAlignment="Center"
+                                             HorizontalAlignment="Center"
+                                             ContentSource="Header"
+                                             Margin="10,2" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="#173537" />
+                            <Setter Property="Foreground" Value="#ffffff" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="#ffffff" />
+                            <Setter Property="Foreground" Value="#173537" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontSize" Value="15" />
+
+    </Style>
+    <Style TargetType="dxe:ComboBoxEdit">
+        <Setter Property="Margin" Value="5" />
+    </Style>
+    
+    </Page.Resources>
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding LoadMaterialsCommand}" />
+    </dxmvvm:Interaction.Behaviors>
+    <Grid>
+       
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+           <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+      
+        <TabControl Grid.Row="0" IsEnabled="{Binding IsEnabled, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged}">
+            <TabItem Header="Добавление">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.3*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            
+
+                        </Grid.ColumnDefinitions>
+
+                        <materialDesign:PackIcon Grid.Column="0" 
+                                                 Kind="AddBox"  
+                                                 Height="30" Width="30" 
+                                                 Foreground="#20454b" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <dxe:TextEdit Grid.Column="1" 
+                                       Text="{Binding AddName, UpdateSourceTrigger=PropertyChanged}" 
+                                       NullText="Наименование" 
+                                       Margin="5"
+                                       dx:ThemeManager.ThemeName="Office2016White" />
+                        <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White"
+                                          ItemsSource="{Binding Partners}"
+                                          SelectedIndex="{Binding AddPartner, UpdateSourceTrigger=PropertyChanged}"
+                                          Grid.Column="2"
+                                          NullText="Контрагент" />
+                        <dxe:DateEdit dx:ThemeManager.ThemeName="Office2016White" 
+                                      Margin="5"
+                                      Grid.Column="3" 
+                                      DateTime="{Binding AddDate}" />
+                        </Grid>
+                    <Button Command="{Binding BackEditCommand}" Grid.Row="1" HorizontalAlignment="Left" Width="25" Height="25" Margin="5 0" Background="#1c4348" Style="{x:Null}" Foreground="#ffffff" BorderThickness="0" Padding="0">
+                        <materialDesign:PackIcon Margin="2" Kind="Undo" Background="#1c4348" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Button>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Command="{Binding AddNewCommand}">Добавить</Button>
+                        <Button Command="{Binding AddCancelCommand}">Отмена</Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Редактирование" Visibility="{Binding EditTabVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.3*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            
+                        </Grid.ColumnDefinitions>
+
+                        <materialDesign:PackIcon Grid.Column="0" 
+                                                 Kind="Pen" Height="30" Width="30" 
+                                                 Foreground="#20454b" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <dxe:TextEdit Grid.Column="1" 
+                                       Text="{Binding EditName, UpdateSourceTrigger=PropertyChanged}" 
+                                       NullText="Наименование" 
+                                       Margin="5"
+                                       />
+                        <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White"
+                                          ItemsSource="{Binding Partners}"
+                                          SelectedIndex="{Binding EditPartner, UpdateSourceTrigger=PropertyChanged}"
+                                          Grid.Column="2"
+                                          NullText="Контрагент" />
+                        <dxe:DateEdit dx:ThemeManager.ThemeName="Office2016White" 
+                                      Grid.Column="3" 
+                                      DateTime="{Binding EditDate}" />
+                    </Grid>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Command="{Binding SaveChangesCommand}">Сохранить</Button>
+                        <Button Command="{Binding DeleteCommand}">Удалить</Button>
+                        <Button Command="{Binding EditCancelCommand}">Отмена</Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+       
+           <Grid Grid.Row="1">
+               <dxg:GridControl  MaxHeight="1000" AutoGenerateColumns="None"
+                                  dx:ThemeManager.ThemeName="Office2016White" 
+                                  
+                                  x:Name="BandsGrid" 
+                                  BandsSource="{Binding Bands, UpdateSourceTrigger=PropertyChanged}"
+                                  BandGeneratorTemplateSelector="{StaticResource BandTemplateSelector}"
+                                 ItemsSource="{Binding OutputList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectionMode="Cell">
+                <dxg:GridControl.View >
+                
+                    <dxg:TableView ShowIndicator="False"   AlternateRowBackground="#ecf8f6"   ShowGroupPanel="False">
+                        <dxmvvm:Interaction.Behaviors>
+                            <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding CellEditedCommand}" PassEventArgsToCommand="True" />
+                        </dxmvvm:Interaction.Behaviors>
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+            </dxg:GridControl>
+        </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="15 0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0" Command="{Binding CreateReportCommand}">
+               Плановая калькуляция
+                <!-- <materialDesign:PackIcon Kind="Printer" Width="100" Height="Auto"></materialDesign:PackIcon> -->
+            </Button>
+            <Button Grid.Column="1">
+                Материальный отчет
+                <!-- <materialDesign:PackIcon Kind="Printer" Width="100" Height="Auto"></materialDesign:PackIcon> -->
+            </Button>
+            <Button Grid.Column="2">
+                Материальный отчет
+                <!-- <materialDesign:PackIcon Kind="Printer" Width="100" Height="Auto"></materialDesign:PackIcon> -->
+            </Button>
+            </Grid>
+            <!-- </Grid> -->
+        </StackPanel>
+        <!-- <wpf:LoadingIndicator Style="{StaticResource LoadingIndicatorRingStyleKey}" Grid.RowSpan="2" Grid.Row="0" SpeedRatio="1" IsActive="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}" Foreground="#1c4348"></wpf:LoadingIndicator> -->
+    </Grid>
+</Page>
