@@ -34,8 +34,9 @@ namespace MenuPagesViewModels
             if (account == null || date == null)
                 return;
             //add tab and add page depends on selected account (dictionary)
-            var page = new Report101Page();
-            page.DataContext = new Report10_1VM(page, date);
+            var dc = new Report10_1VM(date);
+            var page = new Report101Page(dc);
+            page.DataContext = dc;
             AddItem("материальный отчет за \0" + date.Month + "\0"+ date.Year + "\0 по счёту \0" + account,
                 page);
         }

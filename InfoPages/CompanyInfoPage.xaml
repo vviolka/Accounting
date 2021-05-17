@@ -45,7 +45,7 @@
         </Style>
     </Page.Resources>
     <dxmvvm:Interaction.Behaviors>
-        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding ReadFile}" />
+        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding InfoPageLoaded}" />
     </dxmvvm:Interaction.Behaviors>
     <Border BorderBrush="#204244" Margin="20" BorderThickness="1" CornerRadius="10">
         <Grid ShowGridLines="False" >

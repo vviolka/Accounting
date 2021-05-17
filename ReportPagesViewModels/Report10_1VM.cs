@@ -4,16 +4,18 @@ using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Input;
 using DevExpress.Mvvm;
 using DevExpress.Xpf.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Model;
 using Model.DBStructure;
 using ReportPages;
 
 namespace ReportPagesViewModels
 {
-    public class Report10_1VM: BindableBase
+    public class Report10_1VM: BindableBase, IPageActions
     {
         // Returns a list of employees so that they can be bound to the grid control. 
         
@@ -28,12 +30,13 @@ namespace ReportPagesViewModels
         public ObservableCollection<Band> Bands { get; private set; }
        private List<AvailableMaterials> list;
        
-        public Report10_1VM(IFillGrid fillGrid, DateTime date)
+        public Report10_1VM(DateTime date)
         {
             model = new Reports();
             this.date = date;
             list = model.GetAvailableMaterials(date);
             cellEditedCommand = new DelegateCommand<CellValueChangedEventArgs>(CellEdited);
+            mouseDoubleClickCommand = new DelegateCommand<ColumnHeaderClickEventArgs>(HeaderClick);
 
             createReportCommand = new DelegateCommand(CreateReport);
             
@@ -227,6 +230,25 @@ namespace ReportPagesViewModels
         }
 
         #endregion
+
+        #region HeaderClick
+
+        private ICommand mouseDoubleClickCommand;
+
+        public ICommand MouseDoubleClickCommand
+        {
+            get => mouseDoubleClickCommand;
+            set => mouseDoubleClickCommand = value;
+        }
+
+        private void HeaderClick(ColumnHeaderClickEventArgs  eventArgs)
+        {
+            int index = (eventArgs.Column.VisibleIndex - 10) / 2;
+            List<Production>? productions = new Reports().GetProductions(date);
+            new CalculationSettingsVM(productions[index]).Show();
+        }
+
+        #endregion
         #region AddNew
 
         private ICommand addNewCommand;
@@ -284,11 +306,11 @@ namespace ReportPagesViewModels
         {
             List<Production> productions = model.GetProductions(date);
             int cellRow = cell.RowHandle;
-            int column = cell.Column.GroupIndex;
+            int column = cell.Column.VisibleIndex;
             var productionId = (int) Math.Truncate((decimal) ((column - 10) / 2));
             float value = cell.Value.ToString() == string.Empty ? 0f : float.Parse(cell.Value.ToString());
             int materialsId = list[cellRow].Id;
-            var expence = new Expence() { MaterialsInfoId = list[cellRow].Id, ProductionId = productions[productionId].Id };
+            var expence = new Expence() { MaterialId = list[cellRow].Id, ProductionId = productions[productionId].Id, CountForInstall = 0};
             Expence current = model.GetExpence(materialsId, productions[productionId].Id);
             if (current is null)
             {
@@ -340,7 +362,7 @@ namespace ReportPagesViewModels
 
         private void CreateReport()
         {
-            new CalculationExcelReport().CreateReport(date);
+            new CalculationExcelReport(date).CreateReport();
         }
 
         private void RefillGrid()
@@ -353,7 +375,7 @@ namespace ReportPagesViewModels
                 
                 AvailableMaterials elem = list[i];
                 IDictionary<string, object> row = new ExpandoObject();
-                row["Document"] = elem.Type + " № " + elem.Number + " от " + Common.ConvertDate(elem.Date);
+                row["Document"] = elem.Type + " № " + elem.Number + " от " + Model.Common.ConvertDate(elem.Date);
                 row["Name"] = elem.Name;
                 row["Unity"] = elem.Unity;
                 row["Price"] = elem.Price.ToString(CultureInfo.CurrentCulture);
@@ -377,12 +399,18 @@ namespace ReportPagesViewModels
                 for (var j = 0; j < expences.Count; j++)
                 {
                     Expence expence = expences[j];
-                    int i = list.IndexOf(list.First(x => x.Id == expence.MaterialsInfoId));
+                    int i = list.IndexOf(list.First(x => x.Id == expence.MaterialId));
                     IDictionary<string, object> row = outputList[i];
                     row[$"Production{index}Count"] = expence.Count.ToString(CultureInfo.CurrentCulture);
                     row[$"Production{index}Cost"] = expence.Cost.ToString(CultureInfo.CurrentCulture);
                 }
             }
+            RaisePropertiesChanged(nameof(outputList));
+        }
+
+        public void OpenSettings(string name)
+        {
+            throw new NotImplementedException();
         }
     }
 

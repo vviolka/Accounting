@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Office.Interop.Excel;
 using Model.DBStructure;
+using Action = System.Action;
 
 namespace Model
 {
@@ -102,9 +104,17 @@ namespace Model
 
         public void InsertExpence(Expence expence)
         {
-            using var ac = new ApplicationContext();
-            ac.Expences.Add(expence);
-            ac.SaveChanges();
+            try
+            {
+                using var ac = new ApplicationContext();
+
+                ac.Expences.Add(expence);
+                ac.SaveChanges();
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
         public void UpdateExpence(int id, Expence newExpence)
@@ -116,13 +126,14 @@ namespace Model
             ac.SaveChanges();
         }
 
-        public List<ExcelExpence> GetListForExcelReport(DateTime date, Production production)
+        
+        public List<ExcelExpence> GetListForExcelReport(Production production)
         {
             using var ac = new ApplicationContext();
             List<ExcelExpence> excelExpences = (from expence in ac.Expences
                     where
                         expence.ProductionId == production.Id
-                    join materialsInfo in ac.MaterialInfoes on expence.MaterialsInfoId equals materialsInfo.Id
+                    join materialsInfo in ac.MaterialInfoes on expence.MaterialId equals materialsInfo.Id
                     select new ExcelExpence()
                     {
                         Name = materialsInfo.Name,
@@ -141,7 +152,7 @@ namespace Model
             using var ac = new ApplicationContext();
             try
             {
-                return ac.Expences.First(x => x.MaterialsInfoId == materialsId && x.ProductionId == productionId);
+                return ac.Expences.First(x => x.MaterialId == materialsId && x.ProductionId == productionId);
             }
             catch (Exception e)
             {
@@ -162,6 +173,18 @@ namespace Model
             using var ac = new ApplicationContext();
             ac.Productions.Add(production);
             ac.SaveChanges();
+        }
+
+        public float GetSumOfMaterials(Production production)
+        {
+            using var ac = new ApplicationContext();
+            return ac.Expences.Where(expence => expence.ProductionId == production.Id).Sum(expence => expence.Cost);
+        }
+        
+        public string GetPartnerName(int partnerId)
+        {
+            using var ac = new ApplicationContext();
+            return ac.Partners.First(x => x.Id == partnerId).Name;
         }
     }
 }

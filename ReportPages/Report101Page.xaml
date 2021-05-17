@@ -82,7 +82,8 @@
         <Setter Property="Background" Value="#1c4348" />
         <Setter Property="Margin" Value="5" />
         <Setter Property="Foreground" Value="#ffffff" />
-        <Setter Property="Padding" Value="10 0  " />
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Padding" Value="16 2 " />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -142,7 +143,7 @@
     <Grid>
        
         <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
+            <RowDefinition Height="110" />
            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -238,19 +239,20 @@
         </TabControl>
        
            <Grid Grid.Row="1">
-               <dxg:GridControl  MaxHeight="1000" AutoGenerateColumns="None"
+               <dxg:GridControl  MaxHeight="1000" AutoGenerateColumns="None" 
                                   dx:ThemeManager.ThemeName="Office2016White" 
-                                  
                                   x:Name="BandsGrid" 
                                   BandsSource="{Binding Bands, UpdateSourceTrigger=PropertyChanged}"
                                   BandGeneratorTemplateSelector="{StaticResource BandTemplateSelector}"
                                  ItemsSource="{Binding OutputList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectionMode="Cell">
                 <dxg:GridControl.View >
-                
-                    <dxg:TableView ShowIndicator="False"   AlternateRowBackground="#ecf8f6"   ShowGroupPanel="False">
+
+                    <dxg:TableView ShowIndicator="False"  AlternateRowBackground="#ecf8f6"   ShowGroupPanel="False" >
                         <dxmvvm:Interaction.Behaviors>
                             <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding CellEditedCommand}" PassEventArgsToCommand="True" />
+                            <dxmvvm:EventToCommand EventName="ColumnHeaderClick" Command="{Binding MouseDoubleClickCommand}" PassEventArgsToCommand="True" />
                         </dxmvvm:Interaction.Behaviors>
+
                     </dxg:TableView>
                 </dxg:GridControl.View>
             </dxg:GridControl>
