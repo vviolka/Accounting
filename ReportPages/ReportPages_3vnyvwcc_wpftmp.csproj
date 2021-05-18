@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{316E3828-EFFA-481C-871D-8EAD5B131D67}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ReportPages</RootNamespace>
+    <AssemblyName>ReportPages</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>8</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CalculationSettingsWindow.xaml.cs">
+      <DependentUpon>CalculationSettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ComboEdit.cs" />
+    <Compile Include="IPageActions.cs" />
+    <Compile Include="PreviewWindow.xaml.cs">
+      <DependentUpon>PreviewWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Report101Page.xaml.cs" />
+    <Compile Include="TwoDimensionalArrayAdapter.cs" />
+    <Compile Include="VirtualPropertyDescriptor.cs" />
+    <Compile Include="..\..\..\..\Accounting\ReportsPages\App.xaml.cs">
+      <Link>App.xaml.cs</Link>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BandTemplateSelector.cs" />
+    <Compile Include="GenerateReportWindow.xaml.cs" />
+    <Compile Include="IFillGrid.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="..\..\..\..\Accounting\ReportsPages\App.config">
+      <Link>App.config</Link>
+    </None>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\..\Accounting\ReportsPages\App.xaml">
+      <Link>App.xaml</Link>
+    </Content>
+    <Content Include="..\..\..\..\Accounting\ReportsPages\MainWindow.xaml">
+      <Link>MainWindow.xaml</Link>
+    </Content>
+    <Content Include="Report101Page.xaml.bak" />
+    <Content Include="ReportsPages.csproj" />
+    <Content Include="ReportsPages.csproj.bak" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{04ae4bf0-f72d-4ad7-a1aa-ebd448586c91}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <ReferencePath Include="C:\Users\nebys\Mega\0 graduation project\project\Accounting\Common\bin\Debug\Common.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Data.Desktop.v20.1.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Data.v20.1.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Mvvm.v20.1.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Printing.v20.1.Core.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Spreadsheet.v20.1.Core.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.Core.v20.1.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.Grid.v20.1.Core.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.Grid.v20.1.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.Grid.v20.1.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.LayoutControl.v20.1.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.Ribbon.v20.1.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.Spreadsheet.v20.1.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.Themes.Office2019Colorful.v20.1.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.XtraGrid.v20.1.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.XtraSpreadsheet.v20.1.dll" />
+    <ReferencePath Include="C:\Users\nebys\Mega\0 graduation project\project\Accounting\packages\MaterialDesignThemes.4.0.0\lib\net452\MaterialDesignThemes.Wpf.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.CSharp.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\PresentationCore.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\PresentationFramework.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Core.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.DataSetExtensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Drawing.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Windows.Forms.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xaml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.Linq.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\UIAutomationProvider.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\UIAutomationTypes.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\WindowsBase.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="C:\Users\nebys\Mega\0 graduation project\project\Accounting\ReportPages\obj\Debug\CalculationSettingsWindow.g.cs" />
+    <Compile Include="C:\Users\nebys\Mega\0 graduation project\project\Accounting\ReportPages\obj\Debug\MainWindow.g.cs" />
+    <Compile Include="C:\Users\nebys\Mega\0 graduation project\project\Accounting\ReportPages\obj\Debug\GenerateReportWindow.g.cs" />
+    <Compile Include="C:\Users\nebys\Mega\0 graduation project\project\Accounting\ReportPages\obj\Debug\PreviewWindow.g.cs" />
+    <Compile Include="C:\Users\nebys\Mega\0 graduation project\project\Accounting\ReportPages\obj\Debug\Report101Page.g.cs" />
+    <Compile Include="C:\Users\nebys\Mega\0 graduation project\project\Accounting\ReportPages\obj\Debug\App.g.cs" />
+    <Compile Include="C:\Users\nebys\Mega\0 graduation project\project\Accounting\ReportPages\obj\Debug\ReportPages_Content.g.cs" />
+    <Compile Include="C:\Users\nebys\Mega\0 graduation project\project\Accounting\ReportPages\obj\Debug\GeneratedInternalTypeHelper.g.cs" />
+  </ItemGroup>
+</Project>
