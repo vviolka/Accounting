@@ -9,12 +9,12 @@ namespace Model
 {
     public class Reports
     {
-        public List<AvailableMaterials> GetAvailableMaterials(DateTime date)
+        public List<AvailableMaterials> GetAvailableMaterials(DateTime date, string account)
         {
             using var ac = new ApplicationContext();
 
             var incomes = ac.Incomes.ToList<Income>();
-            var materials = ac.MaterialInfoes.ToList();
+            var materials = ac.MaterialInfoes.Where(material => material.Account == account).ToList();
             var bills = ac.BillsOfLading.ToList();
             var balancesList = ac.Balances.ToList();
             var balances = (from balance in balancesList

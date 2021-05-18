@@ -7,18 +7,24 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 using DevExpress.Mvvm;
+using DevExpress.Spreadsheet;
+using System.Drawing.Printing;
+using System.IO;
+using Common;
 using DevExpress.Xpf.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Model;
 using Model.DBStructure;
 using ReportPages;
+using ReportPagesViewModels.Annotations;
+using Column = ReportPages.Column;
 
 namespace ReportPagesViewModels
 {
     public class Report10_1VM: BindableBase, IPageActions
     {
         // Returns a list of employees so that they can be bound to the grid control. 
-        
+        private CalculationExcelReport report;
         private ObservableCollection<ExpandoObject> outputList;
         public ObservableCollection<ExpandoObject> OutputList
         {
@@ -30,15 +36,18 @@ namespace ReportPagesViewModels
         public ObservableCollection<Band> Bands { get; private set; }
        private List<AvailableMaterials> list;
        
-        public Report10_1VM(DateTime date)
+        public Report10_1VM(DateTime date, string account)
         {
             model = new Reports();
+            report = new CalculationExcelReport(date);
             this.date = date;
-            list = model.GetAvailableMaterials(date);
+            list = model.GetAvailableMaterials(date, account);
             cellEditedCommand = new DelegateCommand<CellValueChangedEventArgs>(CellEdited);
             mouseDoubleClickCommand = new DelegateCommand<ColumnHeaderClickEventArgs>(HeaderClick);
+            calculationPrintCommand = new DelegateCommand(CalculationPrint);
+            actPrintCommand = new DelegateCommand(ActPrint);
+            consumptionRatePrintCommand = new DelegateCommand(ConsumptionRatePrint);
 
-            createReportCommand = new DelegateCommand(CreateReport);
             
             addNewCommand = new DelegateCommand(AddNew);
             Bands = new ObservableCollection<Band>()
@@ -245,7 +254,7 @@ namespace ReportPagesViewModels
         {
             int index = (eventArgs.Column.VisibleIndex - 10) / 2;
             List<Production>? productions = new Reports().GetProductions(date);
-            new CalculationSettingsVM(productions[index]).Show();
+            new CalculationSettingsVM().Show(productions[index]);
         }
 
         #endregion
@@ -261,8 +270,10 @@ namespace ReportPagesViewModels
 
         private void AddNew()
         {
-            
-            var production = new Production() { Name = addName, Date = addDate, PartnerId = partners[addPartner].Id, Cost = 0f};
+            var production = new CalculationSettingsVM().OpenForCreate();
+            if (production == null)
+                return;
+            // var production = new Production() { Name = addName, Date = addDate, PartnerId = partners[addPartner].Id, Cost = 0f};
             int i = model.GetProductions(date).IndexOf(production);
              Bands.Add(new Band()
              {
@@ -352,18 +363,66 @@ namespace ReportPagesViewModels
 
         #endregion
 
-        private ICommand createReportCommand;
 
-        public ICommand CreateReportCommand
+        #region CalculationPrint
+
+        private ICommand calculationPrintCommand;
+
+        [NotNull]
+        public ICommand CalculationPrintCommand
         {
-            get => createReportCommand;
-            set => createReportCommand = value;
+            get => calculationPrintCommand;
+            set => calculationPrintCommand = value;
         }
 
-        private void CreateReport()
+        private void CalculationPrint()
         {
-            new CalculationExcelReport(date).CreateReport();
+            report.CreateReport();
+           // new PreviewWindow($"{Directory.GetCurrentDirectory()}\\Калькуляция {Helpers.Monthes[date.Month]}.xls").ShowDialog();
+           var previewWin = new PreviewWindow();
+           previewWin.LoadDocument($"{Directory.GetCurrentDirectory()}\\Калькуляция {Helpers.Monthes[date.Month]}.xlsx");
+           previewWin.Show();
         }
+
+        #endregion
+        #region ActPrint
+
+        private ICommand actPrintCommand;
+
+        [NotNull]
+        public ICommand ActPrintCommand
+        {
+            get => actPrintCommand;
+            set => actPrintCommand = value;
+        }
+
+        private void ActPrint()
+        {
+            report.CreateAct();
+            new PreviewWindow($"{Directory.GetCurrentDirectory()}\\Акт {Helpers.Monthes[date.Month]}.xlsx").ShowDialog();
+        }
+
+        #endregion
+
+        #region ConsumptionRatePrint
+
+        private ICommand consumptionRatePrintCommand;
+
+        [NotNull]
+        public ICommand ConsumptionRatePrintCommand
+        {
+            get => consumptionRatePrintCommand;
+            set => consumptionRatePrintCommand = value;
+        }
+
+        private void ConsumptionRatePrint()
+        {
+            report.CreateConsumptionRate();
+            new PreviewWindow($"{Directory.GetCurrentDirectory()}\\Нормы расхода {Helpers.Monthes[date.Month]}.xlsx").ShowDialog();
+        }
+
+        #endregion
+
 
         private void RefillGrid()
         {
@@ -392,19 +451,24 @@ namespace ReportPagesViewModels
 
                 outputList.Add((ExpandoObject) row);
             }
-            for (var index = 0; index < productions.Count; index++)
+
+            if (list.Count > 0)
             {
-                Production production = productions[index];
-                List<Expence> expences = model.GetExpences(production.Id);
-                for (var j = 0; j < expences.Count; j++)
+                for (var index = 0; index < productions.Count; index++)
                 {
-                    Expence expence = expences[j];
-                    int i = list.IndexOf(list.First(x => x.Id == expence.MaterialId));
-                    IDictionary<string, object> row = outputList[i];
-                    row[$"Production{index}Count"] = expence.Count.ToString(CultureInfo.CurrentCulture);
-                    row[$"Production{index}Cost"] = expence.Cost.ToString(CultureInfo.CurrentCulture);
+                    Production production = productions[index];
+                    List<Expence> expences = model.GetExpences(production.Id);
+                    for (var j = 0; j < expences.Count; j++)
+                    {
+                        Expence expence = expences[j];
+                        int i = list.IndexOf(list.First(x => x.Id == expence.MaterialId));
+                        IDictionary<string, object> row = outputList[i];
+                        row[$"Production{index}Count"] = expence.Count.ToString(CultureInfo.CurrentCulture);
+                        row[$"Production{index}Cost"] = expence.Cost.ToString(CultureInfo.CurrentCulture);
+                    }
                 }
             }
+
             RaisePropertiesChanged(nameof(outputList));
         }
 

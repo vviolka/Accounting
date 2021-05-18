@@ -11,6 +11,13 @@ namespace Common
             val = value;
         }
         
+        public static void SetProperty(ref bool val, bool value)
+        {
+            if (val == value)
+                return;
+            val = value;
+        }
+        
         public static void SetProperty(ref int val, int value)
                 {
                     if (val == value)

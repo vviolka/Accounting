@@ -10,11 +10,14 @@
       xmlns:dxci="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
       xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
       xmlns:reportPages="clr-namespace:ReportPages"
+      xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+      xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+      xmlns:dxsps="http://schemas.devexpress.com/winfx/2008/xaml/spreadsheet"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Report10_1Page">
     <Page.Resources>
-       
+        <dxsps:SpreadsheetStringIdConverter x:Key="stringIdConverter"/>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
         <reportPages:BandTemplateSelector x:Key="BandTemplateSelector" />
     <DataTemplate x:Key="ColumnTemplate">
@@ -95,10 +98,26 @@
         </Setter>
     </Style>
 
+        <Style TargetType="Button" x:Key="RibbonMenu">
+            <Setter Property="Background" Value="#ECF8F6"/>
+            <Setter Property="Foreground" Value="#1c4348"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="dx:ThemeManager.ThemeName" Value="Office2016White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ButtonBase}">
+                        <Border x:Name="border" CornerRadius="10" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     <Style TargetType="dxe:TextEdit">
         <Setter Property="Margin" Value="5" />
         <Setter Property="VerticalContentAlignment" Value="Top"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
             
             <Setter Property="Height" Value="Auto"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
@@ -147,96 +166,25 @@
            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-      
-        <TabControl Grid.Row="0" IsEnabled="{Binding IsEnabled, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged}">
-            <TabItem Header="Добавление">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0" Margin="0,0,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.3*" />
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            
-
-                        </Grid.ColumnDefinitions>
-
-                        <materialDesign:PackIcon Grid.Column="0" 
-                                                 Kind="AddBox"  
-                                                 Height="30" Width="30" 
-                                                 Foreground="#20454b" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <dxe:TextEdit Grid.Column="1" 
-                                       Text="{Binding AddName, UpdateSourceTrigger=PropertyChanged}" 
-                                       NullText="Наименование" 
-                                       Margin="5"
-                                       dx:ThemeManager.ThemeName="Office2016White" />
-                        <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White"
-                                          ItemsSource="{Binding Partners}"
-                                          SelectedIndex="{Binding AddPartner, UpdateSourceTrigger=PropertyChanged}"
-                                          Grid.Column="2"
-                                          NullText="Контрагент" />
-                        <dxe:DateEdit dx:ThemeManager.ThemeName="Office2016White" 
-                                      Margin="5"
-                                      Grid.Column="3" 
-                                      DateTime="{Binding AddDate}" />
-                        </Grid>
-                    <Button Command="{Binding BackEditCommand}" Grid.Row="1" HorizontalAlignment="Left" Width="25" Height="25" Margin="5 0" Background="#1c4348" Style="{x:Null}" Foreground="#ffffff" BorderThickness="0" Padding="0">
-                        <materialDesign:PackIcon Margin="2" Kind="Undo" Background="#1c4348" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    </Button>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Command="{Binding AddNewCommand}">Добавить</Button>
-                        <Button Command="{Binding AddCancelCommand}">Отмена</Button>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Редактирование" Visibility="{Binding EditTabVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0" Margin="0,0,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.3*" />
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            
-                        </Grid.ColumnDefinitions>
-
-                        <materialDesign:PackIcon Grid.Column="0" 
-                                                 Kind="Pen" Height="30" Width="30" 
-                                                 Foreground="#20454b" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <dxe:TextEdit Grid.Column="1" 
-                                       Text="{Binding EditName, UpdateSourceTrigger=PropertyChanged}" 
-                                       NullText="Наименование" 
-                                       Margin="5"
-                                       />
-                        <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White"
-                                          ItemsSource="{Binding Partners}"
-                                          SelectedIndex="{Binding EditPartner, UpdateSourceTrigger=PropertyChanged}"
-                                          Grid.Column="2"
-                                          NullText="Контрагент" />
-                        <dxe:DateEdit dx:ThemeManager.ThemeName="Office2016White" 
-                                      Grid.Column="3" 
-                                      DateTime="{Binding EditDate}" />
-                    </Grid>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Command="{Binding SaveChangesCommand}">Сохранить</Button>
-                        <Button Command="{Binding DeleteCommand}">Удалить</Button>
-                        <Button Command="{Binding EditCancelCommand}">Отмена</Button>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
-        </TabControl>
+        <DockPanel Grid.Row="0" >
+            <dxr:RibbonControl x:Name="ribbonControl1" dx:ThemeManager.ThemeName="Office2016White" Margin="0 -55 0 0" DockPanel.Dock="Top" MinimizationButtonVisibility="Auto" RibbonStyle="Office2010" ToolbarShowMode="Hide">
+                    <dxr:RibbonControl.PageHeaderItems>
+                        <dxb:BarButtonItem Content="BarButtonItem"/>
+                    </dxr:RibbonControl.PageHeaderItems>
+                    <dxr:RibbonDefaultPageCategory>
+                            <dxr:RibbonPage x:Name="pageFile" Caption="{Binding ConverterParameter=Caption_PageFile, Converter={StaticResource stringIdConverter}, Mode=OneTime, Source={StaticResource stringIdConverter}}">
+                                <dxr:RibbonPageGroup x:Name="grpFileCommon" Caption="Отчеты" ShowCaptionButton="False">
+                            <dxb:BarButtonItem Command="{Binding CalculationPrintCommand}" LargeGlyph="{dx:DXImage SvgImages/XAF/Action_Document_Object_Inplace.svg}" Content="Калькуляция" />
+                            <dxb:BarButtonItem Command="{Binding ConsumptionRatePrintCommand}" LargeGlyph="{dx:DXImage SvgImages/XAF/Action_Document_Object_Inplace.svg}" Content="Нормы расхода" />
+                                    <dxb:BarButtonItem Command="{Binding ActPrintCommand}" LargeGlyph="{dx:DXImage SvgImages/XAF/Action_Document_Object_Inplace.svg}" Content="Акт о списании" />
+                                </dxr:RibbonPageGroup>
+                        <dxr:RibbonPageGroup  Caption="Продукция" ShowCaptionButton="False" Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_Add.svg}">
+                            <dxb:BarButtonItem Command="{Binding AddNewCommand}"  Content="Добавить" LargeGlyph="{dx:DXImage SvgImages/Icon Builder/Actions_Add.svg}" />
+                        </dxr:RibbonPageGroup>
+                    </dxr:RibbonPage>
+                        </dxr:RibbonDefaultPageCategory>
+                    </dxr:RibbonControl>
+         </DockPanel>
        
            <Grid Grid.Row="1">
                <dxg:GridControl  MaxHeight="1000" AutoGenerateColumns="None" 
@@ -257,30 +205,6 @@
                 </dxg:GridControl.View>
             </dxg:GridControl>
         </Grid>
-
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="15 0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-            
-            <Button Grid.Column="0" Command="{Binding CreateReportCommand}">
-               Плановая калькуляция
-                <!-- <materialDesign:PackIcon Kind="Printer" Width="100" Height="Auto"></materialDesign:PackIcon> -->
-            </Button>
-            <Button Grid.Column="1">
-                Материальный отчет
-                <!-- <materialDesign:PackIcon Kind="Printer" Width="100" Height="Auto"></materialDesign:PackIcon> -->
-            </Button>
-            <Button Grid.Column="2">
-                Материальный отчет
-                <!-- <materialDesign:PackIcon Kind="Printer" Width="100" Height="Auto"></materialDesign:PackIcon> -->
-            </Button>
-            </Grid>
-            <!-- </Grid> -->
-        </StackPanel>
         <!-- <wpf:LoadingIndicator Style="{StaticResource LoadingIndicatorRingStyleKey}" Grid.RowSpan="2" Grid.Row="0" SpeedRatio="1" IsActive="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}" Foreground="#1c4348"></wpf:LoadingIndicator> -->
     </Grid>
 </Page>

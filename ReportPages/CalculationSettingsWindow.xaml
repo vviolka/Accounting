@@ -10,8 +10,9 @@
         xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
         mc:Ignorable="d"
-        Title="CalculationSettingsWindow" Height="610" Width="747.2" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+        Title="CalculationSettingsWindow" Height="620" Width="750" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="5" />
             <Setter Property="FontSize" Value="17" />
@@ -105,7 +106,7 @@
                     <dxe:DateEdit  DateTime="{Binding Date, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}"></dxe:DateEdit>
             </dxlc:LayoutItem>
                 <dxlc:LayoutItem Label="для">
-                    <dxe:ComboBoxEdit NullText="Контрагент" ItemsSource="{Binding Partners}" SelectedIndex="{Binding Partner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Width="300"></dxe:ComboBoxEdit>
+                    <dxe:ComboBoxEdit NullText="Контрагент" ItemsSource="{Binding Partners}" SelectedIndex="{Binding Partner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Width="280"></dxe:ComboBoxEdit>
                 </dxlc:LayoutItem>
             </StackPanel>
             <StackPanel Orientation="Vertical">
@@ -177,10 +178,14 @@
                 
               
                 
-        </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+        </StackPanel >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Visibility="{Binding EditPanelVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}">
                 <Button Command="{Binding SaveCommand}">Сохранить</Button>
                 <Button Command="{Binding DeleteCommand}">Удалить</Button>
+                
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Visibility="{Binding CreatePanelVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}">
+                <Button Command="{Binding CreateCommand}">Создать</Button>
                 
             </StackPanel>
         </StackPanel>

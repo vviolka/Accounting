@@ -33,11 +33,10 @@ namespace MenuPagesViewModels
             window.Show(out string account, out DateTime date);
             if (account == null || date == null)
                 return;
-            //add tab and add page depends on selected account (dictionary)
-            var dc = new Report10_1VM(date);
+            var dc = new Report10_1VM(date, account);
             var page = new Report101Page(dc);
             page.DataContext = dc;
-            AddItem("материальный отчет за \0" + date.Month + "\0"+ date.Year + "\0 по счёту \0" + account,
+            AddItem($"материальный отчет за {Helpers.Monthes[date.Month]} {date.Year} по счёту {account}",
                 page);
         }
 

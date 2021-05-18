@@ -61,7 +61,7 @@ namespace Model
                 oRange.BorderAround();
             }
 
-            workBook.SaveAs($"{Directory.GetCurrentDirectory()}\\Калькуляция {Helpers.Monthes[date.Month]}.xls");
+            workBook.SaveAs($"{Directory.GetCurrentDirectory()}\\Калькуляция {Helpers.Monthes[date.Month]}.xlsx");
             workBook.Close();
             
         }
@@ -100,7 +100,7 @@ namespace Model
                 offset += 3;
             }
 
-            workBook.SaveAs($"{Directory.GetCurrentDirectory()}\\Нормы расхода {Helpers.Monthes[date.Month]}.xls");
+            workBook.SaveAs($"{Directory.GetCurrentDirectory()}\\Нормы расхода {Helpers.Monthes[date.Month]}.xlsx");
             workBook.Close();
         }
 
@@ -137,7 +137,7 @@ namespace Model
                 oRange.BorderAround();
             }
 
-            workBook.SaveAs($"{Directory.GetCurrentDirectory()}\\Акт {Helpers.Monthes[date.Month]}.xls");
+            workBook.SaveAs($"{Directory.GetCurrentDirectory()}\\Акт {Helpers.Monthes[date.Month]}.xlsx");
             workBook.Close();
         }
         private void FillCalculation(Production production, ref int offset, Excel.Worksheet sheet)
