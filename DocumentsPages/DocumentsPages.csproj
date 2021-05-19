@@ -53,6 +53,9 @@
     <Reference Include="DevExpress.Xpf.Grid.v20.1.Extensions, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.Grid.v20.1.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="DevExpress.Xpf.LayoutControl.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.LayoutControl.v20.1.dll</HintPath>
+    </Reference>
     <Reference Include="DevExpress.Xpf.PivotGrid.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.PivotGrid.v20.1.dll</HintPath>
     </Reference>
@@ -91,6 +94,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PaymentCard.xaml.cs">
+      <DependentUpon>PaymentCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StateSuggestionProvider.cs" />
     <Compile Include="TTN.xaml.cs">
       <DependentUpon>TTN.xaml</DependentUpon>
@@ -150,6 +156,7 @@
   <ItemGroup>
     <Page Include="AllDocuments.xaml" />
     <Page Include="CreateTTN.xaml" />
+    <Page Include="PaymentCard.xaml" />
     <Page Include="TTN.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

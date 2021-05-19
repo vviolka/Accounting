@@ -12,5 +12,6 @@ namespace Model.DBStructure
         public float Cost { get; set; }
         public float Vat { get; set; }
         public float CostWithVat { get; set; }
+        public string Purpose { get; set; }
     }
 }

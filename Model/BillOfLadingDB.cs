@@ -34,7 +34,8 @@ namespace Model
             using var dc = new ApplicationContext();
             dc.BillsOfLading.Add(billOfLadings);
             dc.SaveChanges();
-            return dc.BillsOfLading.First(b => b.Number == billOfLadings.Number).Id;
+            //return dc.BillsOfLading.First(b => b.Number == billOfLadings.Number && b.Type == billOfLadings.Type).Id;
+            return billOfLadings.Id;
         }
 
         public BillOfLading GetBillOfLading(int id)
@@ -54,19 +55,19 @@ namespace Model
             return billOfLading;
 
         }
-        public IEnumerable GetJoinedList()
+        public List<AdaptedDocument> GetJoinedList()
         {
             using var dc = new ApplicationContext();
       
-            IEnumerable billOfLadings = dc.BillsOfLading.Join(
+            List<AdaptedDocument>? billOfLadings = dc.BillsOfLading.Join(
                 dc.Partners,
                 b => b.PartnerId,
                 p => p.Id,
                 
-                (b, p) => new
+                (b, p) => new AdaptedDocument()
                 {
                     Id = b.Id,
-                     Date = b.Date,
+                    Date = b.Date,
                     Type = b.Type,  
                     Number = b.Number,
                     Partner = p.UNP
@@ -105,9 +106,9 @@ namespace Model
             return lastName.Length < n ? lastName : lastName.Substring(0, n);
         }
 
-        public IEnumerable Search(DateTime date, string type, string number, string partnersUNP)
+        public List<AdaptedDocument> Search(DateTime date, string type, string number, string partnersUNP)
         {
-          IEnumerable resultList;
+          List<AdaptedDocument> resultList;
            using var dc = new ApplicationContext();
             {
                 var partners = (from p in dc.Partners where (partnersUNP == "" || partnersUNP == p.UNP) select p.Id).ToList();
@@ -123,7 +124,7 @@ namespace Model
                 resultList = tmp.Join(dc.Partners,
                     b => b.PartnerId,
                     p => p.Id,
-                    (b, p) => new
+                    (b, p) => new AdaptedDocument()
                     {
                         Id = b.Id,
                         Date = b.Date,

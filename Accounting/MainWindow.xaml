@@ -1,0 +1,156 @@
+﻿<Window x:Class="Accounting.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        AllowsTransparency="True"
+        Background="White"
+        SnapsToDevicePixels="True"   
+        WindowStyle="None"
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Normal" 
+          ResizeMode="CanResizeWithGrip" ShowInTaskbar="True">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30" />
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="Control.IsFocused" Value="True">
+                    <Setter Property="Control.Background" Value="#1c4348" />
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+        </Style>
+        <Style x:Key="BtnContainer" TargetType="StackPanel" />
+        <Style TargetType="dxe:TextEdit">
+            <Setter Property="BorderTemplate">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+                        <Border x:Name="border"  
+                                Background="{Binding RelativeSource={RelativeSource AncestorType=dxe:TextEdit}, Path=Background}"  
+                                BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=dxe:TextEdit}, Path=BorderBrush}"  
+                                BorderThickness="{Binding RelativeSource={RelativeSource AncestorType=dxe:TextEdit}, Path=BorderThickness}">
+                            <ContentPresenter Margin="0,0,-1,0" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="materialDesign:PackIcon" >
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Jose"/>
+            <Setter Property="FontSize" Value="13"/>
+
+        </Style>
+    </Window.Resources>
+    <Grid ShowGridLines="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25px"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100px"/>
+            <ColumnDefinition Width="7*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Background="#9fbdb1">
+
+            <TextBlock FontSize="18" Margin="0 25">Accounting</TextBlock>
+            <Button Margin="0 5">
+                <StackPanel Style="{StaticResource BtnContainer}">
+                    <materialDesign:PackIcon Kind="Home" />
+                    <TextBlock>Главная</TextBlock>
+                </StackPanel>
+            </Button>
+
+            <Button Margin="0 5" Command="{Binding GoToReportsPage}"  CommandParameter="{Binding ReportsPageViewModel}">
+                <StackPanel Style="{StaticResource BtnContainer}">
+
+                    <materialDesign:PackIcon Kind="FileMultiple" />
+
+
+                    <TextBlock>Отчёты</TextBlock>
+
+                </StackPanel>
+            </Button>
+
+            <Button Margin="0 5" Command="{Binding GoToDocumentsPage}" CommandParameter="{Binding DocumentsPageViewModel}">
+                <StackPanel Style="{StaticResource BtnContainer}">
+
+                    <materialDesign:PackIcon Kind="ResourceDescriptionFramework" />
+
+
+                    <TextBlock>Документы</TextBlock>
+
+                </StackPanel>
+            </Button>
+            
+            <Button Margin="0 5" Command="{Binding GoToLogPage}" CommandParameter="{Binding LogPageViewModel}">
+                <StackPanel Style="{StaticResource BtnContainer}">
+
+                    <materialDesign:PackIcon  Kind="JournalMultiple"/>
+
+
+                    <TextBlock>Журнал-ордер</TextBlock>
+
+                </StackPanel>
+            </Button>
+
+            <Button Margin="0 5" Command="{Binding GoToSalaryPage}" CommandParameter="{Binding SalaryPageViewModel}">
+                <StackPanel Style="{StaticResource BtnContainer}">
+
+                    <materialDesign:PackIcon Kind="AccountBalanceWallet" />
+                    <TextBlock>ЗП</TextBlock>
+                </StackPanel>
+            </Button>
+
+            <Button Margin="0 5" Command="{Binding GoToInfoPage}" CommandParameter="{Binding InfoPageViewModel}">
+                <StackPanel Style="{StaticResource BtnContainer}">
+
+
+                    <materialDesign:PackIcon Kind="InfoCircle" />
+
+
+                    <TextBlock>Инфо</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Grid.Column="1" WindowChrome.IsHitTestVisibleInChrome="True">
+            <Button>
+                <materialDesign:PackIcon Kind="ArrowBack" VerticalAlignment="Center" Width="Auto" Height="25" Foreground="#3c7161"/>
+            </Button>
+            <Button>
+                <materialDesign:PackIcon Kind="ArrowForward" VerticalAlignment="Center" Width="Auto" Height="25" Foreground="#3c7161"/>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" WindowChrome.IsHitTestVisibleInChrome="True">
+            <Button Click="MinimizeBtn_OnClick">
+                <materialDesign:PackIcon Kind="WindowMinimize"  Width="Auto" Height="25" Foreground="#3c7161"/>
+            </Button>
+            <Button x:Name="MaximizeBtn" Click="MaximizeBtn_OnClick">
+                <materialDesign:PackIcon Kind="WindowMaximize" Width="Auto" Height="25" Foreground="#3c7161"/>
+            </Button>
+            <Button x:Name="RestoreBtn" Click="RestoreBtn_OnClick" Width="0">
+                <materialDesign:PackIcon Kind="WindowRestore" Width="Auto" Height="25" Foreground="#3c7161"/>
+            </Button>
+            <Button Click="CloseBtn_OnClick">
+                <materialDesign:PackIcon Kind="Close" Width="Auto" Height="25" Foreground="#3c7161"/>
+            </Button>
+        </StackPanel>
+        <Frame Grid.Row="1" Grid.Column="1" NavigationUIVisibility="Hidden" x:Name="Frame" />
+    </Grid>
+</Window>

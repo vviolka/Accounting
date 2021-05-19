@@ -26,11 +26,12 @@ namespace Navigator
             pagesResolvers.Add(Navigation.PartnersInfoPageAlias, () => new PartnersInfoPage());
             pagesResolvers.Add(Navigation.PostsInfoPageAlias, () => new PostsInfoPage());
             pagesResolvers.Add(Navigation.EmployeesInfoPageAlias, () => new EmployeesInfoPage());
-           // pagesResolvers.Add(Navigation.MaterialsInfoPageAlias, () => new MaterialsInfoPage());
+            // pagesResolvers.Add(Navigation.MaterialsInfoPageAlias, () => new MaterialsInfoPage());
 
             pagesResolvers.Add(Navigation.DocumentsPageAlias, () => new DocumentsPage());
             pagesResolvers.Add(Navigation.ReportsPageAlias, () => new ReportsPage());
             pagesResolvers.Add(Navigation.SalaryPageAlias, () => new SalaryPage());
+            pagesResolvers.Add(Navigation.LogPageAlias, () => new LogPage());
 
             //salary
             pagesResolvers.Add(Navigation.EmployeesPostsPageAlias, () => new PostsEmployeesPage());

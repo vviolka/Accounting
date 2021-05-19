@@ -130,6 +130,7 @@
     <Compile Include="BillOfLadingDB.cs" />
     <Compile Include="CalculationExcelReport.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="DBStructure\AdaptedDocument.cs" />
     <Compile Include="DBStructure\AdaptedEmployee.cs" />
     <Compile Include="DBStructure\AdaptedWorkOut.cs" />
     <Compile Include="DBStructure\AvailableMaterials.cs" />

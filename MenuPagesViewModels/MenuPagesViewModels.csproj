@@ -56,6 +56,7 @@
     <Compile Include="InfoViewModel.cs" />
     <Compile Include="IShowWindow.cs" />
     <Compile Include="IViewModelsResolver.cs" />
+    <Compile Include="LogViewModel.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportsPageViewModel.cs" />

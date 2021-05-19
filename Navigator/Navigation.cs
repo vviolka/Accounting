@@ -14,6 +14,9 @@ namespace Navigator
         public static readonly string MaterialsInfoPageAlias = "MaterialsInfoPage";
         public static readonly string PostsInfoPageAlias = "PostsInfoPage";
         public static readonly string EmployeesInfoPageAlias = "EmployeesInfoPage";
+
+
+        public static readonly string LogPageAlias = "LogPage";
         public static readonly string NotFoundPageAlias = "404";
 
         public static readonly string DocumentsPageAlias = "DocumentsPage";

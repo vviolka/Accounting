@@ -1,10 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using Common;
 using DocumentsPages;
 using DocumentsPagesViewModels;
 using Model;
+using Model.DBStructure;
 
 namespace MenuPagesViewModels
 {
@@ -50,14 +53,14 @@ namespace MenuPagesViewModels
 
         private void OpenAllDocs()
         {
-            string type;
+            string? type;
             int id = -1;
             var allDocuments = new AllDocumentsVM();
             allDocuments.Show(out type, out id);
             if (type == string.Empty)
                 return;
             if (id == -1)
-                CreateNewDocument();
+                CreateNewDocument(type);
             else
                 OpenDocument(id);
 
@@ -68,23 +71,38 @@ namespace MenuPagesViewModels
 
             if (billOfLading == null)
                 return;
-            billOfLadingId = billOfLading.Id;
-            AddItem(billOfLading.Type + " № " + billOfLading.Number
-                    + "от" + billOfLading.Date.Date, new TTN() { DataContext = new TTNVM(billOfLading.Id, OnDelete, OnEdit) });
+            if (billOfLading.Type == "п/п")
+            {
+                AddItem("платежный документ", new PaymentCard(){DataContext = new PaymentCardVM(billOfLading, OnDelete, OnEdit)});
+            }
+            else
+            {
+                billOfLadingId = billOfLading.Id;
+                AddItem(billOfLading.Type + " № " + billOfLading.Number
+                        + "от" + billOfLading.Date.Date,
+                    new TTN() {DataContext = new TTNVM(billOfLading.Id, OnDelete, OnEdit)});
+            }
 
         }
-        private void CreateNewDocument()
+        private void CreateNewDocument(string type)
         {
-            var window = new CreateBillOfLadingVM();
-            var billOfLading = window.Show();
-            if (billOfLading == null)
-                return;
+            if (type == Lists.GetDocumentTypes().ToList()[3])
+            {
+                AddItem("платежный документ", new PaymentCard(){DataContext = new PaymentCardVM(null, OnDelete, OnEdit)});
+            }
+            else
+            {
+                var window = new CreateBillOfLadingVM();
+                BillOfLading? billOfLading = window.Show();
+                if (billOfLading == null)
+                    return;
 
-            billOfLadingId = new BillOfLadingDB().Add(billOfLading);
+                billOfLadingId = new BillOfLadingDB().Add(billOfLading);
 
-            AddItem(billOfLading.Type + " № " + billOfLading.Number
-                    + "от" + billOfLading.Date.Date, new TTN() { DataContext = new TTNVM(billOfLading.Id, OnDelete, OnEdit) });
-
+                AddItem(billOfLading.Type + " № " + billOfLading.Number
+                        + "от" + billOfLading.Date.Date,
+                    new TTN() {DataContext = new TTNVM(billOfLading.Id, OnDelete, OnEdit)});
+            }
         }
         #endregion
         public event TTNVM.DeleteHandler OnDelete;

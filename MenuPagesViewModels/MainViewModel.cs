@@ -13,6 +13,7 @@ namespace MenuPagesViewModels
 		public static readonly string DocumentsPageViewModelAlias = "Documents";
 		public static readonly string ReportsPageViewModelAlias = "Reports";
         public static readonly string SalaryPageViewModelAlias = "Salary";
+        public static readonly string LogPageViewModelAlias = "Log";
 		public static readonly string CompanyInfoPageViewModelAlias = "CompanyInfoPageVM";
         public static readonly string NotFoundPageViewModelAlias = "404VM";
 
@@ -30,10 +31,12 @@ namespace MenuPagesViewModels
         private ICommand goToDocumentsPage;
         private ICommand goToReportsPage;
         private ICommand goToSalaryPage;
+        private ICommand goToLogPage;
 		private readonly INotifyPropertyChanged infoPageViewModel;
         private readonly INotifyPropertyChanged documentsPageViewModel;
         private readonly INotifyPropertyChanged reportsPageViewModel;
         private readonly INotifyPropertyChanged salaryPageViewModel;
+        private readonly INotifyPropertyChanged logPageViewModel;
 
 		#endregion
 
@@ -97,10 +100,21 @@ namespace MenuPagesViewModels
 				RaisePropertiesChanged("GoToSalaryPageCommand");
             }
         }
+
+        public ICommand GoToLogPage
+        {
+            get => goToLogPage;
+            set
+            {
+                goToLogPage = value;
+				RaisePropertiesChanged("GoToLogPageCommand");
+            }
+        }
 public INotifyPropertyChanged InfoPageViewModel => infoPageViewModel;
         public INotifyPropertyChanged DocumentsPageViewModel => documentsPageViewModel;
         public INotifyPropertyChanged ReportsPageViewModel => reportsPageViewModel;
         public INotifyPropertyChanged SalaryPageViewModel => salaryPageViewModel;
+        public INotifyPropertyChanged LogPageViewModel => logPageViewModel;
 
 		#endregion
 
@@ -127,6 +141,7 @@ public INotifyPropertyChanged InfoPageViewModel => infoPageViewModel;
             documentsPageViewModel = this.resolver.GetViewModelInstance(DocumentsPageViewModelAlias);
             reportsPageViewModel = this.resolver.GetViewModelInstance(ReportsPageViewModelAlias);
             salaryPageViewModel = this.resolver.GetViewModelInstance(SalaryPageViewModelAlias);
+            logPageViewModel = this.resolver.GetViewModelInstance(LogPageViewModelAlias);
             InitializeCommands();
 		}
 
@@ -150,6 +165,7 @@ public INotifyPropertyChanged InfoPageViewModel => infoPageViewModel;
 			goToDocumentsPage = new RelayCommand<INotifyPropertyChanged>(GoToDocumentsPageCommandExecute);
             goToReportsPage = new RelayCommand<INotifyPropertyChanged>(GoToReportsPageCommandExecute);
             goToSalaryPage = new RelayCommand<INotifyPropertyChanged>(GoToSalaryPageCommandExecute);
+            goToLogPage = new RelayCommand<INotifyPropertyChanged>(GoToLogPageCommandExecute);
         }
 		private void GoToInfoPageCommandExecute(INotifyPropertyChanged viewModel)
 		{
@@ -167,6 +183,11 @@ public INotifyPropertyChanged InfoPageViewModel => infoPageViewModel;
         private void GoToSalaryPageCommandExecute(INotifyPropertyChanged viewModel)
         {
             Navigation.Navigate(Navigation.SalaryPageAlias, SalaryPageViewModel);
+        }
+
+        private void GoToLogPageCommandExecute(INotifyPropertyChanged viewModel)
+        {
+            Navigation.Navigate(Navigation.LogPageAlias, LogPageViewModel);
         }
 
 

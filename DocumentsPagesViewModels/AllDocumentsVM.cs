@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using DevExpress.Mvvm;
 using DocumentsPages;
@@ -127,9 +128,9 @@ namespace DocumentsPagesViewModels
         #endregion
 
         #region Documents
-        private IEnumerable documents;
+        private List<AdaptedDocument> documents;
 
-        public IEnumerable Documents
+        public List<AdaptedDocument> Documents
         {
             get => documents;
             set => documents = value;
@@ -159,9 +160,9 @@ namespace DocumentsPagesViewModels
 
         #region SelectedDocument
 
-        private int selectedDocument;
+        private AdaptedDocument selectedDocument;
 
-        public int SelectedDocument
+        public AdaptedDocument SelectedDocument
         {
             get => selectedDocument;
             set => selectedDocument = value;
@@ -179,7 +180,7 @@ namespace DocumentsPagesViewModels
 
         private void DocumentsRowClick()
         {
-            id = dataBase.GetList()[selectedDocument].Id;
+            id = selectedDocument.Id;
             window.Close();
         }
 
@@ -195,7 +196,7 @@ namespace DocumentsPagesViewModels
                 selectedPartner == 0 ? "" : Partners[selectedPartner].UNP);
             RaisePropertyChanged(nameof(documents));
         }
-        public void Show(out string docType, out int docId)
+        public void Show(out string? docType, out int docId)
         {
             window = new AllDocuments(){DataContext = this};
             window.ShowDialog();

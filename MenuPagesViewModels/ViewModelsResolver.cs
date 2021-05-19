@@ -24,6 +24,7 @@ namespace MenuPagesViewModels
             vmResolvers.Add(MainViewModel.DocumentsPageViewModelAlias, () => new DocumentsViewModel(showWindow));
             vmResolvers.Add(MainViewModel.ReportsPageViewModelAlias, () => new ReportsPageViewModel());
             vmResolvers.Add(MainViewModel.SalaryPageViewModelAlias, () => new SalaryPageViewModel(this));
+            vmResolvers.Add(MainViewModel.LogPageViewModelAlias, () => new LogViewModel());
 
             //salary
             vmResolvers.Add(SalaryPageViewModel.EmployeesPostsPageAlias, () => new PostsEmployeesVM());

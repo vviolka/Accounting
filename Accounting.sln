@@ -31,6 +31,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportPagesViewModels", "Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryPagesViewModels", "SalaryPagesViewModels\SalaryPagesViewModels.csproj", "{6C8DFB5F-A7AF-45E2-9D7F-D3C6E378FA46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogPages", "LogPages\LogPages.csproj", "{3CA6E2C6-B089-4355-8567-74AA0392CE6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogPagesViewModels", "LogPagesViewModels\LogPagesViewModels.csproj", "{CDEE7FD7-05AB-4015-A351-3603CCBD08C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +97,14 @@ Global
 		{6C8DFB5F-A7AF-45E2-9D7F-D3C6E378FA46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C8DFB5F-A7AF-45E2-9D7F-D3C6E378FA46}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{6C8DFB5F-A7AF-45E2-9D7F-D3C6E378FA46}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{3CA6E2C6-B089-4355-8567-74AA0392CE6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CA6E2C6-B089-4355-8567-74AA0392CE6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CA6E2C6-B089-4355-8567-74AA0392CE6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CA6E2C6-B089-4355-8567-74AA0392CE6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDEE7FD7-05AB-4015-A351-3603CCBD08C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDEE7FD7-05AB-4015-A351-3603CCBD08C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDEE7FD7-05AB-4015-A351-3603CCBD08C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDEE7FD7-05AB-4015-A351-3603CCBD08C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,70 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Common;
+using ReportPages;
+using ReportPagesViewModels;
+
+namespace MenuPagesViewModels
+{
+    class LogViewModel: BaseViewModel
+    {
+        public LogViewModel()
+        {
+            this.Items = new ObservableCollection<TabItemViewModel>();
+            openGenerateReportWindowCommand = new RelayCommand(OpenGenerateReportWindow);
+        }
+
+        #region OpenGenerateReportWindow
+
+        private ICommand openGenerateReportWindowCommand;
+
+        public ICommand OpenGenerateReportWindowCommand
+        {
+            get => openGenerateReportWindowCommand;
+            set => openGenerateReportWindowCommand = value;
+        }
+
+        private void OpenGenerateReportWindow()
+        {
+            var window = new GenerateReportVM();
+            window.Show(out string account, out DateTime date);
+            if (account == null || date == null)
+                return;
+            var dc = new Report10_1VM(date, account);
+            var page = new Report101Page(dc);
+            page.DataContext = dc;
+            AddItem($"материальный отчет за {Helpers.Monthes[date.Month]} {date.Year} по счёту 60/1",
+                page);
+        }
+
+        #endregion
+
+        public ObservableCollection<TabItemViewModel> Items { get; private set; }
+
+        public TabItemViewModel SelectedItem { get; set; }
+
+        public RelayCommand AddCommand { get; set; }
+
+
+        public void AddItem(string header, object content)
+        {
+            var nextIndex = this.Items.Count + 1;
+            var newItem = new TabItemViewModel(header, content, this.CloseItem);
+            this.Items.Add(newItem);
+            this.SelectedItem = newItem;
+            RaisePropertyChanged("SelectedItem");
+        }
+
+        private void CloseItem(TabItemViewModel vm)
+        {
+            this.Items.Remove(vm);
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
+}

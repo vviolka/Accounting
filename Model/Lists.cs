@@ -22,7 +22,14 @@ namespace Model
             var xmlReader = new XmlSerializer(typeof(List<string>));
             return (IEnumerable<string>)xmlReader.Deserialize(fileStream);
         }
-        
+
+        public static IEnumerable<string> GetLogAccounts()
+        {
+            using var fileStream = new FileStream(BasePath + "LogAccounts.xml", FileMode.Open);
+            var xmlReader = new XmlSerializer(typeof(List<string>));
+            return (IEnumerable<string>)xmlReader.Deserialize(fileStream);
+        }
+
         public static IEnumerable<string> GetCountries()
         {
             using var fileStream = new FileStream(BasePath + "countries.xml", FileMode.Open);
