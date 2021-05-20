@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Forms;
 
 namespace DocumentsPages
 {
@@ -10,6 +11,7 @@ namespace DocumentsPages
         public TTN()
         {
             InitializeComponent();
+            
         }
     }
 }

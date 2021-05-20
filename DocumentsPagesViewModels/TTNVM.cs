@@ -257,8 +257,8 @@ namespace DocumentsPagesViewModels
 
         private void Add()
         {
-            if (addName == string.Empty || addUnity == 0|| addCost == null || addCount == null ||
-                addVatRate == string.Empty || addVat == null || addAccount == 0) 
+            if (addName == string.Empty|| addCost == null || addCount == null ||
+                addVatRate == string.Empty || addVat == null ) 
                 return;
             var materialsInfo = new MaterialsInfo()
             {
@@ -645,7 +645,10 @@ namespace DocumentsPagesViewModels
         }
         #endregion
 
-
+        public List<string> MaterialsName
+        {
+            get => materialsInfoDb.GetNames();
+        }
 
         private void GetJoinedList()
         {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Common;
 using DevExpress.Mvvm;
 using LogPages;
 using Model;
@@ -13,7 +15,7 @@ namespace LogPagesViewModels
     {
         private DateTime logDate;
         private string logAccount;
-        private GenerateLogWindow window;
+        private IWindow window;
         public GenerateLogVM()
         {
             generateLogCommand = new DelegateCommand(GenerateLog);

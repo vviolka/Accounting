@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using Common;
 using Model.DBStructure;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -27,10 +28,10 @@ namespace Model
             productions = new Reports().GetProductions(date);
             
         }
-        public void CreateReport()
+
+        public void CreateLog(List<string> accounts)
         {
-             
-            var ex = new Excel.Application {Visible = false, SheetsInNewWorkbook = 1};
+            var ex = new Excel.Application { Visible = false, SheetsInNewWorkbook = 1 };
             Excel.Workbook workBook = ex.Workbooks.Add(Type.Missing);
             var sheet = (Excel.Worksheet)ex.Worksheets.Item[1];
             sheet.Range["a:a"].ColumnWidth = Helpers.FromPixels(40f);
@@ -41,8 +42,25 @@ namespace Model
             sheet.Range["f:f"].ColumnWidth = Helpers.FromPixels(75f);
             ex.DisplayAlerts = false;
 
-        
 
+
+
+            sheet.Range["A1", "IV65536"].WrapText = true;
+            FillLog(accounts, sheet);
+
+            workBook.SaveAs($"{Directory.GetCurrentDirectory()}\\Журнал-ордер 60.1 {Helpers.Monthes[date.Month]}.xlsx");
+            workBook.Close();
+        }
+        public void CreateReport()
+        {
+            var ex = new Excel.Application {Visible = false, SheetsInNewWorkbook = 1};
+            Excel.Workbook workBook = ex.Workbooks.Add(Type.Missing);
+            var sheet = (Excel.Worksheet)ex.Worksheets.Item[1];
+            
+            sheet.Range["a:a"].ColumnWidth = Helpers.FromPixels(610f);
+          
+            ex.DisplayAlerts = false;
+            
             int start;
             
             sheet.Range["A1", "IV65536"].WrapText = true;
@@ -139,6 +157,66 @@ namespace Model
 
             workBook.SaveAs($"{Directory.GetCurrentDirectory()}\\Акт {Helpers.Monthes[date.Month]}.xlsx");
             workBook.Close();
+        }
+
+        private void FillLog(List<string> accounts, Excel.Worksheet sheet)
+        {
+            int of = 1;
+            sheet.Cells[1, of++] = "Наименование контрагента";
+            sheet.Cells[1, of++] = "Сальдо начальное по дебету";
+            sheet.Cells[1, of++] = "Сальдо начальное по кредиту";
+            foreach (string account in accounts)
+            {
+                sheet.Cells[1, of++] = account.ToString();
+            }
+            sheet.Cells[1, of++] = "Итого по кредиту";
+            sheet.Cells[1, of++] = "Дата оплаты";
+            sheet.Cells[1, of++] = "Счет 51";
+            sheet.Cells[1, of++] = "Счет 90.3/7";
+            sheet.Cells[1, of++] = "Итого по дебету";
+            sheet.Cells[1, of++] = "Сальдо конечное по дебету";
+            sheet.Cells[1, of++] = "Сальдо ";
+
+            var model = new PartnersBalancesDB();
+            List<Partner> partners = new PartnerDB().GetList();
+            List<PartnersBalances> balances = model.GetList(date.AddMonths(-1));
+            date.AddMonths(1);
+            for (int i = 0; i < partners.Count; i++)
+            {
+                int offset = 1;
+                var partner = partners[i];
+                PartnersBalances? currentBalance = balances.FirstOrDefault(x => x.PartnerId == partner.Id);
+                sheet.Cells[i + 2, offset++] = partner.Name;
+                currentBalance ??= new PartnersBalances() {Sum = 0};
+
+
+                sheet.Cells[i + 2, offset++] = currentBalance.Sum > 0 ? currentBalance.Sum.ToString() : 0.ToString();
+                sheet.Cells[i + 2, offset++] = currentBalance.Sum < 0 ? -1 * currentBalance.Sum : 0;
+
+                foreach (string account in accounts)
+                {
+                    sheet.Cells[i + 2, offset++] = model.GetCostForAccount(account, partner.Id, date);
+                    if (ReferenceEquals(sheet.Cells[i + 1, offset - 1], "18"))
+                    {
+                        sheet.Cells[i + 2, offset++] = model.GetVatSum(partner.Id, date);
+                    }
+                }
+
+                float creditSum = model.GetCostSum(partner.Id, date);
+                
+                sheet.Cells[i + 2, offset++] = creditSum;
+                (float sum, string description) = model.GetPaymentsInfo(partner.Id, date);
+                sheet.Cells[i + 2, offset++] = description;
+                sheet.Cells[i + 2, offset++] = sum;
+                sheet.Cells[i + 2, offset++] = "";
+                sheet.Cells[i + 2, offset++] = sum;
+
+                float endBalance = currentBalance.Sum + sum - creditSum;
+
+                sheet.Cells[i + 2, offset++] = endBalance > 0 ? endBalance : 0;
+                sheet.Cells[i + 2, offset++] = endBalance < 0 ? -1 * endBalance : 0;
+
+            }
         }
         private void FillCalculation(Production production, ref int offset, Excel.Worksheet sheet)
         {

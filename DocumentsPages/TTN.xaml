@@ -127,7 +127,8 @@
 
                         <materialDesign:PackIcon Grid.Column="0" Kind="AddBox"  Height="30" Width="30" Foreground="#20454b" HorizontalAlignment="Center"  VerticalAlignment="Center" />
                         <!-- <wpfControls:AutoCompleteTextBox Grid.Column="1" ItemsSource="{Binding Materials}" SelectedIndex="{Binding AddSelectedMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" IsReadOnly="True"></Autoco> -->
-                        <!-- <wpfControls:AutoCompleteTextBox Delay="5" Grid.Column="1" Text="{Binding AddName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5"></wpfControls:AutoCompleteTextBox> -->
+                        <dxe:ComboBoxEdit Grid.Column="1" IncrementalFiltering="True" ImmediatePopup="True" AutoComplete="True" IsReadOnly="False" Text="{Binding AddName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Наименование" ItemsSource="{Binding MaterialsName}"
+                                          dx:ThemeManager.ThemeName="Office2016White" />
                         <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" NullText="Кол-во"  Text="{Binding AddCount, StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Tag="Количество" />
                         <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="2" SelectedIndex="{Binding AddUnity, Mode=TwoWay}" ItemsSource="{Binding Units, Mode=OneWay}" NullText="Ед. изм."/>
                         <!-- <local:CountryDropdown Grid.Column="3"  x:Name="ucCountryDropdown"></local:CountryDropdown> -->

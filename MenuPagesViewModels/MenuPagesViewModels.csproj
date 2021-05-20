@@ -84,6 +84,14 @@
       <Project>{de72d16d-793b-4717-a8f6-1dcd7ec43be4}</Project>
       <Name>InfoPagesViewModels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LogPagesViewModels\LogPagesViewModels.csproj">
+      <Project>{cdee7fd7-05ab-4015-a351-3603ccbd08c7}</Project>
+      <Name>LogPagesViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LogPages\LogPages.csproj">
+      <Project>{3ca6e2c6-b089-4355-8567-74aa0392ce6a}</Project>
+      <Name>LogPages</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{1a3c146c-6d42-4963-bc3a-62602cd3a464}</Project>
       <Name>Model</Name>

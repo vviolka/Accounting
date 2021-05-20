@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Common;
-using ReportPages;
-using ReportPagesViewModels;
+using LogPages;
+using LogPagesViewModels;
 
 namespace MenuPagesViewModels
 {
@@ -17,29 +17,29 @@ namespace MenuPagesViewModels
         public LogViewModel()
         {
             this.Items = new ObservableCollection<TabItemViewModel>();
-            openGenerateReportWindowCommand = new RelayCommand(OpenGenerateReportWindow);
+            openGenerateLogWindowCommand = new RelayCommand(OpenGenerateLogWindow);
         }
 
-        #region OpenGenerateReportWindow
+        #region OpenGenerateLogWindow
 
-        private ICommand openGenerateReportWindowCommand;
+        private ICommand openGenerateLogWindowCommand;
 
-        public ICommand OpenGenerateReportWindowCommand
+        public ICommand OpenGenerateLogWindowCommand
         {
-            get => openGenerateReportWindowCommand;
-            set => openGenerateReportWindowCommand = value;
+            get => openGenerateLogWindowCommand;
+            set => openGenerateLogWindowCommand = value;
         }
 
-        private void OpenGenerateReportWindow()
+        private void OpenGenerateLogWindow()
         {
-            var window = new GenerateReportVM();
+            var window = new GenerateLogVM();
             window.Show(out string account, out DateTime date);
             if (account == null || date == null)
                 return;
-            var dc = new Report10_1VM(date, account);
-            var page = new Report101Page(dc);
+            var dc = new Log60_1VM(date, account);
+            var page = new Log60_1Page();
             page.DataContext = dc;
-            AddItem($"материальный отчет за {Helpers.Monthes[date.Month]} {date.Year} по счёту 60/1",
+            AddItem($"журнал-ордер за {Helpers.Monthes[date.Month]} {date.Year} по счёту 60/1",
                 page);
         }
 

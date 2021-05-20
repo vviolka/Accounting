@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <LangVersion>8</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +34,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.Data.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Data.v20.1.dll</HintPath>
+    </Reference>
     <Reference Include="DevExpress.Xpf.Printing.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.Printing.v20.1.dll</HintPath>
     </Reference>
@@ -144,6 +147,7 @@
     <Compile Include="DBStructure\Income.cs" />
     <Compile Include="DBStructure\MaterialsInfo.cs" />
     <Compile Include="DBStructure\Partner.cs" />
+    <Compile Include="DBStructure\PartnersBalances.cs" />
     <Compile Include="DBStructure\Post.cs" />
     <Compile Include="DBStructure\Production.cs" />
     <Compile Include="DBStructure\WorkOut.cs" />
@@ -153,6 +157,7 @@
     <Compile Include="Lists.cs" />
     <Compile Include="MaterialsInfoDB.cs" />
     <Compile Include="PartnerDB.cs" />
+    <Compile Include="PartnersBalancesDB.cs" />
     <Compile Include="PostDB.cs" />
     <Compile Include="PostsEmployeesDB.cs" />
     <Compile Include="ProductionsDB.cs" />

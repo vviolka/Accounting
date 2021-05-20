@@ -90,7 +90,7 @@
     </Page.Resources>
     <Grid>
         <local:ScrollableTabControl ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" Margin="5"
-                                    AddItemCommand="{Binding OpenGenerateReportWindowCommand}" IsAddItemEnabled="True" BorderBrush="Gray" BorderThickness="0"
+                                    AddItemCommand="{Binding OpenGenerateLogWindowCommand}" IsAddItemEnabled="True" BorderBrush="Gray" BorderThickness="0"
                                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
             <local:ScrollableTabControl.ItemTemplate>
                 <DataTemplate>

@@ -29,6 +29,13 @@ namespace Model
             var xmlReader = new XmlSerializer(typeof(List<string>));
             return (IEnumerable<string>)xmlReader.Deserialize(fileStream);
         }
+        
+        public static IEnumerable<string> Get60_1CreditCorrespondents ()
+        {
+            using var fileStream = new FileStream(BasePath + "60_1CreditCorrespondents .xml", FileMode.Open);
+            var xmlReader = new XmlSerializer(typeof(List<string>));
+            return (IEnumerable<string>)xmlReader.Deserialize(fileStream);
+        }
 
         public static IEnumerable<string> GetCountries()
         {

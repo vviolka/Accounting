@@ -27,7 +27,12 @@ namespace ReportPages
         {
             var band = (Band)item;
             if (band.ChildColumns.Count == 1)
-                return (DataTemplate)((Control)container).FindResource("SingleColumnBandTemplate");
+            {
+                if (band.Fixed == "Left")
+                    return (DataTemplate) ((Control) container).FindResource("SingleColumnLeftBandTemplate");
+                return (DataTemplate)((Control)container).FindResource("SingleColumnBandTemplate"); 
+            }
+                
             if (band.Fixed == "Right")
                 return (DataTemplate) ((Control) container).FindResource("MultiColumnRightBandTemplate");
             if (band.Fixed=="Left")
@@ -35,7 +40,7 @@ namespace ReportPages
             return (DataTemplate)((Control)container).FindResource("MultiColumnBandTemplate");
 
         
-     
+     //SingleColumnLeftBandTemplate
         }
     }
 }

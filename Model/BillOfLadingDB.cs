@@ -34,7 +34,82 @@ namespace Model
             using var dc = new ApplicationContext();
             dc.BillsOfLading.Add(billOfLadings);
             dc.SaveChanges();
-            //return dc.BillsOfLading.First(b => b.Number == billOfLadings.Number && b.Type == billOfLadings.Type).Id;
+
+           int dateRowsCount = (dc.PartnersBalances.Where(x => x.PartnerId ==
+                                            billOfLadings.PartnerId &&
+                                            x.Date.Month == billOfLadings.Date.Month &&
+                                            x.Date.Year == billOfLadings.Date.Year)).Count();
+
+           int partnersRowsCount = (dc.PartnersBalances.Where(x => x.PartnerId == billOfLadings.PartnerId && x.Date < billOfLadings.Date)).Count();
+
+           DateTime newDate = billOfLadings.Date;
+
+           if (dateRowsCount > 0)
+           {
+               BillOfLading balance = ac.BillsOfLading.First(x => x.PartnerId == billOfLadings.PartnerId &&
+                                                                  x.Date.Month == billOfLadings.Date.Month &&
+                                                                  x.Date.Year == billOfLadings.Date.Year);
+               balance.Date = billOfLadings.Date;
+           }
+
+           if (dateRowsCount == 0 && partnersRowsCount > 0)
+           {
+               DateTime? NDate = ac.PartnersBalances.Where(x => x.PartnerId == billOfLadings.PartnerId &&
+                                                                x.Date < newDate).Max(y => y.Date);
+               if (NDate == null)
+               {
+                   ac.PartnersBalances.Add(new PartnersBalances()
+                   {
+                       Date = newDate,
+                       PartnerId = billOfLadings.PartnerId,
+                       Sum = 0
+                   });
+               }
+               else
+               {
+                   ac.PartnersBalances.Add(new PartnersBalances()
+                   {
+                       Date = (DateTime) NDate,
+                       PartnerId = billOfLadings.PartnerId,
+                       Sum = ac.PartnersBalances.First(x => x.Date == NDate &&
+                                                            x.PartnerId == billOfLadings.PartnerId).Sum
+                   });
+               }
+
+               ac.SaveChanges();
+           }
+
+           float sDebit = 0;
+               if (billOfLadings.Type == "п/п")
+               {
+                   sDebit = billOfLadings.Cost;
+               }
+
+               if (partnersRowsCount > 0)
+               {
+                   var tmp = ac.PartnersBalances.Where(x => x.PartnerId == billOfLadings.PartnerId &&
+                                                            x.Date >= newDate).ToList();
+                   foreach (PartnersBalances balances in tmp)
+                   {
+                       balances.Sum = balances.Sum + sDebit - billOfLadings.Cost - billOfLadings.Vat;
+                   }
+
+                   ac.SaveChanges();
+               }
+
+               if (partnersRowsCount == 0)
+                   {
+                       ac.PartnersBalances.Add(new PartnersBalances()
+                       {
+                           PartnerId = billOfLadings.PartnerId,
+                           Date = newDate,
+                           Sum = sDebit - billOfLadings.Cost - billOfLadings.Vat
+                       });
+                       ac.SaveChanges();
+                   }
+               
+
+           //return dc.BillsOfLading.First(b => b.Number == billOfLadings.Number && b.Type == billOfLadings.Type).Id;
             return billOfLadings.Id;
         }
 
@@ -79,21 +154,120 @@ namespace Model
         public void Edit(int id, BillOfLading oldBillOfLadings)
         {
             using var dataContext = new ApplicationContext();
+
+            BillOfLading old = ac.BillsOfLading.First(x => x.Id == id);
             var newBillOfLadings = dataContext.BillsOfLading.First(x => x.Id == id);
             newBillOfLadings.Date = oldBillOfLadings.Date;
             newBillOfLadings.Number = oldBillOfLadings.Number;
             newBillOfLadings.PartnerId = oldBillOfLadings.PartnerId;
             newBillOfLadings.Type = oldBillOfLadings.Type;
-
+            var newB = newBillOfLadings;
             dataContext.SaveChanges();
+
+            float newDebit = 0;
+            float oldDebit = 0;
+            if (newB.Type == "п/п") newDebit = newB.Cost;
+            if (old.Type == "п/п") oldDebit = old.Cost;
+
+            var balances = ac.PartnersBalances.Where(x =>
+                x.PartnerId == old.PartnerId &&
+                x.Date >= old.Date);
+
+
+           
+
+            int dateRowsCount = (ac.PartnersBalances.Where(x => x.PartnerId ==
+                                           newB.PartnerId &&
+                                           x.Date.Month == newB.Date.Month &&
+                                           x.Date.Year == newB.Date.Year)).Count();
+
+            int partnersRowsCount = (ac.PartnersBalances.Where(x =>
+                x.PartnerId == newB.PartnerId)).Count();
+
+            DateTime newDate = newB.Date;
+
+            if (dateRowsCount > 0)
+            {
+                BillOfLading balance = ac.BillsOfLading.First(x => x.PartnerId == newB.PartnerId &&
+                                                                   x.Date >= newDate);
+                balance.Date = newB.Date;
+            }
+
+            if (dateRowsCount == 0 && partnersRowsCount > 0)
+            {
+                DateTime? NDate = ac.PartnersBalances.Where(x =>
+                    x.PartnerId == newB.PartnerId &&
+                    x.Date < newDate).Max(y => y.Date);
+                if (NDate == null)
+                {
+                    ac.PartnersBalances.Add(new PartnersBalances()
+                    {
+                        Date = newDate,
+                        PartnerId = newB.PartnerId,
+                        Sum = 0
+                    });
+                }
+                else
+                {
+                    ac.PartnersBalances.Add(new PartnersBalances()
+                    {
+                        Date = (DateTime) NDate,
+                        PartnerId = newB.PartnerId,
+                        Sum = ac.PartnersBalances.First(x => x.Date == NDate &&
+                                                             x.PartnerId == newB.PartnerId).Sum
+                    });
+                }
+
+                ac.SaveChanges();
+            }
+
+
+            if (partnersRowsCount > 0)
+            {
+                var tmp = ac.PartnersBalances.Where(x => x.PartnerId == newB.PartnerId &&
+                                                         x.Date >= newDate).ToList();
+                foreach (PartnersBalances balance in tmp)
+                {
+                    balance.Sum = balance.Sum + newDebit - newB.CostWithVat;
+                }
+
+                ac.SaveChanges();
+            }
+
+            if (partnersRowsCount == 0)
+                    {
+                        ac.PartnersBalances.Add(new PartnersBalances()
+                        {
+                            PartnerId = newB.PartnerId,
+                            Date = newDate,
+                            Sum = newDebit - newB.CostWithVat
+                        });
+                        ac.SaveChanges();
+                    }
+            
         }
 
         public void Delete(int billOfLadingsId)
         {
             using var dataContext = new ApplicationContext();
+            var old = ac.BillsOfLading.First(x => x.Id == billOfLadingsId);
             var newBillOfLadings = dataContext.BillsOfLading.First(x => x.Id == billOfLadingsId);
             dataContext.BillsOfLading.Remove(newBillOfLadings);
             dataContext.SaveChanges();
+
+            float sDebit = 0;
+
+            if (old.Type == "п/п") sDebit = old.Cost;
+            var balances = ac.PartnersBalances.Where(x =>
+                x.PartnerId == old.PartnerId &&
+                x.Date >= old.Date);
+            foreach (var balance in balances)
+            {
+                balance.Sum = balance.Sum - sDebit + old.CostWithVat;
+            }
+
+            ac.SaveChanges();
+
         }
 
         private string DateConverter(DateTime date)

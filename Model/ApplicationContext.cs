@@ -17,6 +17,8 @@ namespace Model
         public DbSet<Partner> Partners { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Production> Productions { get; set; }
+        
+        public DbSet<PartnersBalances> PartnersBalances { get; set; }
        // public DbSet<Salary> Salaries { get; set; }
         
 
