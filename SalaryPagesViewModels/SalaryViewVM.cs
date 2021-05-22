@@ -34,7 +34,7 @@ namespace SalaryPagesViewModels
                 return;
             //add tab and add page depends on selected account (dictionary)
             var page = new SalaryPages.ReportCard();
-            page.DataContext = new ReportCardVM(date, page);
+            page.DataContext = new ReportCardVM(date);
             AddItem("материальный отчет за \0" + date.Month + " " + date.Year + "\0 по счёту \0",
                 page);
         }

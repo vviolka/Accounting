@@ -19,6 +19,8 @@ namespace Model
         public DbSet<Production> Productions { get; set; }
         
         public DbSet<PartnersBalances> PartnersBalances { get; set; }
+        public DbSet<ResultMonth> ResultMonthes { get; set; }
+        public DbSet<WorkedDay> WorkedDays { get; set; }
        // public DbSet<Salary> Salaries { get; set; }
         
 

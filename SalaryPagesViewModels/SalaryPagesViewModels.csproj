@@ -37,9 +37,8 @@
     <Reference Include="DevExpress.Mvvm.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Mvvm.v20.1.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.Grid.v20.1.dll</HintPath>
-    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Grid.v20.1.Core, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -83,6 +82,10 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{1a3c146c-6d42-4963-bc3a-62602cd3a464}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReportPagesViewModels\ReportPagesViewModels.csproj">
+      <Project>{33B6BAFF-6DC7-4739-AC11-F051FEF3F106}</Project>
+      <Name>ReportPagesViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\ReportPages\ReportPages.csproj">
       <Project>{316e3828-effa-481c-871d-8ead5b131d67}</Project>

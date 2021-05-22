@@ -28,9 +28,22 @@ namespace LogPagesViewModels
             set => outputList = value;
         }
 
+        #region RefreshCommand
+
+        private ICommand refreshCommand;
+
+        public ICommand RefreshCommand
+        {
+            get => refreshCommand;
+            set => refreshCommand = value;
+        }
+
+        #endregion
+
         public Log60_1VM(DateTime date, string account)
         {
             logPrintCommand = new DelegateCommand(PrintLog);
+            refreshCommand = new DelegateCommand(RefillGrid);
             this.date = new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
             this.account = account;
             IEnumerable<string> accounts = new List<string>();

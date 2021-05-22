@@ -181,7 +181,7 @@
                             <dxb:BarButtonItem Command="{Binding AddNewCommand}"  Content="Убрать пустые строки" LargeGlyph="{dx:DXImage SvgImages/Spreadsheet/RemoveTableRows.svg}" />
                         </dxr:RibbonPageGroup>
                                 <dxr:RibbonPageGroup Caption=""  ShowCaptionButton="False" Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_Add.svg}">
-                                    <dxb:BarButtonItem Command="{Binding AddNewCommand}"  Content="Обновить" LargeGlyph="{dx:DXImage SvgImages/Spreadsheet/RefreshAllPivotTable.svg}" />
+                                    <dxb:BarButtonItem Command="{Binding RefreshCommand}"  Content="Обновить" LargeGlyph="{dx:DXImage SvgImages/Spreadsheet/RefreshAllPivotTable.svg}" />
                                 </dxr:RibbonPageGroup>
                     </dxr:RibbonPage>
                         </dxr:RibbonDefaultPageCategory>

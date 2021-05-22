@@ -150,7 +150,8 @@
     <Compile Include="DBStructure\PartnersBalances.cs" />
     <Compile Include="DBStructure\Post.cs" />
     <Compile Include="DBStructure\Production.cs" />
-    <Compile Include="DBStructure\WorkOut.cs" />
+    <Compile Include="DBStructure\ResultMonth.cs" />
+    <Compile Include="DBStructure\WorkedDay.cs" />
     <Compile Include="EmployeesDB.cs" />
     <Compile Include="IncomeDB.cs" />
     <Compile Include="InfoPageModel.cs" />

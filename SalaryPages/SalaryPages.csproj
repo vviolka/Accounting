@@ -43,6 +43,9 @@
     <Reference Include="DevExpress.Data.v20.1" />
     <Reference Include="DevExpress.Printing.v20.1.Core" />
     <Reference Include="DevExpress.Xpf.Core.v20.1" />
+    <Reference Include="DevExpress.Xpf.DemoBase.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.DemoBase.v20.1.dll</HintPath>
+    </Reference>
     <Reference Include="DevExpress.Xpf.Grid.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.Grid.v20.1.dll</HintPath>
     </Reference>
@@ -52,6 +55,7 @@
     <Reference Include="DevExpress.Xpf.Grid.v20.1.Extensions, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\DevExpress 20.1\Components\Bin\Framework\DevExpress.Xpf.Grid.v20.1.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="DevExpress.Xpf.LayoutControl.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Themes.Office2019Colorful.v20.1" />
     <Reference Include="MaterialDesignThemes.Wpf, Version=4.0.0.2422, Culture=neutral, PublicKeyToken=df2a72020bd7962a">
       <HintPath>..\packages\MaterialDesignThemes.4.0.0\lib\net452\MaterialDesignThemes.Wpf.dll</HintPath>
@@ -66,6 +70,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -75,7 +81,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ReportCard.xaml.cs" />
+    <Compile Include="ReportCard.xaml.cs">
+      <DependentUpon>ReportCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SalaryView.xaml.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -109,6 +117,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -129,8 +138,8 @@
     </Content>
     <Page Include="AddCardReport.xaml" />
     <Page Include="PostsEmployeesPage.xaml" />
-    <Page Include="ReportCard.xaml" />
     <Content Include="SalaryPages.csproj.bak" />
+    <Page Include="ReportCard.xaml" />
     <Page Include="SalaryView.xaml" />
   </ItemGroup>
   <ItemGroup>
