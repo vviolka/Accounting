@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using InfoPages;
 using MenuPages;
 using SalaryPages;
+using SalaryPage = MenuPages.SalaryPage;
 
 // using InfoPages;
 // using Pages;
@@ -36,6 +37,8 @@ namespace Navigator
             //salary
             pagesResolvers.Add(Navigation.EmployeesPostsPageAlias, () => new PostsEmployeesPage());
             pagesResolvers.Add(Navigation.SalaryViewPageAlias, () => new SalaryView());
+            pagesResolvers.Add(Navigation.SalariesPageAlias, () => new SalariesPage());
+            pagesResolvers.Add(Navigation.VacationsPageAlias, () => new VacationsPage());
 
 
         }

@@ -60,7 +60,7 @@ namespace SalaryPagesViewModels
                new Band()
                {
                    Header = "Фамилия И.О.",
-                   Fixed = "Left",
+                   // Fixed = "Left",
                    ChildColumns = new ObservableCollection<Column>()
                    {
                        new Column()
@@ -74,7 +74,7 @@ namespace SalaryPagesViewModels
                new Band()
                {
                    Header = "Должность",
-                   Fixed = "Left",
+                   // Fixed = "Left",
                    ChildColumns = new ObservableCollection<Column>()
                    {
                        new Column()
@@ -88,7 +88,7 @@ namespace SalaryPagesViewModels
                new Band()
                {
                    Header = "Ставка",
-                   Fixed = "Left",
+                   // Fixed = "Left",
                    ChildColumns = new ObservableCollection<Column>()
                    {
                        new Column()
@@ -105,7 +105,7 @@ namespace SalaryPagesViewModels
                    {
                        new Column()
                        {
-                           Header = "Служ. команд., дней '\n' К",
+                           Header = "Служ. команд., дней \n К",
                            FieldName = "Trips"
                        },
                        new Column()
@@ -218,7 +218,6 @@ namespace SalaryPagesViewModels
                 new Band()
                     {
                         Header = "Фамилия И.О.",
-                        Fixed="Left",
                         ChildColumns = new ObservableCollection<Column>()
                         {
                             new Column()
@@ -232,7 +231,6 @@ namespace SalaryPagesViewModels
                 new Band()
                 {
                     Header = "Должность",
-                    Fixed="Left",
                     ChildColumns = new ObservableCollection<Column>()
                     {
                         new Column()
@@ -246,7 +244,6 @@ namespace SalaryPagesViewModels
                 new Band()
                 {
                     Header = "Ставка",
-                    Fixed="Left",
                     ChildColumns = new ObservableCollection<Column>()
                     {
                         new Column()
@@ -389,14 +386,20 @@ namespace SalaryPagesViewModels
                 {
                     if (value.Contains(':'))
                     {
-                        var tmp = value.Split(':');
+                        string[]? tmp = value.Split(':');
                         hours += new TimeSpan(Convert.ToInt32(tmp[0]), Convert.ToInt32(tmp[1]), 0);
+                        countDays++;
+
+                    }
+                    else if (value == transcript["Trips"])
+                    {
+                        hours += new TimeSpan(8,0, 0);
                         countDays++;
                     }
                 }
 
                 resultRow["SumDays"] = countDays;
-                resultRow["SumHours"] = hours.Hours;
+                resultRow["SumHours"] = (hours.Hours + hours.Days * 24);
                 resultRow["HolidaysCount"] = month.HolidaysCount;
                 resultRow["OvertimeCount"] = month.OvertimeCount;
                 resultRow["NightCount"] = month.NightCount;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,6 +11,8 @@ namespace ReportPages
         
         public string Header { get; set; }
         public string FieldName { get; set; }
+       //[DefaultValue("Auto")]
+       //public string Width { get; set; }
       
     }
 

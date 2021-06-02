@@ -20,7 +20,7 @@ namespace Common
             return $"{date.Day}.{date.Month}.{date.Year}";
         }
 
-        private static List<string> MonthesR = new List<string>()
+        public static List<string> MonthesR = new List<string>()
         {
             "января",
             "февраля",

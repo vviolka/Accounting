@@ -22,6 +22,7 @@
             <Setter Property="Padding" Value="5" />
             <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"/>
             <Setter Property="MaxHeight" Value="250"/>
+            <Setter Property="Cursor" Value="Hand"/>
 
         </Style>
 
@@ -41,8 +42,8 @@
                     <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" TargetName="border" Value="#FFBEE6FD"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>
+                    <Setter Property="Background" TargetName="border" Value="#F31A4142"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#132d2e"/>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
@@ -66,7 +67,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -93,16 +93,6 @@
         </Button>
 
 
-        <Button Grid.Row="0" Grid.Column="1" Template="{DynamicResource RoundedButtonBase}"
-                Command="{Binding GoToMaterialsInfoPage}" CommandParameter="{Binding MaterialsInfoPageVM}">
-            
-                <StackPanel>
-                    <materialDesign:PackIcon Kind="Layerstriple"/>
-                    <TextBlock>Материалы</TextBlock>
-                </StackPanel>
-            
-        </Button>
-
 
         <Button Grid.Row="1" Grid.Column="1" Template="{DynamicResource RoundedButtonBase}"  Command="{Binding GoToEmployeesInfoPage}" CommandParameter="{Binding EmployeesInfoPageVM}">
             
@@ -112,19 +102,8 @@
                 </StackPanel>
             
         </Button>
-
-
-        <Button Grid.Row="0" Grid.Column="2" Template="{DynamicResource RoundedButtonBase}">
-            
-                <StackPanel>
-                    <materialDesign:PackIcon Kind="Package"/>
-                    <TextBlock>Товары</TextBlock>
-                </StackPanel>
-            
-        </Button>
-
-
-        <Button Grid.Row="1" Grid.Column="2" Template="{DynamicResource RoundedButtonBase}"
+        
+        <Button Grid.Row="0" Grid.Column="1" Template="{DynamicResource RoundedButtonBase}"
                 Command="{Binding GoToPartnersInfoPage}" CommandParameter="{Binding PartnersInfoPageVM}">
             
                 <StackPanel>

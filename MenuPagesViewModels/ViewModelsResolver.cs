@@ -29,6 +29,8 @@ namespace MenuPagesViewModels
             //salary
             vmResolvers.Add(SalaryPageViewModel.EmployeesPostsPageAlias, () => new PostsEmployeesVM());
             vmResolvers.Add(SalaryPageViewModel.SalaryViewPageAlias, () => new SalaryViewVM());
+            vmResolvers.Add(SalaryPageViewModel.SalariesViewPageAlias, () => new SalariesVM());
+            vmResolvers.Add(SalaryPageViewModel.VacationsPageAlias, () => new VacationsPageVM());
         }
 
         public INotifyPropertyChanged GetViewModelInstance(string alias)

@@ -6,7 +6,7 @@
         xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
         mc:Ignorable="d"
-        Title="{Binding}" Height="300" Width="410">
+        Title="" Height="270" Width="430" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
         <Style TargetType="Button">
@@ -15,12 +15,19 @@
             <Setter Property="FontSize" Value="15" />
             <Setter Property="Foreground" Value="#ffffff"/>
             <Setter Property="Padding" Value="10 0  " />
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ButtonBase}">
-                        <Border x:Name="border" CornerRadius="10"  BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Border x:Name="border" CornerRadius="10"  BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#F31A4142"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#132d2e"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -28,6 +35,14 @@
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="#1c4348"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        
+        <Style TargetType="dxe:ComboBoxEdit">
+            <Setter Property="Foreground" Value="#1c4348"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="dx:ThemeManager.ThemeName" Value="Office2016White"></Setter>
         </Style>
         <Style TargetType="StackPanel">
             <Setter Property="Orientation" Value="Horizontal"/>
@@ -40,20 +55,14 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Viewbox Grid.Row="0" HorizontalAlignment="Center">
-            <StackPanel>
-                <TextBlock Text="Создание " />
-                <TextBlock Text="{Binding DocumentName}" />
-            </StackPanel>
-        </Viewbox>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5 0">
-            <TextBlock Text="Дата:" />
+            <TextBlock Text="Дата:  " />
             <dxe:DateEdit DateTime="{Binding DocumentsDate}" dx:ThemeManager.ThemeName="Office2016White" VerticalAlignment="Center" Foreground="#1c4348" />
             <TextBlock Text=" Номер документа:"/>
             <dxe:TextEdit Text="{Binding DocumentsNumber}" dx:ThemeManager.ThemeName="Office2016White"  Mask="0000000" Margin="5 15" Width="150" />
@@ -61,11 +70,9 @@
         </StackPanel>
         <StackPanel Grid.Row="2" Margin="5 0">
             <TextBlock Text="Контрагент: "/>
-            <ComboBox ItemsSource="{Binding Partners}" SelectedIndex="{Binding SelectedPartner}" Margin="15" Width="200" IsEditable="True" IsReadOnly="False" />
+            <dxe:ComboBoxEdit ItemsSource="{Binding Partners}" AutoComplete="True" SelectedIndex="{Binding SelectedPartner}" Margin="15" Width="200" />
         </StackPanel>
         <StackPanel Grid.Row="3" Margin="15">
-            <CheckBox x:Name="CheckBox" IsChecked="{Binding VatsDeduction}" VerticalAlignment="Center" />
-            <TextBlock Text=" Принять НДС к вычету   "/>
             <StackPanel Visibility="{Binding DeductionsVisibility, Converter={StaticResource VisibilityConverter}}">
                 <TextBlock Text="    Дата принятия "/>
                 <DatePicker SelectedDate="{Binding DeductionsDate}" VerticalAlignment="Center" />
@@ -76,7 +83,7 @@
         </StackPanel >
         <StackPanel Grid.Row="4" Visibility="{Binding EditVisibility, Converter={StaticResource VisibilityConverter}}" HorizontalAlignment="Center">
             <Button Command="{Binding EditCommand}">Изменить</Button>
-            <Button Command="{Binding DeleteCommand}">Удалить</Button>
+            <Button Command="{Binding DeleteCommand}" Foreground="#132d2e" Background="White" >Удалить</Button>
         </StackPanel>
     </Grid>
 </Window>

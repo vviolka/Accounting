@@ -20,9 +20,10 @@ namespace LogPagesViewModels
         {
             generateLogCommand = new DelegateCommand(GenerateLog);
             accounts = (List<string>) Lists.GetLogAccounts();
+            logDate = DateTime.Today;
+            Date = DateTime.Now;
         }
-
-
+        
         #region Account
 
         private int account;

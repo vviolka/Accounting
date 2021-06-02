@@ -30,13 +30,14 @@ namespace MenuPagesViewModels
         private void OpenGenerateReportWindow()
         {
             var window = new GenerateReportVM();
-            window.Show(out string account, out DateTime date);
+            DateTime date = DateTime.Today;
+            window.Show(out string account, out date);
             if (account == null || date == null)
                 return;
             var dc = new Report10_1VM(date, account);
             var page = new Report101Page(dc);
             page.DataContext = dc;
-            AddItem($"материальный отчет за {Helpers.Monthes[date.Month]} {date.Year} по счёту {account}",
+            AddItem($"материальный отчет за {Helpers.Monthes[new DateTime(date.Year, date.Month, date.Day).AddMonths(-1).Month]} {date.Year} по счёту {account}",
                 page);
         }
 

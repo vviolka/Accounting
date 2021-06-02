@@ -23,7 +23,7 @@ namespace SalaryPagesViewModels
         public void Show(out DateTime date)
         {
             window = new AddCardReport(){DataContext = this};
-            var t = window.ShowDialog();
+            bool? t = window.ShowDialog();
             date = reportDate;
             
         }
@@ -31,6 +31,7 @@ namespace SalaryPagesViewModels
         {
             generateReportCommand = new DelegateCommand(GenerateReport);
             accounts = (List<string>) Lists.GetMaterialsAccounts();
+            date = DateTime.Today;
         }
 
 

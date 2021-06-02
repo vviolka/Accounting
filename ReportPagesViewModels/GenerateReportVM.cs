@@ -16,6 +16,7 @@ namespace ReportPagesViewModels
         {
             generateReportCommand = new DelegateCommand(GenerateReport);
             accounts = (List<string>) Lists.GetMaterialsAccounts();
+            date = DateTime.Today;
         }
 
 

@@ -26,6 +26,8 @@ namespace Navigator
         //salary
         public static readonly string EmployeesPostsPageAlias = "EmployeesPostsPage";
         public static readonly string SalaryViewPageAlias = "SalaryViewPage";
+        public static readonly string SalariesPageAlias = "SalariesViewPage";
+        public static readonly string VacationsPageAlias = "VacationsPage";
         #endregion
 
         #region Fields

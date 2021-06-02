@@ -8,6 +8,7 @@ using System.Windows.Input;
 using DevExpress.Mvvm;
 using System.IO;
 using Common;
+using DevExpress.Mvvm.Native;
 using DevExpress.Xpf.Grid;
 using Model;
 using Model.DBStructure;
@@ -19,8 +20,10 @@ namespace ReportPagesViewModels
 {
     public class Report10_1VM: BindableBase, IPageActions
     {
+        public ExpandoObject SelectedItem;
         // Returns a list of employees so that they can be bound to the grid control. 
         private CalculationExcelReport report;
+        private string account;
         private ObservableCollection<ExpandoObject> outputList;
         public ObservableCollection<ExpandoObject> OutputList
         {
@@ -37,7 +40,8 @@ namespace ReportPagesViewModels
             model = new Reports();
             report = new CalculationExcelReport(date);
             this.date = date;
-            list = model.GetAvailableMaterials(date, account);
+            this.account = account;
+            list = new List<AvailableMaterials>(model.GetAvailableMaterials(date, account).OrderBy(x => x.Date));
             cellEditedCommand = new DelegateCommand<CellValueChangedEventArgs>(CellEdited);
             mouseDoubleClickCommand = new DelegateCommand<ColumnHeaderClickEventArgs>(HeaderClick);
             calculationPrintCommand = new DelegateCommand(CalculationPrint);
@@ -74,7 +78,7 @@ namespace ReportPagesViewModels
                     },
                     new Band()
                     {
-                        Header = "Остаток материалов на 01.......",
+                        Header = $"Остаток материалов на 1 {Helpers.MonthesR[date.AddMonths(-1).Month].ToLower()}",
                         Fixed = "Left",
                         ChildColumns = new ObservableCollection<Column>()
                         {
@@ -142,20 +146,20 @@ namespace ReportPagesViewModels
 
                     new Band()
                     {
-                        Header = "Остаток матералов на 01 ......+1",
+                        Header = $"Остаток матералов на 1 {Helpers.MonthesR[date.Month]}",
                         Fixed = "Right",
                         ChildColumns = new ObservableCollection<Column>()
                         {
                             new Column()
                             {
                                 Header = "кол-во",
-                                FieldName = "",
+                                FieldName = "LeftCount",
                                
                             },
                             new Column()
                             {
                                 Header = "сумма",
-                                FieldName = "",
+                                FieldName = "LeftCost",
                                
                             }
                         }
@@ -174,12 +178,12 @@ namespace ReportPagesViewModels
                         new Column()
                         {
                             Header = "кол-во",
-                            FieldName = $"Production{i}Count",
+                            FieldName = $"Production{production.Id}Count",
                         },
                         new Column()
                         {
                             Header = "сумма",
-                            FieldName = $"Production{i}Cost",
+                            FieldName = $"Production{production.Id}Cost",
                         }
                     }
                 });
@@ -270,28 +274,149 @@ namespace ReportPagesViewModels
             if (production == null)
                 return;
             // var production = new Production() { Name = addName, Date = addDate, PartnerId = partners[addPartner].Id, Cost = 0f};
-            int i = model.GetProductions(date).IndexOf(production);
-             Bands.Add(new Band()
-             {
-                 Header = production.Name,
-                 ChildColumns = new ObservableCollection<Column>
-                 {
-                     new Column()
-                     {
-                         Header = "кол-во",
-                         FieldName = $"Production{i}Count",
-                     },
-                     new Column()
-                     {
-                         Header = "сумма",
-                         FieldName = $"Production{i}Cost",
-                     }
-                 }
-             });
-            model.AddProduction(production);
-             RaisePropertyChanged(nameof(Bands));
-             RefillGrid();
-             
+            int i = model.GetProductions(date).IndexOf(production) + 1;
+            //int i = model.GetProductions(date).Count + 1;
+            Bands = new ObservableCollection<Band>()
+            {
+                new Band()
+                {
+                    Header = "Наименование документа, его номер и дата",
+                    ChildColumns = new ObservableCollection<Column>()
+                    {
+                        new Column()
+                        {
+                            Header = "Наименование документа, его номер и дата",
+                            FieldName = "Document",
+                        }
+                    }
+                },
+                new Band()
+                {
+                    Header = "Наименование сырья и материалов",
+                    ChildColumns = new ObservableCollection<Column>()
+                    {
+                        new Column()
+                        {
+                            Header = "Наименование сырья и материалов",
+                            FieldName = "Name",
+                        }
+                    }
+                },
+                new Band()
+                {
+                    Header = $"Остаток материалов на 1 {Helpers.MonthesR[date.AddMonths(-1).Month].ToLower()}",
+                    Fixed = "Left",
+                    ChildColumns = new ObservableCollection<Column>()
+                    {
+                        new Column()
+                        {
+                            Header = "ед. изм.",
+                            FieldName = "Unity",
+                        },
+                        new Column()
+                        {
+                            Header = "цена",
+                            FieldName = "Price",
+                        },
+                        new Column()
+                        {
+                            Header = "кол-во",
+                            FieldName = "Count",
+                        },
+                        new Column()
+                        {
+                            Header = "сумма",
+                            FieldName = "Cost",
+                        }
+                    }
+                },
+                new Band()
+                {
+                    Header = "Поступление материалов",
+                    ChildColumns = new ObservableCollection<Column>()
+                    {
+                        new Column()
+                        {
+                            Header = "кол-во",
+                            FieldName = "ICount",
+
+                        },
+                        new Column()
+                        {
+                            Header = "сумма",
+                            FieldName = "ICost",
+
+                        }
+                    }
+                },
+                new Band()
+                {
+                    Header = "Передано в доработку",
+                    ChildColumns = new ObservableCollection<Column>()
+                    {
+                        new Column()
+                        {
+                            Header = "кол-во",
+                            FieldName = "",
+
+                        },
+                        new Column()
+                        {
+                            Header = "сумма",
+                            FieldName = "",
+
+                        }
+                    }
+                },
+
+
+                new Band()
+                {
+                    Header = $"Остаток матералов на 1 {Helpers.MonthesR[date.Month]}",
+                    Fixed = "Right",
+                    ChildColumns = new ObservableCollection<Column>()
+                    {
+                        new Column()
+                        {
+                            Header = "кол-во",
+                            FieldName = "LeftCount",
+
+                        },
+                        new Column()
+                        {
+                            Header = "сумма",
+                            FieldName = "LeftCost",
+
+                        }
+                    }
+                }
+            };
+            RefillGrid();
+            List<Production> productions = model.GetProductions(date);
+            for (var j = 0; j < productions.Count; j++)
+            {
+                production = productions[j];
+                Bands.Add(new Band()
+                {
+                    Header = production.Name,
+                    ChildColumns = new ObservableCollection<Column>
+                    {
+                        new Column()
+                        {
+                            Header = "кол-во",
+                            FieldName = $"Production{production.Id}Count",
+                        },
+                        new Column()
+                        {
+                            Header = "сумма",
+                            FieldName = $"Production{production.Id}Cost",
+                        }
+                    }
+                });
+
+                RaisePropertyChanged(nameof(Bands));
+
+            }
         }
 
         #endregion
@@ -425,25 +550,36 @@ namespace ReportPagesViewModels
             outputList = new ObservableCollection<ExpandoObject>();
             int count = 10 + model.GetProductions(date).Count * 2;
             List<Production> productions = model.GetProductions(date);
+            var addMonths = date.AddMonths(1);
+            var leftList = model.GetAvailableMaterials(addMonths, account).OrderBy(x => x.Date);
             for (var i = 0; i < list.Count; i++)
             {
                 
                 AvailableMaterials elem = list[i];
+                double matCount = elem.Count == null ? 0 : Math.Round((double) elem.Count, 2);
+                double matCost = elem.Cost == null ? 0 : Math.Round((double) elem.Cost, 2);
+                double iCount = elem.ICount == null ? 0 : Math.Round((double) elem.ICount, 2);
+                double iCost = elem.ICost == null ? 0 : Math.Round((double) elem.ICost, 2);
                 IDictionary<string, object> row = new ExpandoObject();
                 row["Document"] = elem.Type + " № " + elem.Number + " от " + Model.Common.ConvertDate(elem.Date);
                 row["Name"] = elem.Name;
                 row["Unity"] = elem.Unity;
-                row["Price"] = elem.Price.ToString(CultureInfo.CurrentCulture);
-                row["Count"] = elem.Count.ToString();
-                row["Cost"] = elem.Cost.ToString();
-                row["ICount"] = elem.ICount.ToString();
-                row["ICost"] = elem.ICost.ToString();
-                for (var j = 0; j < productions.Count; j++)
+                row["Price"] = elem.Price.ToString("f2");
+                row["Count"] = matCount.ToString("f2");
+                row["Cost"] = matCost.ToString("f2");
+                row["ICount"] = iCount.ToString("f2");
+                row["ICost"] = iCost.ToString("f2");
+                for (int j = 0; j < productions.Count; j++)
                 {
-                    row[$"Production{j}Count"] = string.Empty;
-                    row[$"Production{j}Cost"] = string.Empty;
+                    row[$"Production{productions[j].Id}Count"] = "";
+                    row[$"Production{productions[j].Id}Cost"] = "";
 
                 }
+
+                var nextMonthElem = leftList.First(x => x.Id == elem.Id);
+
+                row["LeftCount"] = ((float)nextMonthElem.Count).ToString("f2");
+                row["LeftCost"] = ((float)nextMonthElem.Cost).ToString("f2");
 
                 outputList.Add((ExpandoObject) row);
             }
@@ -459,8 +595,11 @@ namespace ReportPagesViewModels
                         Expence expence = expences[j];
                         int i = list.IndexOf(list.First(x => x.Id == expence.MaterialId));
                         IDictionary<string, object> row = outputList[i];
-                        row[$"Production{index}Count"] = expence.Count.ToString(CultureInfo.CurrentCulture);
-                        row[$"Production{index}Cost"] = expence.Cost.ToString(CultureInfo.CurrentCulture);
+                        if (expence != null)
+                        {
+                            row[$"Production{production.Id}Count"] = expence.Count.ToString("f2");
+                            row[$"Production{production.Id}Cost"] = expence.Cost.ToString("f2");
+                        }
                     }
                 }
             }

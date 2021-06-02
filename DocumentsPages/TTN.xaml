@@ -13,6 +13,20 @@
       Title="TTN">
    <Page.Resources>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+
+        <Style TargetType="dxg:TableView">
+            <Setter Property="ColumnHeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="dxe:TextEditSettings">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
         <Style TargetType="TextBox" x:Key="FixedTextBox">
             <Setter Property="Background" Value="#1c4348"/>
             <Setter Property="Margin" Value="0"/>
@@ -45,12 +59,19 @@
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Foreground" Value="#ffffff"/>
             <Setter Property="Padding" Value="10 0  " />
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ButtonBase}">
-                        <Border x:Name="border" CornerRadius="10"  BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Border x:Name="border" CornerRadius="10"  BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#F31A4142"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#132d2e"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -92,6 +113,7 @@
             <Setter Property="Margin" Value="5"/>
         </Style>
     </Page.Resources>
+
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding LoadMaterialsCommand}" />
     </dxmvvm:Interaction.Behaviors>
@@ -129,7 +151,7 @@
                         <!-- <wpfControls:AutoCompleteTextBox Grid.Column="1" ItemsSource="{Binding Materials}" SelectedIndex="{Binding AddSelectedMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" IsReadOnly="True"></Autoco> -->
                         <dxe:ComboBoxEdit Grid.Column="1" IncrementalFiltering="True" ImmediatePopup="True" AutoComplete="True" IsReadOnly="False" Text="{Binding AddName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Наименование" ItemsSource="{Binding MaterialsName}"
                                           dx:ThemeManager.ThemeName="Office2016White" />
-                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" NullText="Кол-во"  Text="{Binding AddCount, StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Tag="Количество" />
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" NullText="Кол-во"  Text="{Binding AddCount, StringFormat='{}{##.##}',Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Tag="Количество" />
                         <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="2" SelectedIndex="{Binding AddUnity, Mode=TwoWay}" ItemsSource="{Binding Units, Mode=OneWay}" NullText="Ед. изм."/>
                         <!-- <local:CountryDropdown Grid.Column="3"  x:Name="ucCountryDropdown"></local:CountryDropdown> -->
                         <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="4" Text="{Binding AddCost,  StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Стоимость" />
@@ -143,8 +165,8 @@
                         <materialDesign:PackIcon Margin="2" Kind="Undo" Background="#1c4348" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </Button>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button  Command="{Binding AddNewCommand}">Добавить</Button>
-                        <Button Command="{Binding AddCancelCommand}">Отмена</Button>
+                        <Button  Command="{Binding AddNewCommand}" BorderBrush="#123d2e">Добавить</Button>
+                        <Button Command="{Binding AddCancelCommand}" Foreground="#132d2e" Background="White" >Отмена</Button>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -183,19 +205,19 @@
                                           Grid.Column="8" ItemsSource="{Binding Accounts, Mode=OneTime}" SelectedIndex="{Binding EditAccount}" />
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" >
-                        <Button Command="{Binding SaveChangesCommand}">Сохранить</Button>
-                        <Button Command="{Binding DeleteCommand}">Удалить</Button>
-                        <Button Command="{Binding EditCancelCommand}">Отмена</Button>
+                        <Button Command="{Binding SaveChangesCommand}" BorderBrush="#123d2e">Сохранить</Button>
+                        <Button Command="{Binding DeleteCommand}" Foreground="#132d2e" Background="White" >Удалить</Button>
+                        <Button Command="{Binding EditCancelCommand}" Foreground="#132d2e" Background="White" >Отмена</Button>
                     </StackPanel>
                 </Grid>
             </TabItem>
         </TabControl>
 
-        <dxg:GridControl Margin="10 0"  BorderThickness="1"  dx:ThemeManager.ThemeName="Office2016White" Grid.Row="1" x:Name="grid" ShowBorder="False" ItemsSource="{Binding Materials, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding SelectedDocument}" AutoGenerateColumns="None" Background="red" Foreground="Yellow" SelectionMode="Row">
+        <dxg:GridControl Margin="10 5"  BorderThickness="1"  dx:ThemeManager.ThemeName="Office2016White" Grid.Row="1" x:Name="grid" ShowBorder="False" ItemsSource="{Binding Materials, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedItem="{Binding SelectedDocument}" AutoGenerateColumns="None" Background="red" Foreground="Yellow" SelectionMode="Row">
             <dxg:GridControl.View>
                 <dxg:TableView AllowEditing="False" ShowIndicator="False"    AlternateRowBackground="#ecf8f6"  AutoWidth="True"  ShowGroupPanel="False" FontFamily="Tahoma" HeaderHorizontalAlignment="Center"/>
             </dxg:GridControl.View>
-            <dxg:GridColumn x:Name="Header1" Header="Название"  Width ="3*" Binding="{Binding Name}"/>
+            <dxg:GridColumn x:Name="Header1" Header="Название"  Width ="3*" MinWidth="150"  Binding="{Binding Name}"/>
             <dxg:GridColumn x:Name="Header2" Header="Единица измерения" MinWidth="100" Width="*"  Binding="{Binding Unity}" />
             <dxg:GridColumn x:Name="Header3" Header="Количество" MinWidth="100"  Width="*"  Binding="{Binding Count}" />
             <dxg:GridColumn x:Name="Header4" Header="Цена" Width="*" MinWidth="100"  Binding="{Binding Price}" />
@@ -210,7 +232,7 @@
         </dxg:GridControl>
         
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="15 0">
-            <TextBlock Width="{Binding ElementName=Header1,Path=ActualWidth}" Text="Итого:" FontSize="20" />
+            <TextBlock Width="{Binding ElementName=Header1,Path=ActualWidth}"  Text="Итого:" FontSize="20" />
             <TextBox Width="{Binding ElementName=Header2,Path=ActualWidth}" MinWidth="100"  Style="{StaticResource FixedTextBox}" />
             <!-- <TextBox Text="435678" Style="{StaticResource FixedTextBox}"></TextBox> -->
             <TextBox Width="{Binding ElementName=Header3,Path=ActualWidth}" MinWidth="100"  Style="{StaticResource FixedTextBox}" />

@@ -16,6 +16,18 @@
 
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+        <Style TargetType="dxg:TableView">
+            <Setter Property="ColumnHeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="dxe:TextEditSettings">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
         <Style TargetType="{x:Type dxe:TextEdit}">
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Foreground" Value="#1c4348"/>
@@ -45,12 +57,19 @@
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Foreground" Value="#ffffff"/>
             <Setter Property="Padding" Value="10 0  "/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ButtonBase}">
-                        <Border x:Name="border" CornerRadius="10"  BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Border x:Name="border" CornerRadius="10"  BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#F31A4142"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#132d2e"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -134,8 +153,8 @@
 
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button  Command="{Binding AddNewCommand}" Margin="5" Content="Добавить"/>
-                        <Button Command="{Binding AddCancelCommand}" Content="Отмена"/>
+                        <Button  Command="{Binding AddNewCommand}" BorderBrush="#132d2e" Margin="5" Content="Добавить"/>
+                        <Button Command="{Binding AddCancelCommand}" Foreground="#132d2e" Background="White"  Content="Отмена"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -159,7 +178,7 @@
 
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="0">
-                        <Button Command="{Binding SearchCancelCommand}" Content="Отмена"/>
+                        <Button Command="{Binding SearchCancelCommand}" Foreground="#132d2e" Background="White"  Content="Отмена"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -183,10 +202,9 @@
 
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.ColumnSpan="2">
-                        <Button Command="{Binding SaveChangesCommand}" Content="Сохранить"/>
-                        <Button Command="{Binding DeleteCommand}" Content="Удалить"/>
-                        <Button Command="{Binding SaveAsNewCommand}" Content="Добавить как новую"/>
-                        <Button Command="{Binding EditCancelCommand}" Content="Отмена"/>
+                        <Button Command="{Binding SaveChangesCommand}" BorderBrush="#132d2e" Content="Сохранить"/>
+                        <Button Command="{Binding DeleteCommand}" Foreground="#132d2e" Background="White"  Content="Удалить"/>
+                        <Button Command="{Binding EditCancelCommand}" Foreground="#132d2e" Background="White"  Content="Отмена"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

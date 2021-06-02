@@ -33,13 +33,14 @@ namespace MenuPagesViewModels
         private void OpenGenerateLogWindow()
         {
             var window = new GenerateLogVM();
-            window.Show(out string account, out DateTime date);
+            DateTime date = DateTime.Today;
+            window.Show(out string account, out date);
             if (account == null || date == null)
                 return;
             var dc = new Log60_1VM(date, account);
             var page = new Log60_1Page();
             page.DataContext = dc;
-            AddItem($"журнал-ордер за {Helpers.Monthes[date.Month]} {date.Year} по счёту 60/1",
+            AddItem($"журнал-ордер за {Helpers.Monthes[new DateTime(date.Year, date.Month, date.Day).AddMonths(-1).Month]} {date.Year} по счёту 60/1",
                 page);
         }
 

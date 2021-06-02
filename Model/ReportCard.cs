@@ -15,7 +15,8 @@ namespace Model
         public List<AdaptedEmployee> GetAdaptedEmployeesPosts(DateTime date)
         {
             using var ac = new ApplicationContext();
-            var employees = ac.Employees.Where(x => (x.FiredDate == null || (((DateTime)x.FiredDate).Month > date.Month && ((DateTime)x.FiredDate).Year > date.Year))&&(x.AcceptableDate.Month <= date.Month && x.AcceptableDate.Year <= date.Year)).ToList();
+            //var employees = ac.Employees.Where(x => (x.FiredDate == null || (((DateTime)x.FiredDate).Month > date.Month && ((DateTime)x.FiredDate).Year > date.Year))&&(x.AcceptableDate.Month <= date.Month && x.AcceptableDate.Year <= date.Year)).ToList();
+            var employees = ac.Employees.ToList(); //todo 
             var posts = ac.Posts.ToList();
             var postsEmployees = ac.EmployeesPosts.ToList();
             var result = (from employee in employees
@@ -24,6 +25,7 @@ namespace Model
                 select new AdaptedEmployee
                 {
                     Id = postEmployee.Id,
+                    EmployeeId = employee.Id,
                     Name = employee.Name,
                     MiddleName = employee.MiddleName,
                     LastName = employee.LastName,

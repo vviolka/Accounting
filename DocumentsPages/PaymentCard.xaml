@@ -16,12 +16,19 @@
             <Setter Property="Foreground" Value="#ffffff" />
             <Setter Property="Height" Value="25"/>
             <Setter Property="Padding" Value="16 2 " />
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ButtonBase}">
-                        <Border x:Name="border" CornerRadius="10" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Border x:Name="border" CornerRadius="10" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#F31A4142"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#132d2e"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -113,8 +120,8 @@
         </StackPanel>
         <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Dock="Bottom">
             <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding SaveCommand}" IsEnabled="{Binding IsEnable}">Сохранить</Button>
-                <Button Command="{Binding DeleteCommand}" >Удалить</Button>
+                <Button Command="{Binding SaveCommand}" BorderBrush="#132d2e"  IsEnabled="{Binding IsEnable}">Сохранить</Button>
+                <Button Command="{Binding DeleteCommand}" BorderBrush="#132d2e" Foreground="#132d2e" Background="White"  >Удалить</Button>
 
             </StackPanel>
 

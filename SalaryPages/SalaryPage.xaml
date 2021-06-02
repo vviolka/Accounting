@@ -1,20 +1,15 @@
-﻿<Page
+﻿<Page x:Class="SalaryPages.SalaryPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:system="clr-namespace:System;assembly=mscorlib"
-      xmlns:local="clr-namespace:MenuPages;assembly=MenuPages"
-      xmlns:dxdb="http://schemas.devexpress.com/winfx/2008/xaml/demobase"
-      xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+      xmlns:local="clr-namespace:SalaryPages"
       xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
       xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
       xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
       xmlns:reportPages="clr-namespace:ReportPages;assembly=ReportPages"
       xmlns:dxci="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
       xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-      x:Class="SalaryPages.ReportCard"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Background="#ffffff">
@@ -37,8 +32,7 @@
             <ContentControl>
                 <dxg:GridColumn 
                 FieldName="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).FieldName, RelativeSource={RelativeSource Self}}" 
-                Header="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Header, RelativeSource={RelativeSource Self}}" 
-                Width="Auto" MinWidth="35"/>
+                Header="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Header, RelativeSource={RelativeSource Self}}"/>
             </ContentControl>
         </DataTemplate>
         <DataTemplate x:Key="SingleColumnLeftBandTemplate">
@@ -88,10 +82,13 @@
                                  ColumnGeneratorTemplate="{StaticResource ColumnTemplate}"
                                  OverlayHeaderByChildren="True" 
                                  Fixed="Left"
-
                                  Header="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Header, RelativeSource={RelativeSource Self}}"/>
             </ContentControl>
         </DataTemplate>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="5"/>
+            
+        </Style>
         <Style TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="ContentTemplate">
                 <Setter.Value>
@@ -106,6 +103,7 @@
             <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="BorderThickness" Value="0.5" />
         </Style>
+    
         <Style TargetType="Button">
             <Setter Property="Background" Value="#1c4348" />
             <Setter Property="Margin" Value="5" />
@@ -139,6 +137,7 @@
             </Setter>
         </Style>
         <Style TargetType="dxe:TextEdit">
+            <Setter Property="dx:ThemeManager.ThemeName" Value="Office2016White"/>
             <Setter Property="Margin" Value="5" />
             <Setter Property="VerticalContentAlignment" Value="Top"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
@@ -183,7 +182,7 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -199,7 +198,7 @@
                     <dxg:TableView ShowIndicator="False" AlternateRowBackground="#ecf8f6"   ShowGroupPanel="False" >
                         <dxmvvm:Interaction.Behaviors>
                             <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding CellEditedCommand}" PassEventArgsToCommand="True" />
-                            </dxmvvm:Interaction.Behaviors>
+                        </dxmvvm:Interaction.Behaviors>
 
                     </dxg:TableView>
                 </dxg:GridControl.View>
@@ -211,22 +210,41 @@
                       ShowsPreview="false"
                       ResizeDirection="Rows"
                       Height="2" ></GridSplitter>
-        <StackPanel Grid.Row="2">
-            <dxg:GridControl  MaxHeight="1000" AutoGenerateColumns="None"  
-                              dx:ThemeManager.ThemeName="Office2016White" 
-                              BandsSource="{Binding ResultBands, UpdateSourceTrigger=PropertyChanged}"
-                              BandGeneratorTemplateSelector="{StaticResource BandTemplateSelector}"
-                              ItemsSource="{Binding ResultOutputList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectionMode="Cell">
-                <dxg:GridControl.View >
-
-                    <dxg:TableView ShowIndicator="False" AlternateRowBackground="#ecf8f6"   ShowGroupPanel="False" >
-                        <dxmvvm:Interaction.Behaviors>
-                            <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding ResultCellEditedCommand}" PassEventArgsToCommand="True" />
-                        </dxmvvm:Interaction.Behaviors>
-
-                    </dxg:TableView>
-                </dxg:GridControl.View>
-            </dxg:GridControl>
+        <StackPanel Grid.Row="2" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
+                <Label>ФСЗН:</Label>
+                <dxe:TextEdit  Text="{Binding FSZN, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsReadOnly="True"></dxe:TextEdit>
+                <Label>руб.</Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>      пенсионный:</Label>
+                <dxe:TextEdit Text="{Binding Pension, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsReadOnly="True"></dxe:TextEdit>
+                <Label>руб.</Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>      соц. защита:</Label>
+                <dxe:TextEdit Text="{Binding Social, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsReadOnly="True"></dxe:TextEdit>
+                <Label>руб.</Label>
+            </StackPanel>
+                </StackPanel>
+            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
+                <Label>страхование:</Label>
+                <dxe:TextEdit Text="{Binding Insurance, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsReadOnly="True"></dxe:TextEdit>
+                <Label>руб.</Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>Подоходный:</Label>
+                <dxe:TextEdit Text="{Binding IncomeTax, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsReadOnly="True"></dxe:TextEdit>
+                <Label>руб.</Label>
+            </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>Всего:</Label>
+                <dxe:TextEdit Text="{Binding TaxSum, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsReadOnly="True"></dxe:TextEdit>
+                <Label>руб.</Label>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

@@ -10,7 +10,7 @@
         xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
         mc:Ignorable="d"
-        Title="CalculationSettingsWindow" Height="620" Width="750" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+        Title="" Height="635" Width="750" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
         <Style TargetType="TextBlock">
@@ -19,6 +19,18 @@
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Foreground" Value="#54696a" />
+        </Style>
+        <Style TargetType="dxg:TableView">
+            <Setter Property="ColumnHeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="dxe:TextEditSettings">
+            <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
         <Style TargetType="dxlc:LayoutItem">
             <Setter Property="Margin" Value="5"/>
@@ -51,12 +63,19 @@
             <Setter Property="Foreground" Value="#ffffff" />
             <Setter Property="Height" Value="25"/>
             <Setter Property="Padding" Value="16 2 " />
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ButtonBase}">
-                        <Border x:Name="border" CornerRadius="10" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Border x:Name="border" CornerRadius="10" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}"  Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#F31A4142"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#132d2e"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -181,7 +200,7 @@
         </StackPanel >
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Visibility="{Binding EditPanelVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}">
                 <Button Command="{Binding SaveCommand}">Сохранить</Button>
-                <Button Command="{Binding DeleteCommand}">Удалить</Button>
+                <Button Command="{Binding DeleteCommand}" Foreground="#132d2e" Background="White" >Удалить</Button>
                 
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Visibility="{Binding CreatePanelVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}">

@@ -59,7 +59,10 @@
     <Compile Include="PostsEmployeesVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportCardVM.cs" />
+    <Compile Include="SalariesVM.cs" />
     <Compile Include="SalaryViewVM.cs" />
+    <Compile Include="SalaryVM.cs" />
+    <Compile Include="VacationsPageVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\..\..\Accounting\SalaryPagesViewModels\SalaryPagesViewModels.csproj">

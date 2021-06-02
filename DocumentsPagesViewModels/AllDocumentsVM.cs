@@ -22,6 +22,7 @@ namespace DocumentsPagesViewModels
         public AllDocumentsVM()
         {
             dataBase = new BillOfLadingDB();
+            documentsDate = DateTime.Today;
             loadAllDocumentsCommand = new DelegateCommand(LoadAllDocuments);
             addNewDocumentCommand = new DelegateCommand(AddNewDocument);
             documentsRowClickCommand = new DelegateCommand(DocumentsRowClick);
@@ -73,8 +74,8 @@ namespace DocumentsPagesViewModels
 
         #region SelectedTypeSearch
 
-        private int selectedTypeSearch;
-        public int SelectedTypeSearch
+        private int? selectedTypeSearch;
+        public int? SelectedTypeSearch
         {
             get => selectedTypeSearch;
             set {
@@ -191,7 +192,7 @@ namespace DocumentsPagesViewModels
             if (selectedPartner == -1)
                 return;
             documents = dataBase.Search(documentsDate,
-                selectedTypeSearch == 0 ? "" : Types[selectedTypeSearch],
+                selectedTypeSearch == 0 ? "" : Types[(int) selectedTypeSearch],
                 documentsNumber == null ? "" : documentsNumber.Replace(" ", string.Empty),
                 selectedPartner == 0 ? "" : Partners[selectedPartner].UNP);
             RaisePropertyChanged(nameof(documents));

@@ -28,8 +28,7 @@ namespace MenuPagesViewModels
                 CloseItem(SelectedItem);
                 var billOfLading = new BillOfLadingDB().GetBillOfLading(billOfLadingId);
 
-                AddItem(billOfLading.Type + " № " + billOfLading.Number
-                        + "от" + billOfLading.Date.Date, new TTN() { DataContext = new TTNVM(billOfLading.Id, OnDelete, OnEdit) });
+                AddItem($"{billOfLading.Type} № {billOfLading.Number} от {Helpers.DateName(billOfLading.Date.AddMonths(-1))}", new TTN() { DataContext = new TTNVM(billOfLading.Id, OnDelete, OnEdit) });
                 RaisePropertyChanged(nameof(SelectedItem.Header));
             };
 
@@ -78,8 +77,7 @@ namespace MenuPagesViewModels
             else
             {
                 billOfLadingId = billOfLading.Id;
-                AddItem(billOfLading.Type + " № " + billOfLading.Number
-                        + "от" + billOfLading.Date.Date,
+                AddItem($"{billOfLading.Type} № {billOfLading.Number} от {Helpers.DateName(billOfLading.Date.AddMonths(-1))}",
                     new TTN() {DataContext = new TTNVM(billOfLading.Id, OnDelete, OnEdit)});
             }
 
@@ -99,8 +97,7 @@ namespace MenuPagesViewModels
 
                 billOfLadingId = new BillOfLadingDB().Add(billOfLading);
 
-                AddItem(billOfLading.Type + " № " + billOfLading.Number
-                        + "от" + billOfLading.Date.Date,
+                AddItem($"{billOfLading.Type} № {billOfLading.Number} от {Helpers.DateName(billOfLading.Date.AddMonths(-1))}",
                     new TTN() {DataContext = new TTNVM(billOfLading.Id, OnDelete, OnEdit)});
             }
         }

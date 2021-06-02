@@ -163,8 +163,8 @@ namespace DocumentsPagesViewModels
         
         #region AddUnity
 
-        private int addUnity;
-        public int AddUnity
+        private int? addUnity;
+        public int? AddUnity
         {
             set => addUnity = value;
             get => addUnity;
@@ -204,7 +204,12 @@ namespace DocumentsPagesViewModels
         public string AddVatRate
         {
             get => addVatRate;
-            set => addVatRate = value;
+            set 
+            {
+            addVatRate = value;
+            SetTaxSum();
+            RaisePropertyChanged(nameof(addVat));
+            }
         }
 
         #endregion
@@ -235,9 +240,9 @@ namespace DocumentsPagesViewModels
 
         #region AddAcccount
 
-        private int addAccount;
+        private int? addAccount;
 
-        public int AddAccount
+        public int? AddAccount
         {
             get => addAccount;
             set => addAccount = value;
@@ -262,7 +267,7 @@ namespace DocumentsPagesViewModels
                 return;
             var materialsInfo = new MaterialsInfo()
             {
-                Name = addName, Unity = Units[addUnity], Account = accounts[addAccount]
+                Name = addName, Unity = Units[(int) addUnity], Account = accounts[(int) addAccount]
             };
             int materialsInfoId = materialsInfoDb.Add(materialsInfo);
             var income = new Income()
@@ -293,7 +298,7 @@ namespace DocumentsPagesViewModels
         private void AddCancel()
         {
             addName = String.Empty;
-            addUnity = 0;
+            addUnity = -1;
             addCount = null;
             addCost = null;
             addVatRate = string.Empty;
@@ -354,9 +359,9 @@ namespace DocumentsPagesViewModels
 
         #region EditUnity
 
-        private int editUnity;
+        private int? editUnity;
 
-        public int EditUnity
+        public int? EditUnity
         {
             get => editUnity;
             set => editUnity = value;
@@ -450,7 +455,7 @@ namespace DocumentsPagesViewModels
             var newMaterials = new MaterialsInfo()
             {
                 Name = editName,
-                Unity = Units[editUnity],
+                Unity = Units[(int) editUnity],
                 Account = accounts[editAccount]
             };
             var newIncome = new Income()
@@ -504,7 +509,7 @@ namespace DocumentsPagesViewModels
         private void EditCancel()
         {
             editName = String.Empty;
-            editUnity = 0;
+            editUnity = -1;
             editCount = null;
             editCost = null;
             editVatRate = string.Empty;
@@ -650,6 +655,12 @@ namespace DocumentsPagesViewModels
             get => materialsInfoDb.GetNames();
         }
 
+        private void SetTaxSum()
+        {
+            if (addVatRate == null || addCost == null) return;
+            addVat = (float)addCost * Convert.ToSingle(addVatRate) / 100;
+            RaisePropertyChanged(nameof(addVat));
+        }
         private void GetJoinedList()
         {
             materials = incomeDb.GetList(billOfLadingId).Join(
@@ -660,11 +671,11 @@ namespace DocumentsPagesViewModels
                     Name = m.Name,
                     Unity = m.Unity,
                     Count = i.Count,
-                    Cost = i.Cost,
-                    Price = m.Price,
+                    Cost = Math.Round(i.Cost, 2),
+                    Price = Math.Round(m.Price, 2),
                     VatRate = i.VatRate,
-                    Vat = i.Vat,
-                    CostWithVat = i.CostWithVat,
+                    Vat = Math.Round(i.Vat, 2),
+                    CostWithVat = Math.Round(i.CostWithVat, 2),
                     Weight = i.Weight,
                     Account = m.Account
 

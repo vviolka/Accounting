@@ -1,29 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Common;
 using DevExpress.Mvvm;
-using ReportCard = Model.ReportCard;
 
 namespace SalaryPagesViewModels
 {
-    public class SalaryViewVM : BindableBase
+   public class SalariesVM:BindableBase
     {
-        public SalaryViewVM()
+        public SalariesVM()
         {
             this.Items = new ObservableCollection<TabItemViewModel>();
-            openAddCardRepordWindowCommand = new RelayCommand(OpenGenerateReportWindow);
+            openAddSalaryWindowCommand = new RelayCommand(OpenGenerateReportWindow);
         }
 
         #region OpenGenerateReportWindow
 
-        private ICommand openAddCardRepordWindowCommand;
+        private ICommand openAddSalaryWindowCommand;
 
-        public ICommand OpenAddCardRepordWindowCommand
+        public ICommand OpenAddSalaryWindowCommand
         {
-            get => openAddCardRepordWindowCommand;
-            set => openAddCardRepordWindowCommand = value;
+            get => openAddSalaryWindowCommand;
+            set => openAddSalaryWindowCommand = value;
         }
 
         private void OpenGenerateReportWindow()
@@ -33,9 +36,9 @@ namespace SalaryPagesViewModels
             if (date == null)
                 return;
             //add tab and add page depends on selected account (dictionary)
-            var page = new SalaryPages.ReportCard();
-            page.DataContext = new ReportCardVM(date);
-            AddItem($"табель за {Helpers.Monthes[new DateTime(date.Year, date.Month, date.Day).AddMonths(-1).Month].ToLower()} {date.Year} г.", page);
+            var page = new SalaryPages.SalaryPage();
+            page.DataContext = new SalaryVM(date);
+            AddItem($"зарплата за {Helpers.Monthes[new DateTime(date.Year, date.Month, date.Day).AddMonths(-1).Month].ToLower()} {date.Year}", page);
         }
 
         #endregion

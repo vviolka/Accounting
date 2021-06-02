@@ -21,7 +21,8 @@ namespace Model
         public DbSet<PartnersBalances> PartnersBalances { get; set; }
         public DbSet<ResultMonth> ResultMonthes { get; set; }
         public DbSet<WorkedDay> WorkedDays { get; set; }
-       // public DbSet<Salary> Salaries { get; set; }
+       public DbSet<Salary> Salaries { get; set; }
+       public DbSet<Vacation> Vacations { get; set; }
         
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

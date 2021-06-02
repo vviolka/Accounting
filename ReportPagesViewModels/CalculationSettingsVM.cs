@@ -35,6 +35,9 @@ namespace ReportPagesViewModels
             createPanelVisible = true;
             editPanelVisible = false;
             window.ShowDialog();
+            date = DateTime.Today;
+            Date = DateTime.Now;
+            
             return production;
         }
         public void Show(Production production)
@@ -279,6 +282,7 @@ namespace ReportPagesViewModels
                 Transportation = Transportation,
                 SellingPrice = SellingPrice
             };
+            new Reports().AddProduction(production);
 
             window.Close();
         }

@@ -23,8 +23,15 @@
             <Setter Property="BorderBrush" Value="#1c4348"/>
           
         </Style>
-
-
+        <Style x:Key="activeTextEditStyle" TargetType="dxe:TextEdit">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style>
+        <!--<dxg:GridColumn.CellTemplate>  
+        <DataTemplate>  
+            <dxe:InplaceBaseEdit x:Name="PART_Editor" EditCoreStyle="{StaticResource activeTextEditStyle}"/>  
+        </DataTemplate>  
+    </dxg:GridColumn.CellTemplate>  -->
+        
         <Style TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="ContentTemplate">
                 <Setter.Value>
@@ -39,22 +46,31 @@
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="0.5"/>
         </Style>
+
+
         <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#1c4348"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Foreground" Value="#ffffff"/>
             <Setter Property="Padding" Value="10 0  "/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ButtonBase}">
-                        <Border x:Name="border" CornerRadius="10"  BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Border x:Name="border" CornerRadius="10"  BorderThickness="1" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding Foreground}" SnapsToDevicePixels="True">
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#F31A4142"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#132d2e"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
+        
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="Margin" Value="5"/>
 
@@ -90,8 +106,20 @@
         <Style TargetType="{x:Type ComboBox}">
             <Setter Property="Margin" Value="5"/>
         </Style>
-        
+      
 
+        <Style TargetType="dxg:TableView">
+            <Setter Property="ColumnHeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                    </DataTemplate>
+</Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="dxe:TextEditSettings">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
 
 
 
@@ -134,7 +162,7 @@
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button  Command="{Binding AddNewCommand}" Margin="5" Content="Добавить"/>
-                        <Button Command="{Binding AddCancelCommand}" Content="Отмена"/>
+                        <Button Command="{Binding AddCancelCommand}" Background="White" Foreground="#132d2e" BorderBrush="#132d2e" BorderThickness="1" Content="Отмена" />
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -158,7 +186,7 @@
 
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="0">
-                        <Button Command="{Binding SearchCancelCommand}" Content="Отмена"/>
+                        <Button Command="{Binding SearchCancelCommand}" Foreground="#132d2e" Background="White" Content="Отмена"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -183,18 +211,18 @@
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.ColumnSpan="2">
                         <Button Command="{Binding SaveChangesCommand}" Content="Сохранить"/>
-                        <Button Command="{Binding DeleteCommand}" Content="Удалить"/>
-                        <Button Command="{Binding SaveAsNewCommand}" Content="Добавить как новую"/>
-                        <Button Command="{Binding EditCancelCommand}" Content="Отмена"/>
+                        <Button Command="{Binding DeleteCommand}" Foreground="#132d2e" Background="White" Content="Удалить"/>
+                        <Button Command="{Binding EditCancelCommand}" Foreground="#132d2e" Background="White" Content="Отмена"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
         </TabControl>
         <dxg:GridControl Margin="7" BorderThickness="1"  dx:ThemeManager.ThemeName="Office2016White" Grid.Row="1" x:Name="grid" ShowBorder="False" ItemsSource="{Binding Partners}" SelectedItem="{Binding SelectedPartner}" AutoGenerateColumns="None" Background="red" Foreground="Yellow" SelectionMode="Row">
             <dxg:GridControl.View>
-                <dxg:TableView AllowEditing="False" ShowIndicator="False"  AlternateRowBackground="#ecf8f6"  AutoWidth="True" ShowGroupPanel="False"/>
+                <dxg:TableView AllowEditing="False" ShowIndicator="False"  AlternateRowBackground="#ecf8f6" ShowGroupPanel="False"/>
             </dxg:GridControl.View>
-            <dxg:GridColumn Header="Название" Width ="*" Binding="{Binding Name}"/>
+            <dxg:GridColumn   Header="Название" Width ="*" Binding="{Binding Name}">
+            </dxg:GridColumn>
             <dxg:GridColumn Header="УНП" MinWidth="100" Width="0.9*"  Binding="{Binding UNP}" />
             <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding PartnersRowClickCommand}" />

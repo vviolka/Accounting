@@ -1,28 +1,47 @@
-﻿<Page x:Class="SalaryPages.PostsEmployeesPage"
+﻿<Page x:Class="SalaryPages.VacationsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+      xmlns:local="clr-namespace:SalaryPages"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+      xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
       xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
       xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="PostsEmployeesPage">
+      mc:Ignorable="d"
+      Title="VacationsPage">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
-        <Style TargetType="{x:Type dxe:TextEdit}">
+        <Style TargetType="dxg:TableView">
+            <Setter Property="ColumnHeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="dxe:TextEditSettings">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style TargetType="dxe:DateEdit">
+            <Setter Property="dx:ThemeManager.ThemeName" Value="Office2016White"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="PopupMaxWidth" Value="250"/>
+            <Setter Property="PopupMaxHeight" Value="260"/>
+            <Setter Property="Foreground" Value="#54696a"/>
+            <Setter Property="BorderBrush" Value="#54696a"/>
+            <Setter Property="Background" Value="#ffffff"/>
             <Setter Property="Margin" Value="5"/>
+        </Style>
+      <Style TargetType="{x:Type dxe:TextEdit}">
+            <Setter Property="Margin" Value="5 "/>
             <Setter Property="Foreground" Value="#1c4348"/>
+            <Setter Property="Height" Value="30"/>
             <Setter Property="Background" Value="#ffffff"/>
             <Setter Property="BorderBrush" Value="#1c4348"/>
-            <Setter Property="Height" Value="25"/>
-
-        </Style>
-
-
+      </Style>
         <Style TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="ContentTemplate">
                 <Setter.Value>
@@ -42,19 +61,12 @@
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Foreground" Value="#ffffff"/>
             <Setter Property="Padding" Value="10 0  "/>
-            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ButtonBase}">
-                        <Border x:Name="border" CornerRadius="10"  BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}"  Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Border x:Name="border" CornerRadius="10"  BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#F31A4142"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="#132d2e"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -95,22 +107,11 @@
         <Style TargetType="{x:Type ComboBox}">
             <Setter Property="Margin" Value="5"/>
         </Style>
-
-
-        <Style TargetType="dxe:ComboBoxEdit">
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-
-
-
-
-
-
-
+        
     </Page.Resources>
 
     <dxmvvm:Interaction.Behaviors>
-        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding LoadPostsCommand}" AllowChangingEventOwnerIsEnabled="False" UseDispatcher="True"/>
+        <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding LoadVacationsCommand}" AllowChangingEventOwnerIsEnabled="False" UseDispatcher="True"/>
     </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
@@ -118,7 +119,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TabControl dx:ThemeManager.ThemeName="Office2016White" Grid.Row="0"  SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <TabControl dx:ThemeManager.ThemeName="Office2016White"  Grid.Row="0"  SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <TabItem Header="Добавление">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -131,20 +132,27 @@
                             <ColumnDefinition Width="0.3*"/>
 
                             <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="1.5*"/>
 
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Grid.Column="0" Kind="AddBox"  Height="30" Width="30" Foreground="#20454b" HorizontalAlignment="Center"  VerticalAlignment="Center" />
-                        <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White"  Grid.Column="1" ItemsSource="{Binding Employees, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding AddSelectedEmployee, UpdateSourceTrigger=PropertyChanged}" NullText="Сотрудник" IsReadOnly="False"/>
-                        <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White"  Grid.Column="2" NullText="Должность"  ItemsSource="{Binding Posts, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding AddSelectedPost, UpdateSourceTrigger=PropertyChanged}"/>
-                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="3" Text="{Binding AddBid}" NullText="Ставка" Mask="f" MaskType="Numeric" />
-
-
+                        <dxe:ComboBoxEdit  Grid.Column="1" Background="#ffffff"  Foreground="Black" 
+                                           ItemsSource="{Binding Names}"
+                                           SelectedIndex="{Binding AddName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                       BorderBrush="Black" ShowBorderInInplaceMode="False" NullText="ФИО" IsReadOnly="False"/>
+                        <Viewbox Grid.Column="2" VerticalAlignment="Center" Height="40">
+                            <dxe:DateEdit Margin="10" dx:ThemeManager.ThemeName="Office2016White"  VerticalAlignment="Center" PopupMaxWidth="250" PopupMaxHeight="260" Foreground="#54696a" BorderBrush="#54696a" Background="#ffffff" Width="150" DateTime="{Binding AddStartDate, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="17" />
+                        </Viewbox>
+                        <Viewbox Grid.Column="3" VerticalAlignment="Center" Height="40">
+                            <dxe:DateEdit Margin="10" dx:ThemeManager.ThemeName="Office2016White"  VerticalAlignment="Center" PopupMaxWidth="250" PopupMaxHeight="260" Foreground="#54696a" BorderBrush="#54696a" Background="#ffffff" Width="150" DateTime="{Binding AddEndDate, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="17" />
+                        </Viewbox>
+                        <dxe:TextEdit Grid.Column="4"  Text="{Binding AddDaysCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></dxe:TextEdit>
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button  Command="{Binding AddNewCommand}" Margin="5" Content="Добавить"/>
-                        <Button Command="{Binding AddCancelCommand}" Foreground="#132d2e" Background="White" Content="Отмена"/>
+                        <Button Command="{Binding AddCancelCommand}" Content="Отмена"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -168,7 +176,7 @@
 
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="0">
-                        <Button Command="{Binding SearchCancelCommand}" Foreground="#132d2e" Background="White" Content="Отмена"/>
+                        <Button Command="{Binding SearchCancelCommand}" Content="Отмена"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -193,24 +201,27 @@
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.ColumnSpan="2">
                         <Button Command="{Binding SaveChangesCommand}" Content="Сохранить"/>
-                        <Button Command="{Binding DeleteCommand}" Foreground="#132d2e" Background="White" Content="Удалить"/>
-                        <Button Command="{Binding EditCancelCommand}" Foreground="#132d2e" Background="White" Content="Отмена"/>
+                        <Button Command="{Binding DeleteCommand}" Content="Удалить"/>
+                        <Button Command="{Binding EditCancelCommand}" Content="Отмена"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
         </TabControl>
-
-        <dxg:GridControl Margin="10 5" BorderThickness="1"  dx:ThemeManager.ThemeName="Office2016White" Grid.Row="1" x:Name="grid" ShowBorder="False" ItemsSource="{Binding EmployeesPosts}" SelectedItem="{Binding SelectedEmployeePost}" AutoGenerateColumns="None" Background="red" Foreground="Yellow" SelectionMode="Row">
+        <dxg:GridControl Margin="7" BorderThickness="1"  dx:ThemeManager.ThemeName="Office2016White" Grid.Row="1" x:Name="grid" ShowBorder="False" 
+                         ItemsSource="{Binding Vacations}" SelectedItem="{Binding SelectedVacation}" AutoGenerateColumns="None" Background="red" Foreground="Yellow" SelectionMode="Row">
             <dxg:GridControl.View>
                 <dxg:TableView AllowEditing="False" ShowIndicator="False"  AlternateRowBackground="#ecf8f6"  AutoWidth="True" ShowGroupPanel="False"/>
             </dxg:GridControl.View>
-            <dxg:GridColumn Header="Сотрудник" Width ="2*" Binding="{Binding Employee}"/>
-            <dxg:GridColumn Header="Должность" Width ="2*" Binding="{Binding Post}"/>
-            <dxg:GridColumn Header="Ставка" Width="*"  Binding="{Binding Bid}" />
+            <dxg:GridColumn Header="Название" Width ="3*" Binding="{Binding Employee}"/>
+            <dxg:GridColumn Header="с" MinWidth="100" Width="0.9*"  Binding="{Binding StartDate}" />
+            <dxg:GridColumn Header="по" MinWidth="100" Width="0.9*"  Binding="{Binding EndDate}" />
+            <dxg:GridColumn Header="Количество дней" MinWidth="100" Width="0.9*"  Binding="{Binding DaysCount}" />
             <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding EmployeesPostsRowClickCommand}" />
+                <dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding VacationsRowClickCommand}" />
             </dxmvvm:Interaction.Behaviors>
         </dxg:GridControl>
+       
+        <!-- <wpf:LoadingIndicator Style="{StaticResource LoadingIndicatorRingStyleKey}" Grid.RowSpan="2" Grid.Row="0" SpeedRatio="1" IsActive="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}" Foreground="#1c4348"  /> -->
     </Grid>
 
 

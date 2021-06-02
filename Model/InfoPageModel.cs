@@ -35,6 +35,7 @@ namespace Model
 			}
 			return name;
 		}
+		//возвращает полное имя организации по короткому 
 		public string TransformShortName(string shortOrganizationName)
 		{
 			if (shortOrganizationName == null)
@@ -67,23 +68,15 @@ namespace Model
 			};
 			shortOrganizationName = GetSeperatedName(shortOrganizationName, out string organizationForm);
 			if (formDictionary.TryGetValue(organizationForm, out var fullOrganizationForm))
-			{
-				//shortOrganizationName = organizationForm + name;
 				longOrganizationName = fullOrganizationForm + ' ' + shortOrganizationName;
-			}
 			else
-			{
 				longOrganizationName = shortOrganizationName;
-			}
 
-			/*else if (name == String.Empty)
-				longOrganizationName = organizationForm;
-			else
-				longOrganizationName = name;*/
 
 			return longOrganizationName;
 		}
 
+		//сохранить данные в файл
 		public void Save(string shortOrganizationName, string longOrganizationName, string unp, string egr, string registrationDate,
 			string taxAuthority, string bankAccount, string head, string chiefAccountant, string cashier)
 		{
@@ -102,15 +95,13 @@ namespace Model
                 streamWriter.WriteLine(head);
                 streamWriter.WriteLine(chiefAccountant);
                 streamWriter.WriteLine(cashier);
-
-                //SaveBtnVisible = false;
+                
             }
 			catch (IOException)
-			{
-				// ignored
-			}
+			{ }
 		}
 
+		//чтение данных из файла
 		public bool Read(out string shortOrganizationName,
 			out string longOrganizationName,
 			out string unp,

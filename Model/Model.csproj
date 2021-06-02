@@ -135,6 +135,7 @@
     <Compile Include="Common.cs" />
     <Compile Include="DBStructure\AdaptedDocument.cs" />
     <Compile Include="DBStructure\AdaptedEmployee.cs" />
+    <Compile Include="DBStructure\AdaptedVacation.cs" />
     <Compile Include="DBStructure\AdaptedWorkOut.cs" />
     <Compile Include="DBStructure\AvailableMaterials.cs" />
     <Compile Include="DBStructure\Balance.cs" />
@@ -151,6 +152,8 @@
     <Compile Include="DBStructure\Post.cs" />
     <Compile Include="DBStructure\Production.cs" />
     <Compile Include="DBStructure\ResultMonth.cs" />
+    <Compile Include="DBStructure\Salary.cs" />
+    <Compile Include="DBStructure\Vacation.cs" />
     <Compile Include="DBStructure\WorkedDay.cs" />
     <Compile Include="EmployeesDB.cs" />
     <Compile Include="IncomeDB.cs" />
@@ -165,6 +168,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportCard.cs" />
     <Compile Include="Reports.cs" />
+    <Compile Include="SalaryDB.cs" />
+    <Compile Include="VacationCalculations.cs" />
+    <Compile Include="VacationsDB.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\..\..\Accounting\Mode\Model.csproj">

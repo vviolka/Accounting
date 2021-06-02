@@ -14,9 +14,11 @@ namespace Model
         }
 
 
+        //добавить запись
         public void Add(Income income)
         {
             using var dc = new ApplicationContext();
+            income.CostWithVat = income.Cost + income.Vat;
             dc.Incomes.Add(income);
             dc.SaveChanges();
 
@@ -30,6 +32,7 @@ namespace Model
             ac.SaveChanges();
         }
 
+        //получить лист материлов, пришедших по платежке 
         public List<Income> GetList(int billOfLadingId)
         {
             using var dc = new ApplicationContext();
@@ -38,6 +41,7 @@ namespace Model
             return income;
         }
         
+        //редактирование
         public void Edit(int id, Income oldIncome)
         {
             using var dataContext = new ApplicationContext();
@@ -61,6 +65,7 @@ namespace Model
 
         }
 
+        //удалить
         public void Delete(Income income)
         {
             using var dataContext = new ApplicationContext();

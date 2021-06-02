@@ -17,12 +17,13 @@
             <Setter Property="Height" Value="60"/>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Margin" Value="5" />
+            <Setter Property="Margin" Value="15 10" />
             <Setter Property="Background" Value="#132d2e"/>
             <Setter Property="BorderBrush" Value="#132d2e" />
             <Setter Property="Padding" Value="5" />
             <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"/>
-            <Setter Property="MaxHeight" Value="200"/>
+            <Setter Property="MaxHeight" Value="250"/>
+            <Setter Property="Cursor" Value="Hand"/>
 
         </Style>
 
@@ -42,8 +43,8 @@
                     <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" TargetName="border" Value="#FFBEE6FD"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>
+                    <Setter Property="Background" TargetName="border" Value="#F31A4142"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="#132d2e"/>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
@@ -69,7 +70,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Button Grid.Row="0" Grid.Column="0" Template="{DynamicResource RoundedButtonBase}"
@@ -83,19 +83,9 @@
             </StackPanel>
 
         </Button>
-
-        <Button Grid.Row="1" Grid.Column="0" Template="{DynamicResource RoundedButtonBase}"  Command="{Binding GoToPostsInfoPage}" CommandParameter="{Binding PostsInfoPageVM}">
-
-            <StackPanel>
-                <materialDesign:PackIcon Kind="DriveEta"/>
-                <TextBlock>Командировки</TextBlock>
-            </StackPanel>
-
-        </Button>
-
-
+        
         <Button Grid.Row="0" Grid.Column="1" Template="{DynamicResource RoundedButtonBase}"
-                Command="{Binding GoToMaterialsInfoPage}" CommandParameter="{Binding MaterialsInfoPageVM}">
+                Command="{Binding GoToSalariesPage}" CommandParameter="{Binding SalariesViewPageVM}">
 
             <StackPanel>
                 <materialDesign:PackIcon Kind="Money"/>
@@ -105,7 +95,8 @@
         </Button>
 
 
-        <Button Grid.Row="1" Grid.Column="1" Template="{DynamicResource RoundedButtonBase}"  Command="{Binding GoToEmployeesInfoPage}" CommandParameter="{Binding EmployeesInfoPageVM}">
+        <Button Grid.Row="1" Grid.Column="1" Template="{DynamicResource RoundedButtonBase}"  
+                Command="{Binding GoToVacationsPage}" CommandParameter="{Binding VacationsPageVM}">
 
             <StackPanel>
                 <materialDesign:PackIcon Kind="PalmTree"/>
@@ -114,18 +105,7 @@
 
         </Button>
 
-
-        <Button Grid.Row="0" Grid.Column="2" Template="{DynamicResource RoundedButtonBase}">
-
-            <StackPanel>
-                <materialDesign:PackIcon Kind="Hospital"/>
-                <TextBlock>Больничные</TextBlock>
-            </StackPanel>
-
-        </Button>
-
-
-        <Button Grid.Row="1" Grid.Column="2" Template="{DynamicResource RoundedButtonBase}"
+        <Button Grid.Row="1" Grid.Column="0" Template="{DynamicResource RoundedButtonBase}"
                 Command="{Binding GoToEmployeesPostsPage}" CommandParameter="{Binding EmployeesPostsPageVM}">
 
             <StackPanel>

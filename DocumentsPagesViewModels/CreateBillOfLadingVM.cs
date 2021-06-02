@@ -17,6 +17,7 @@ namespace DocumentsPagesViewModels
         {
             createCommand = new DelegateCommand(Create);
             createVisibility = true;
+            documentsDate = DateTime.Today;
         }
         public CreateBillOfLadingVM(BillOfLading billOfLading)
         {
@@ -31,6 +32,7 @@ namespace DocumentsPagesViewModels
             RaisePropertyChanged(nameof(documentsDate));
             RaisePropertyChanged(nameof(documentsNumber));
             RaisePropertyChanged(nameof(selectedPartner));
+            documentsDate = DateTime.Today;
 
         }
         #region DocumentsDate

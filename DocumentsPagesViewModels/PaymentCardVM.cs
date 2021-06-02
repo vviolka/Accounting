@@ -19,6 +19,7 @@ namespace DocumentsPagesViewModels
 
         public PaymentCardVM(BillOfLading? billOfLading,  TTNVM.DeleteHandler notifier, TTNVM.DeleteHandler updater)
         {
+            Date = DateTime.Today;
             model = new BillOfLadingDB();
             deleteHandler = notifier;
             updateHandler = updater;

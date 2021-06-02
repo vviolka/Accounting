@@ -12,11 +12,12 @@ namespace Model
         public List<AvailableMaterials> GetAvailableMaterials(DateTime date, string account)
         {
             using var ac = new ApplicationContext();
-
+            //date = date.AddMonths(-1);
+            var ndate = new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
             var incomes = ac.Incomes.ToList<Income>();
             var materials = ac.MaterialInfoes.Where(material => material.Account == account).ToList();
             var bills = ac.BillsOfLading.ToList();
-            var balancesList = ac.Balances.ToList();
+            var balancesList = ac.Balances.ToList().Where(x => x.Date < ndate);
             var balances = (from balance in balancesList
                 where
                     balancesList.GroupBy(g => g.MaterialId)
@@ -54,7 +55,7 @@ namespace Model
                 join material in materials on balance.MaterialsId equals material.Id
                 join income in incomes on material.Id equals income.MaterialId
                 join bill in bills on income.BillId equals bill.Id
-                where bill.Date < date
+                where bill.Date < ndate
                           select
                     new AvailableMaterials()
                     {
@@ -72,7 +73,7 @@ namespace Model
                     from material in materials
                     join income in incomes on material.Id equals income.MaterialId
                     join bill in bills on income.BillId equals bill.Id
-                    where bill.Date.Month == date.Month
+                    where bill.Date.Month == date.Month && bill.Date.Year == date.Year
                     select
                         new AvailableMaterials()
                         {
@@ -92,7 +93,7 @@ namespace Model
         public List<Production> GetProductions(DateTime date)
         {
             using var ac = new ApplicationContext();
-            var tmp = ac.Productions.ToList();
+            List<Production> tmp = ac.Productions.ToList();
             return ac.Productions.Where(p => p.Date.Month == date.Month).ToList();
         }
 

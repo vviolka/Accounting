@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DevExpress.Mvvm;
@@ -8,12 +9,11 @@ using Model.DBStructure;
 using Timer = System.Timers.Timer;
 
 
-namespace InfoPagesViewModels
+namespace SalaryPagesViewModels
 {
-    public class PartnersInfoVM : BindableBase
+    public class VacationsPageVM : BindableBase
     {
-        private readonly PartnerDB dataBase;
-        private readonly IErrorAlert errorAlert;
+        private readonly VacationsDB dataBase;
 
         #region selectedTabIndex
 
@@ -48,13 +48,13 @@ namespace InfoPagesViewModels
         #endregion
 
 
-        #region AddPartner
+        #region AddVacation
 
         #region AddName
 
-        private string addName = string.Empty;
+        private int addName;
 
-        public string AddName
+        public int AddName
         {
             set
             {
@@ -66,24 +66,64 @@ namespace InfoPagesViewModels
             }
         }
         #endregion
+        
+        #region AddStartDate
 
-        #region AddUNP
+        private DateTime addStartDate = DateTime.Now;
 
-        private string addUNP;
-        public string AddUNP
+        public DateTime AddStartDate
         {
-            set => addUNP = value;
-            get => addUNP;
+            set
+            {
+                addStartDate = value;
+            }
+            get
+            {
+                return addStartDate;
+            }
         }
+        #endregion
+        
+        #region AddEndDate
 
+        private DateTime addEndDate = DateTime.Now;
 
+        public DateTime AddEndDate
+        {
+            set
+            {
+                addEndDate = value;
+            }
+            get
+            {
+                return addEndDate;
+            }
+        }
+        #endregion
+        
+        
+        #region AddDaysCount
+
+        private int addDaysCount;
+
+        public int AddDaysCount
+        {
+            set
+            {
+                addDaysCount = value;
+            }
+            get
+            {
+                return addDaysCount;
+            }
+        }
+        #endregion
+
+       
         #endregion
 
 
-        #endregion
-
-
-        #region SearchPartner
+        #region SearchVacation
 
         #region SearchName
 
@@ -124,11 +164,11 @@ namespace InfoPagesViewModels
 
         private async void SearchByName(object sender, EventArgs e)
         {
-            nameTimer.Stop();
-            partners = dataBase.GetList(); //why?
-            if (searchName != string.Empty)
-                await Task.Run(() => partners = (List<Partner>)dataBase.SearchByName(searchName));
-            RaisePropertyChanged(nameof(partners));
+            // nameTimer.Stop();
+            // vacations = dataBase.GetList(); //why?
+            // if (searchName != string.Empty)
+            //     await Task.Run(() => vacations = (List<Vacation>)dataBase.SearchByName(searchName));
+            // RaisePropertyChanged(nameof(vacations));
         }
 
         //todo: make parallel
@@ -165,16 +205,14 @@ namespace InfoPagesViewModels
 
         private void AddNew()
         {
-            if (addName != string.Empty && addUNP.Replace(" ", string.Empty).Length == 9)
+            if (employees[addName] != null && addDaysCount > 0 && addDaysCount <= (addEndDate - addStartDate).Days + 1)
             {
-                var partner = new Partner() { Name = addName, UNP = addUNP};
-                dataBase.Add(partner);
-                partners = dataBase.GetList();
+                var vacation = new Vacation() {DaysCount = addDaysCount, EmployeeId = employees[addName].Id, StartDate = addStartDate, EndDate = addEndDate};
+                dataBase.Add(vacation);
+                vacations = dataBase.GetList();
                 AddCancel();
-                RaisePropertyChanged(nameof(partners));
+                RaisePropertyChanged(nameof(vacations));
             }
-            else 
-                errorAlert.ErrorAlert("Форма заполнена некорректно");
         }
 
         #endregion
@@ -197,36 +235,36 @@ namespace InfoPagesViewModels
 
         #endregion
 
-        #region LoadPartnersCommand
+        #region LoadVacationsCommand
 
-        public ICommand LoadPartnersCommand
+        public ICommand LoadVacationsCommand
         {
-            get => loadPartnersCommand;
-            set => loadPartnersCommand = value;
+            get => loadVacationsCommand;
+            set => loadVacationsCommand = value;
         }
-        private ICommand loadPartnersCommand;
+        private ICommand loadVacationsCommand;
 
-        public async void LoadPartners()
+        public async void LoadVacations()
         {
-            await Task.Run(() => Partners = dataBase.GetList());
+            await Task.Run(() => Vacations = dataBase.GetList());
 
-            RaisePropertyChanged(nameof(Partners));
+            RaisePropertyChanged(nameof(Vacations));
             isActive = false;
             RaisePropertyChanged(nameof(isActive));
         }
         #endregion
 
-        #region SelectedPartner
+        #region SelectedVacation
 
-        private Partner selectedPartner;
+        private int selectedVacation;
 
-        public Partner SelectedPartner
+        public int SelectedVacation
         {
-            get => selectedPartner;
+            get => selectedVacation;
             set
             {
-                selectedPartner = value;
-                RaisePropertyChanged(nameof(selectedPartner));
+                selectedVacation = value;
+                RaisePropertyChanged(nameof(selectedVacation));
             }
         }
 
@@ -238,16 +276,20 @@ namespace InfoPagesViewModels
 
         private void AddCancel()
         {
-            addName = string.Empty;
-            addUNP = string.Empty;
-            selectedPartner = null;
+            addName = -1;
+            addDaysCount = 0;
+            addEndDate = DateTime.Now;
+            addStartDate = DateTime.Now;
+            selectedVacation = 0;
             RaisePropertyChanged(nameof(addName));
-            RaisePropertyChanged(nameof(addUNP));
+            RaisePropertyChanged(nameof(addDaysCount));
+            RaisePropertyChanged(nameof(addStartDate));
+            RaisePropertyChanged(nameof(addEndDate));
         }
 
         #endregion
 
-        #region EditPartner
+        #region EditVacation
 
         #region EditName
 
@@ -288,18 +330,14 @@ namespace InfoPagesViewModels
         private void SaveChanges()
         {
 
-            if (editName != string.Empty && editUNP.Replace(" ", string.Empty).Length != 9)
+            /*if (editName != string.Empty && editUNP.Replace(" ", string.Empty).Length != 9)
             {
-                var partner = new Partner() { Name = editName, UNP = editUNP};
-                dataBase.Edit(selectedPartner.Id, partner);
-                partners = dataBase.GetList();
-                RaisePropertyChanged(nameof(partners));
+                var vacation = new Vacation() { Name = editName, UNP = editUNP};
+                dataBase.Edit(vacations[selectedVacation].Id, vacation);
+                vacations = dataBase.GetList();
+                RaisePropertyChanged(nameof(vacations));
                 EditCancel();
-            }
-            else
-            {
-                errorAlert.ErrorAlert("Введите корректные значения для изменения");
-            }
+            }*/
         }
 
         #endregion
@@ -340,19 +378,15 @@ namespace InfoPagesViewModels
         {
             if (editName != string.Empty && editUNP.Replace(" ", string.Empty).Length != 9)
             {
-                var partner = new Partner()
+                var vacation = new Vacation()
                 {
-                    Name = editName,
-                    UNP = editUNP,
+                    // Name = editName,
+                    // UNP = editUNP,
                 };
-                dataBase.Add(partner);
-                partners = dataBase.GetList();
-                RaisePropertyChanged(nameof(partners));
+                dataBase.Add(vacation);
+                vacations = dataBase.GetList();
+                RaisePropertyChanged(nameof(vacations));
                 EditCancel();
-            }
-            else
-            {
-                errorAlert.ErrorAlert("Введите корректные значения");
             }
         }
         #endregion
@@ -369,9 +403,9 @@ namespace InfoPagesViewModels
 
         private void Delete()
         {
-            dataBase.Delete(selectedPartner);
-            partners = dataBase.GetList();
-            RaisePropertyChanged(nameof(partners));
+            // dataBase.Delete(vacations[selectedVacation]);
+            // vacations = dataBase.GetList();
+            RaisePropertyChanged(nameof(vacations));
             EditCancel();
         }
 
@@ -386,21 +420,21 @@ namespace InfoPagesViewModels
 
         private void Search()
         {
-            partners = dataBase.Search(searchName, searchUNP.Replace(" ", string.Empty));
-            RaisePropertyChanged(nameof(partners));
+            // vacations = dataBase.Search(searchName, searchUNP.Replace(" ", string.Empty));
+            // RaisePropertyChanged(nameof(vacations));
         }
 
-        public ICommand PartnersRowClickCommand { get; set; }
+        public ICommand VacationsRowClickCommand { get; set; }
 
         private void OnRowClick()
         {
-            if (selectedPartner == null) return;
+            if (selectedVacation == -1) return;
             selectedTabIndex = 2;
-            var partner = selectedPartner;
-            editName = partner.Name;
-            editUNP = partner.UNP;
+            var vacation = vacations[selectedVacation];
+            // editName = vacation.Name;
+            // editUNP = vacation.UNP;
 
-            RaisePropertyChanged(nameof(selectedPartner));
+            RaisePropertyChanged(nameof(selectedVacation));
             RaisePropertyChanged(nameof(selectedTabIndex));
             RaisePropertyChanged(nameof(editName));
             RaisePropertyChanged(nameof(editUNP));
@@ -408,32 +442,42 @@ namespace InfoPagesViewModels
         #endregion
 
         #region construcor
-        public PartnersInfoVM(IErrorAlert errorAlert)
+        public VacationsPageVM()
         {
+            employees = new EmployeesDB().GetActualList();
             saveChangesCommand = new DelegateCommand(SaveChanges);
             addNewCommand = new DelegateCommand(AddNew);
-            PartnersRowClickCommand = new DelegateCommand(OnRowClick);
+            VacationsRowClickCommand = new DelegateCommand(OnRowClick);
             AddCancelCommand = new DelegateCommand(AddCancel);
-            loadPartnersCommand = new DelegateCommand(LoadPartners);
+            loadVacationsCommand = new DelegateCommand(LoadVacations);
             nameTimer.Elapsed += SearchByName;
             editCancelCommand = new DelegateCommand(EditCancel);
             deleteCommand = new DelegateCommand(Delete);
             saveAsNewCommand = new DelegateCommand(SaveAsNew);
             searchCancelCommand = new DelegateCommand(SearchCancel);
 
-            //partner = new MaterialsM(); 
-            dataBase = new PartnerDB();
+            //vacation = new MaterialsM(); 
+            dataBase = new VacationsDB();
             IsActive = true;
-            this.errorAlert = errorAlert;
         }
         #endregion
 
-        private List<Partner> partners;
+        #region Lists
 
-        public List<Partner> Partners
+        private List<Employee> employees;
+
+        public List<string> Names
         {
-            get => partners;
-            set => partners = value;
+            get => employees.Select(x => $"{x.LastName} {x.Name} {x.MiddleName}").ToList();
+        }
+
+        #endregion
+        private List<AdaptedVacation> vacations;
+
+        public List<AdaptedVacation> Vacations
+        {
+            get => vacations;
+            set => vacations = value;
         }
     }
 }

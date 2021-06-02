@@ -52,7 +52,6 @@
   <ItemGroup>
     <Compile Include="AllDocumentsVM.cs" />
     <Compile Include="CreateBillOfLadingVM.cs" />
-    <Compile Include="DocumentsPageVM.cs" />
     <Compile Include="MaterialsJoined.cs" />
     <Compile Include="PaymentCardVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

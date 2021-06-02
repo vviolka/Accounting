@@ -84,7 +84,16 @@
     <Compile Include="ReportCard.xaml.cs">
       <DependentUpon>ReportCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SalaryPage.xaml.cs">
+      <DependentUpon>SalaryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SalaryView.xaml.cs" />
+    <Compile Include="SalariesPage.xaml.cs">
+      <DependentUpon>SalariesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VacationsPage.xaml.cs">
+      <DependentUpon>VacationsPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -101,6 +110,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SalariesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VacationsPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PostsEmployeesPage.xaml.cs" />
@@ -140,6 +154,10 @@
     <Page Include="PostsEmployeesPage.xaml" />
     <Content Include="SalaryPages.csproj.bak" />
     <Page Include="ReportCard.xaml" />
+    <Page Include="SalaryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SalaryView.xaml" />
   </ItemGroup>
   <ItemGroup>

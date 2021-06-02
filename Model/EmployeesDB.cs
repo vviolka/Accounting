@@ -12,6 +12,7 @@ namespace Model
         {
             
         }
+        //добавить запись
         public void Add(Employee employee)
         {
             using var dc = new ApplicationContext();
@@ -19,6 +20,7 @@ namespace Model
             dc.SaveChanges();
         }
 
+        //получить список работников на данное время
         public List<Employee> GetActualList()
         {
             using var dc = new ApplicationContext();
@@ -27,6 +29,7 @@ namespace Model
             return employees;
         }
 
+        //изменить запись
         public void Edit(int id, Employee newEmployee)
         {
             using var dataContext = new ApplicationContext();
@@ -41,6 +44,7 @@ namespace Model
             dataContext.SaveChanges();
         }
 
+        //удалить запись
         public void Delete(Employee employees)
         {
             using var dataContext = new ApplicationContext();
@@ -49,6 +53,7 @@ namespace Model
             dataContext.SaveChanges();
         }
         
+        //поиск
         public List<Employee> Search(string name, string lastName, string middleName, DateTime dateBirth, DateTime acceptableDate)
         {
             List<Employee> resultList;

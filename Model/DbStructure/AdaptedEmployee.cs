@@ -8,5 +8,6 @@
         public string LastName  { get; set; }
         public string PostName  { get; set; }
         public float Rate { get; set; }
+        public int EmployeeId { get; set; }
     }
 }

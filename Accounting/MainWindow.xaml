@@ -54,6 +54,23 @@
             <Setter Property="FontSize" Value="13"/>
 
         </Style>
+
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <ContentPresenter Content="{TemplateBinding Content}">
+                            <ContentPresenter.LayoutTransform>
+                                <RotateTransform Angle="270" />
+                            </ContentPresenter.LayoutTransform>
+                        </ContentPresenter>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="15"/>
+
+        </Style>
     </Window.Resources>
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
@@ -68,12 +85,14 @@
         <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Background="#9fbdb1">
 
             <TextBlock FontSize="18" Margin="0 25">Accounting</TextBlock>
+            <!--
             <Button Margin="0 5">
                 <StackPanel Style="{StaticResource BtnContainer}">
                     <materialDesign:PackIcon Kind="Home" />
                     <TextBlock>Главная</TextBlock>
                 </StackPanel>
             </Button>
+            -->
 
             <Button Margin="0 5" Command="{Binding GoToReportsPage}"  CommandParameter="{Binding ReportsPageViewModel}">
                 <StackPanel Style="{StaticResource BtnContainer}">

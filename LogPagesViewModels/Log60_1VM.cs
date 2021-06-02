@@ -190,7 +190,6 @@ namespace LogPagesViewModels
         private void PrintLog()
         {
             new CalculationExcelReport(date).CreateLog(accounts.ToList());
-            // new PreviewWindow($"{Directory.GetCurrentDirectory()}\\Калькуляция {Helpers.Monthes[date.Month]}.xls").ShowDialog();
             var previewWin = new PreviewWindow();
             previewWin.LoadDocument($"{Directory.GetCurrentDirectory()}\\Журнал-ордер 60.1 {Helpers.Monthes[date.Month]}.xlsx");
             previewWin.Show();
@@ -203,8 +202,8 @@ namespace LogPagesViewModels
             var model = new PartnersBalancesDB();
             outputList = new ObservableCollection<ExpandoObject>();
             List<Partner> partners = new PartnerDB().GetList();
-            List<PartnersBalances> balances = model.GetList(date.AddMonths(-1));
-            date.AddMonths(1);
+            DateTime prevMonth = date.AddMonths(-1);
+            List<PartnersBalances> balances = model.GetList(prevMonth);
             int count = 7 + accounts.Count();
             for (int i = 0; i < partners.Count; i++)
             {
