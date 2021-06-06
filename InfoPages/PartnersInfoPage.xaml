@@ -26,11 +26,6 @@
         <Style x:Key="activeTextEditStyle" TargetType="dxe:TextEdit">
             <Setter Property="TextWrapping" Value="Wrap"/>
             </Style>
-        <!--<dxg:GridColumn.CellTemplate>  
-        <DataTemplate>  
-            <dxe:InplaceBaseEdit x:Name="PART_Editor" EditCoreStyle="{StaticResource activeTextEditStyle}"/>  
-        </DataTemplate>  
-    </dxg:GridColumn.CellTemplate>  -->
         
         <Style TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="ContentTemplate">

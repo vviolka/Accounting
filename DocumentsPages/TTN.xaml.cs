@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 
 namespace DocumentsPages
@@ -11,7 +12,7 @@ namespace DocumentsPages
         public TTN()
         {
             InitializeComponent();
-            
+            grid.Columns[0].Width = grid.Columns[0].ActualWidth;
         }
     }
 }

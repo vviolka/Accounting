@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using DevExpress.Mvvm;
 using Model;
@@ -192,7 +193,13 @@ namespace DocumentsPagesViewModels
         public float? AddCost
         {
             get => addCost;
-            set => addCost = value;
+            set 
+            {
+                addCost = value;
+                SetTaxSum();
+                RaisePropertyChanged(nameof(addVat));
+            
+            }
         }
 
         #endregion
@@ -449,8 +456,8 @@ namespace DocumentsPagesViewModels
         }
         private void SaveChanges()
         {
-            if (editName == String.Empty || editUnity == 0 || editCount == null ||
-                editCost == null || editVatRate == string.Empty || editVat == null || editAccount == 0)
+            if (editName == String.Empty || editUnity == -1 || editCount == null ||
+                editCost == null || editVatRate == string.Empty || editVat == null || editAccount == -1)
                 return;
             var newMaterials = new MaterialsInfo()
             {
@@ -641,7 +648,7 @@ namespace DocumentsPagesViewModels
 
         private void LoadMaterials()
         {
-            GetJoinedList();
+            Task.Run(GetJoinedList);
             isActive = false;
             UpdateResultValues();
             RaisePropertyChanged(nameof(materials));

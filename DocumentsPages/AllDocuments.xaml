@@ -76,7 +76,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Height="100" Grid.Row="0">
+        <Grid Height="60" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -91,17 +91,17 @@
             <Viewbox Grid.Row="0" Grid.Column="0" Margin="10">
                 <materialDesign:PackIcon Kind="AddBox" />
             </Viewbox>
-            <Viewbox Grid.Row="1" Grid.Column="0" Margin="10">
-                <materialDesign:PackIcon Kind="Search" />
-            </Viewbox>
+            <!-- <Viewbox Grid.Row="1" Grid.Column="0" Margin="10"> -->
+            <!--     <materialDesign:PackIcon Kind="Search" /> -->
+            <!-- </Viewbox> -->
             <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" NullText="Тип документа"  IsReadOnly="False" ItemsSource="{Binding Types}" SelectedIndex="{Binding SelectedTypeCreate}" />
             <Button Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Margin="10" FontSize="15"  Command="{Binding AddNewDocumentCommand}">Добавить новый документ</Button>
-            <Viewbox VerticalAlignment="Center" Height="40" Grid.Row="1" Grid.Column="1">
-                <dxe:DateEdit dx:ThemeManager.ThemeName="Office2016White" VerticalAlignment="Center" Foreground="#54696a" Background="{x:Null}" DateTime="{Binding DocumentsDate, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}" MaskCulture="ru-BY" PopupMaxHeight="250" PopupMaxWidth="250" />
-            </Viewbox>
-            <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White" NullText="Тип документа"  Grid.Row="1" Grid.Column="2" IsReadOnly="False" ItemsSource="{Binding Types}" SelectedIndex="{Binding SelectedTypeSearch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" NullText="Номер документа"  Grid.Row="1" Grid.Column="3" Mask="0000000" Tag="№ документа" Text="{Binding DocumentsNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaskUseAsDisplayFormat="False" MaskType="Numeric" />
-            <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White" NullText="Контрагент"  Grid.Row="1" Grid.Column="4" IsReadOnly="False" SelectedIndex="{Binding SelectedPartner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <!-- <Viewbox VerticalAlignment="Center" Height="40" Grid.Row="1" Grid.Column="1"> -->
+            <!--     <dxe:DateEdit dx:ThemeManager.ThemeName="Office2016White" VerticalAlignment="Center" Foreground="#54696a" Background="{x:Null}" DateTime="{Binding DocumentsDate, Mode = TwoWay, UpdateSourceTrigger=PropertyChanged}" MaskCulture="ru-BY" PopupMaxHeight="250" PopupMaxWidth="250" /> -->
+            <!-- </Viewbox> -->
+            <!-- <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White" NullText="Тип документа"  Grid.Row="1" Grid.Column="2" IsReadOnly="False" ItemsSource="{Binding Types}" SelectedIndex="{Binding SelectedTypeSearch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" /> -->
+            <!-- <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" NullText="Номер документа"  Grid.Row="1" Grid.Column="3" Mask="0000000" Tag="№ документа" Text="{Binding DocumentsNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaskUseAsDisplayFormat="False" MaskType="Numeric" /> -->
+            <!-- <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White" NullText="Контрагент"  Grid.Row="1" Grid.Column="4" IsReadOnly="False" SelectedIndex="{Binding SelectedPartner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" /> -->
         </Grid>
 
         <dxg:GridControl Margin="5" BorderThickness="1"  dx:ThemeManager.ThemeName="Office2016White" Grid.Row="1" x:Name="Grid" ShowBorder="False" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument}" AutoGenerateColumns="None" Background="red" Foreground="Yellow" SelectionMode="Row">

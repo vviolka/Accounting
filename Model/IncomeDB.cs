@@ -47,7 +47,7 @@ namespace Model
             using var dataContext = new ApplicationContext();
             var newIncome = dataContext.Incomes.First(x => x.Id == id);
 
-            var bill = ac.BillsOfLading.First(x => x.Id == oldIncome.BillId);
+            var bill = ac.BillsOfLading.First(x => x.Id == newIncome.BillId);
             var balance = ac.PartnersBalances.Where(x => x.PartnerId == bill.PartnerId && x.Date >= bill.Date);
             foreach (PartnersBalances balances in balance)
             {

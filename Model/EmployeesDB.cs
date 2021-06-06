@@ -54,18 +54,18 @@ namespace Model
         }
         
         //поиск
-        public List<Employee> Search(string name, string lastName, string middleName, DateTime dateBirth, DateTime acceptableDate)
+        public List<Employee> Search(string name, string lastName, string middleName/*, DateTime dateBirth, DateTime acceptableDate*/)
         {
             List<Employee> resultList;
             using var dc = new ApplicationContext();
             {
                 resultList = (from employee in dc.Employees
                               where
-          name == "" || EF.Functions.Like(employee.Name, '%' + name + '%') &&
+          name == "" || EF.Functions.Like(employee.Name, '%' + name + '%') 
+          &&
           (lastName == "" || EF.Functions.Like(employee.LastName, '%' + lastName + '%')) &&
-          (middleName == "" || EF.Functions.Like(employee.MiddleName, '%' + middleName + '%')) &&
-          (dateBirth == null || employee.DateBirth == dateBirth) &&
-          (acceptableDate == null || employee.AcceptableDate == acceptableDate)
+          (middleName == "" || EF.Functions.Like(employee.MiddleName, '%' + middleName + '%'))
+        
                               select employee).ToList();
             }
 

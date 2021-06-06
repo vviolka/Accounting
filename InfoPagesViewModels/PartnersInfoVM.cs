@@ -288,7 +288,7 @@ namespace InfoPagesViewModels
         private void SaveChanges()
         {
 
-            if (editName != string.Empty && editUNP.Replace(" ", string.Empty).Length != 9)
+            if (editName != string.Empty && editUNP.Replace(" ", string.Empty).Length == 9)
             {
                 var partner = new Partner() { Name = editName, UNP = editUNP};
                 dataBase.Edit(selectedPartner.Id, partner);

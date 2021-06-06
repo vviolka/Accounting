@@ -220,6 +220,5 @@
                 </dxg:GridControl.View>
             </dxg:GridControl>
         </Grid>
-        <!-- <wpf:LoadingIndicator Style="{StaticResource LoadingIndicatorRingStyleKey}" Grid.RowSpan="2" Grid.Row="0" SpeedRatio="1" IsActive="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}" Foreground="#1c4348"></wpf:LoadingIndicator> -->
     </Grid>
 </Page>

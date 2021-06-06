@@ -118,12 +118,12 @@
         <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding LoadMaterialsCommand}" />
     </dxmvvm:Interaction.Behaviors>
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
         <TabControl Grid.Row="0" IsEnabled="{Binding IsEnabled, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding SelectedTabIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
             <TabItem Header="Добавление">
                 <Grid>
@@ -153,10 +153,9 @@
                                           dx:ThemeManager.ThemeName="Office2016White" />
                         <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" NullText="Кол-во"  Text="{Binding AddCount, StringFormat='{}{##.##}',Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Tag="Количество" />
                         <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="2" SelectedIndex="{Binding AddUnity, Mode=TwoWay}" ItemsSource="{Binding Units, Mode=OneWay}" NullText="Ед. изм."/>
-                        <!-- <local:CountryDropdown Grid.Column="3"  x:Name="ucCountryDropdown"></local:CountryDropdown> -->
                         <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="4" Text="{Binding AddCost,  StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Стоимость" />
                         <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="5" Text="{Binding AddVatRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Ставка НДС" />
-                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="6" Text="{Binding AddVat,  StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Сумма НДС" />
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="6" Text="{Binding AddVat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Сумма НДС" />
                         <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="7" Text="{Binding AddWeight,  StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  NullText="Вес" />
                         <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White" NullText="Счет учета"  IsReadOnly="False" 
                                           Grid.Column="8" ItemsSource="{Binding Accounts, Mode=OneTime}" SelectedIndex="{Binding AddAccount}" />
@@ -192,16 +191,18 @@
                         </Grid.ColumnDefinitions>
 
                         <materialDesign:PackIcon Grid.Column="0" Kind="Pen"  Height="30" Width="30" Foreground="#20454b" HorizontalAlignment="Center"  VerticalAlignment="Center" />
+                        <dxe:ComboBoxEdit Grid.Column="1" IncrementalFiltering="True" ImmediatePopup="True" AutoComplete="True" IsReadOnly="False" Text="{Binding EditName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Наименование" ItemsSource="{Binding MaterialsName}"
+                                          dx:ThemeManager.ThemeName="Office2016White" />
                         <!-- <wpfControls:AutoCompleteTextBox Grid.Column="1" ItemsSource="{Binding Materials}" SelectedIndex="{Binding AddSelectedMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" IsReadOnly="True"></Autoco> -->
                         <!-- <wpfControls:AutoCompleteTextBox Grid.Column="1" Provider="{Binding }" Text="{Binding EditName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5"></wpfControls:AutoCompleteTextBox> -->
-                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White"  Text="{Binding EditCount, StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" NullText="Количество" />
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White"  Text="{Binding EditCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" NullText="Количество" />
                         <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White"  Name="UnityComboBox" Grid.Column="2" NullText="Ед. изм." SelectedIndex="{Binding EditUnity, Mode=TwoWay}" ItemsSource="{Binding Units, Mode=OneWay}"/>
                         <!-- <local:CountryDropdown Grid.Column="3"  x:Name="ucCountryDropdown"></local:CountryDropdown> -->
-                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="4" Text="{Binding EditCost,  StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Стоимость" />
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="4" Text="{Binding EditCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Стоимость" />
                         <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="5" Text="{Binding EditVatRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Ставка НДС" />
-                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="6" Text="{Binding EditVat,  StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Сумма НДС" />
-                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="7" Text="{Binding EditWeight,  StringFormat='{}{##.##}', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Вес" />
-                        <dxe:ComboBoxEdit Name="AccountComboBox" IsReadOnly="False" NullText="Счет учета"
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="6" Text="{Binding EditVat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Сумма НДС" />
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="7" Text="{Binding EditWeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Вес" />
+                        <dxe:ComboBoxEdit Name="AccountComboBox" IsReadOnly="False" NullText="Счет учета"   dx:ThemeManager.ThemeName="Office2016White" 
                                           Grid.Column="8" ItemsSource="{Binding Accounts, Mode=OneTime}" SelectedIndex="{Binding EditAccount}" />
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" >
@@ -245,6 +246,7 @@
 
             <!-- </Grid> -->
         </StackPanel>
-        <!-- <wpf:LoadingIndicator Style="{StaticResource LoadingIndicatorRingStyleKey}" Grid.RowSpan="2" Grid.Row="0" SpeedRatio="1" IsActive="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}" Foreground="#1c4348" AutomationProperties.IsColumnHeader="True"  /> -->
+        
+        
     </Grid>
     </Page>

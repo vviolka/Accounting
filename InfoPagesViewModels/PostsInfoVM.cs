@@ -130,8 +130,6 @@ namespace InfoPagesViewModels
             RaisePropertyChanged(nameof(posts));
         }
 
-        //todo: make parallel
-
         #region SearchCancel
 
 
@@ -217,9 +215,9 @@ namespace InfoPagesViewModels
 
         #region SelectedPost
 
-        private int selectedPost;
+        private Post selectedPost;
 
-        public int SelectedPost
+        public Post SelectedPost
         {
             get => selectedPost;
             set
@@ -239,7 +237,7 @@ namespace InfoPagesViewModels
         {
             addName = string.Empty;
             addRate = null;
-            selectedPost = 0;
+            selectedPost = null;
             RaisePropertyChanged(nameof(addName));
             RaisePropertyChanged(nameof(addRate));
         }
@@ -290,7 +288,7 @@ namespace InfoPagesViewModels
             if (editName != string.Empty && editRate != null)
             {
                 var post = new Post() { Name = editName, Rate = (float)editRate };
-                dataBase.Edit(posts[selectedPost].Id, post);
+                dataBase.Edit(selectedPost.Id, post);
                 posts = dataBase.GetList();
                 RaisePropertyChanged(nameof(posts));
                 EditCancel();
@@ -368,7 +366,7 @@ namespace InfoPagesViewModels
 
         private void Delete()
         {
-            dataBase.Delete(posts[selectedPost]);
+            dataBase.Delete(selectedPost);
             posts = dataBase.GetList();
             RaisePropertyChanged(nameof(posts));
             EditCancel();
@@ -393,9 +391,9 @@ namespace InfoPagesViewModels
 
         private void OnRowClick()
         {
-            if (selectedPost == -1) return;
+            if (selectedPost == null) return;
             selectedTabIndex = 2;
-            var post = posts[selectedPost];
+            var post = selectedPost;
             editName = post.Name;
             editRate = post.Rate;
 

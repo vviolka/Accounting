@@ -174,7 +174,7 @@
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Grid.Column="0" Kind="Search"  Height="30" Width="30" Foreground="#20454b" HorizontalAlignment="Center"  VerticalAlignment="Center" />
                         <dxe:TextEdit  Grid.Column="1" NullText="Название"  Text="{Binding SearchName, UpdateSourceTrigger=PropertyChanged}"/>
-                        <dxe:TextEdit  Grid.Column="2" Mask="000 000 000" Text="{Binding SearchUNP, UpdateSourceTrigger=PropertyChanged}"/>
+                        <dxe:TextEdit  Grid.Column="2" Mask="000 000 000" Text="{Binding SearchRate, UpdateSourceTrigger=PropertyChanged}"/>
 
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="0">
@@ -198,7 +198,7 @@
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Grid.Column="0" Kind="Pen"  Height="30" Width="30" Foreground="#20454b" HorizontalAlignment="Center"  VerticalAlignment="Center" />
                         <dxe:TextEdit  Grid.Column="1" NullText="Название"  Text="{Binding EditName, UpdateSourceTrigger=PropertyChanged}"/>
-                        <dxe:TextEdit Mask="000 000 000" Grid.Column="2" Text="{Binding EditUNP, UpdateSourceTrigger=PropertyChanged}"/>
+                        <dxe:TextEdit Mask="000 000 000" Grid.Column="2" Text="{Binding EditRate, UpdateSourceTrigger=PropertyChanged}"/>
 
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.ColumnSpan="2">
@@ -210,14 +210,14 @@
             </TabItem>
         </TabControl>
 
-        <dxg:GridControl Margin="10 5" BorderThickness="1"  dx:ThemeManager.ThemeName="Office2016White" Grid.Row="1" x:Name="grid" ShowBorder="False" ItemsSource="{Binding Posts}" SelectedItem="{Binding SelectedDocument}" AutoGenerateColumns="None" Background="red" Foreground="Yellow" SelectionMode="Row">
+        <dxg:GridControl Margin="10 5" BorderThickness="1"  dx:ThemeManager.ThemeName="Office2016White" Grid.Row="1" x:Name="grid" ShowBorder="False" ItemsSource="{Binding Posts}" SelectedItem="{Binding SelectedPost}" AutoGenerateColumns="None" Background="red" Foreground="Yellow" SelectionMode="Row">
             <dxg:GridControl.View>
                 <dxg:TableView AllowEditing="False" ShowIndicator="False"  AlternateRowBackground="#ecf8f6"  AutoWidth="True" ShowGroupPanel="False"/>
             </dxg:GridControl.View>
             <dxg:GridColumn Header="Название" Width ="2*" Binding="{Binding Name}"/>
             <dxg:GridColumn Header="Оклад" Width="*"  Binding="{Binding Rate}" />
             <dxmvvm:Interaction.Behaviors>
-                <dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding DocumentsRowClickCommand}" />
+                <dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding PostsRowClickCommand}" />
             </dxmvvm:Interaction.Behaviors>
         </dxg:GridControl>
     </Grid>

@@ -33,7 +33,8 @@ namespace ReportPagesViewModels
         private Reports model;
         private DateTime date;
         public ObservableCollection<Band> Bands { get; private set; }
-       private List<AvailableMaterials> list;
+        
+        private List<AvailableMaterials> list;
        
         public Report10_1VM(DateTime date, string account)
         {

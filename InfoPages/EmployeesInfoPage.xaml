@@ -181,13 +181,22 @@
                     <Grid Grid.Row="0" Margin="0,0,0,33" Grid.ColumnSpan="3" Grid.RowSpan="2" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.3*"/>
+
                             <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="1.5*"/>
                             <ColumnDefinition Width="1.5*"/>
 
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Grid.Column="0" Kind="Search"  Height="30" Width="30" Foreground="#20454b" HorizontalAlignment="Center"  VerticalAlignment="Center" />
-                        <dxe:TextEdit  Grid.Column="1" NullText="Название"  Text="{Binding SearchName, UpdateSourceTrigger=PropertyChanged}"/>
-                        <dxe:TextEdit  Grid.Column="2" Mask="000 000 000" Text="{Binding SearchUNP, UpdateSourceTrigger=PropertyChanged}"/>
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="1"  Text="{Binding SearchName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Имя"/>
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="2"  Text="{Binding SearchLastName,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Фамилия"/>
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="3"  Text="{Binding SearchMiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="Отчество"/>
+                        <dxe:DateEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="4"  DateTime="{Binding SearchDateBirth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="jjj" />
+                        <dxe:DateEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="5"  DateTime="{Binding SearchAcceptableDate,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" NullText="jjj" />
+                        <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="6" SelectedIndex="{Binding SearchEducation,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Education}" NullText="Образование" />
 
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="0">
@@ -195,7 +204,7 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="Редактирование" Visibility="Hidden" Height="25" VerticalAlignment="Top" >
+            <TabItem Header="Редактирование" Visibility="{Binding EditTabVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}" Height="25" VerticalAlignment="Top" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -205,13 +214,22 @@
                     <Grid Grid.Row="0" Margin="0,0,0,33" Grid.ColumnSpan="3" Grid.RowSpan="2" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.3*"/>
+
                             <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="1.5*"/>
                             <ColumnDefinition Width="1.5*"/>
 
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Grid.Column="0" Kind="Pen"  Height="30" Width="30" Foreground="#20454b" HorizontalAlignment="Center"  VerticalAlignment="Center" />
-                        <dxe:TextEdit  Grid.Column="1" NullText="Название"  Text="{Binding EditName, UpdateSourceTrigger=PropertyChanged}"/>
-                        <dxe:TextEdit Mask="000 000 000" Grid.Column="2" Text="{Binding EditUNP, UpdateSourceTrigger=PropertyChanged}"/>
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="1"  Text="{Binding EditName, UpdateSourceTrigger=PropertyChanged}" NullText="Имя"/>
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="2"  Text="{Binding EditLastName, UpdateSourceTrigger=PropertyChanged}" NullText="Фамилия"/>
+                        <dxe:TextEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="3"  Text="{Binding EditMiddleName, UpdateSourceTrigger=PropertyChanged}" NullText="Отчество"/>
+                        <dxe:DateEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="4"  DateTime="{Binding EditDateBirth, UpdateSourceTrigger=PropertyChanged}" NullText="jjj" />
+                        <dxe:DateEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="5"  DateTime="{Binding EditAcceptableDate, UpdateSourceTrigger=PropertyChanged}" NullText="jjj" />
+                        <dxe:ComboBoxEdit dx:ThemeManager.ThemeName="Office2016White" Grid.Column="6" SelectedIndex="{Binding EditEducation, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Education}" NullText="Образование" />
 
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.ColumnSpan="2">
